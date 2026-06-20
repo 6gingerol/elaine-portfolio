@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<script>document.documentElement.classList.add('js');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elaine Chen — Product Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#ffffff">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#ffffff"/>
+    <g transform="translate(600,400)">
+      <circle cx="-258" cy="-9" r="13" fill="#0b0b0c"/>
+      <text x="-228" y="10" font-family="'Space Grotesk', Arial, sans-serif" font-size="62" font-weight="600" letter-spacing="-2" fill="#0b0b0c">Elaine Chen</text>
+      <text x="-226" y="58" font-family="monospace" font-size="20" letter-spacing="6" fill="#9a9a9e">PRODUCT &amp; UX DESIGNER</text>
+    </g>
+  </svg>
+</template>
+
+<!-- faint atmospheric background -->
+<div id="ascii-bg" aria-hidden="true"></div>
+
+<!-- mobile topbar (sidebar is always visible on desktop) -->
+<div class="topbar">
+  <a href="#work" class="brand">Elaine Chen</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span> Menu</button>
+</div>
+<div class="backdrop" id="backdrop"></div>
+
+<!-- persistent sidebar / table of contents -->
+<aside class="spine" id="spine">
+  <div class="spine-id">
+    <a href="#work" class="brand" style="font-weight: 400; font-size: 21px">Elaine&nbsp;Chen</a>
+    <span class="descriptor" style="font-size: 13px">Product Designer</span>
+  </div>
+
+  <nav class="toc" id="toc">
+    <a href="#work" class="toc-item" data-spy="work"><span>Home</span></a>
+    <a href="case-nwplus.html" class="toc-item toc-proj"><span>nwPlus</span></a>
+    <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
+    <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
+    <a href="case-hatchloom.html" class="toc-item toc-proj"><span>Hatchloom</span></a>
+    <a href="#about" class="toc-item" data-spy="about"><span>About</span></a>
+    <a href="playground.html" class="toc-item"><span>Playground</span></a>
+  </nav>
+
+  <div class="spine-foot">
+    <div class="spine-links">
+      <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
+      <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
+      <a href="#">Resume
+↗</a>
+    </div>
+    <div class="spine-copy"><span>© 2026 Elaine Chen</span><span>Portfolio</span></div>
+  </div>
+</aside>
+
+<main class="stage" style="padding: 0px 42px; margin: 0px 0px 0px var(--spine-w)">
+
+  <!-- OPENING — intro + work together -->
+  <section class="section opening" id="work" data-screen-label="Opening" style="padding: 51px 0px 50px">
+    <header class="opening-head reveal-self">
+      <h1 style="font-size: 40px; padding: 100px 0px 0px; font-weight: 300">Elaine is a designer with intention ☀ — creating experiences with precision ∆, care ♥, and a touch of whimsy ✨. <span class="h1-caret" aria-hidden="true"></span></h1>
+      <div class="locale" aria-label="Location and local time">
+        <span class="loc">Vancouver, BC</span>
+        <span class="clock" id="localClock" aria-live="off">--:--:--</span>
+      </div>
+    </header>
+
+    <div class="bento work-grid">
+      <article class="c-6 proj reveal-self" id="cadence" data-screen-label="Project nwPlus">
+        <a href="case-nwplus.html" class="p-media" aria-label="Open nwPlus case study">
+          <span class="frame"><img src="assets/nwplus.jpg" class="full" alt="nwPlus — space illustration with logo" /></span>
+        </a>
+        <div class="p-body">
+          <div class="p-head">
+            <h3 style="font-weight: 500">nwPlus</h3>
+            <div class="p-tags"><span class="tag">UX/UI</span><span class="tag">Branding</span><span class="tag">Design System</span></div>
+          </div>
+          <p>Driving design for Western Canada's largest hackathons. </p>
+          <div class="p-foot">
+            <a href="case-nwplus.html" class="p-go" aria-label="Open nwPlus case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="c-6 proj reveal-self" id="palette" data-screen-label="Project Hackathon Judging Portal">
+        <a href="case-hackathon.html" class="p-media" aria-label="Open Hackathon Judging Portal case study">
+          <span class="frame"><video src="assets/award-admin.mp4" autoplay muted loop playsinline preload="auto" aria-label="Hackathon judging portal — admin award view, looping demo"></video></span>
+        </a>
+        <div class="p-body">
+          <div class="p-head">
+            <h3 style="font-weight: 500">Hackathon Judging Portal</h3>
+            <div class="p-tags"><span class="tag">Product Design</span><span class="tag">Systems</span></div>
+          </div>
+          <p>A cleaner evaluation system for hackathon projects, built to simplify scoring and reduce decision friction.</p>
+          <div class="p-foot">
+            <a href="case-hackathon.html" class="p-go" aria-label="Open Hackathon Judging Portal case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="c-6 proj reveal-self" id="saved" data-screen-label="Project JellyBreak">
+        <a href="case-jellybreak.html" class="p-media" aria-label="Open JellyBreak case study">
+          <span class="frame"><image-slot id="proj-jellybreak" placeholder="Drop a JellyBreak screen or loop" radius="0"></image-slot></span>
+        </a>
+        <div class="p-body">
+          <div class="p-head">
+            <h3 style="font-weight: 500">JellyBreak</h3>
+            <div class="p-tags"><span class="tag">Designathon</span><span class="tag">Mobile</span></div>
+          </div>
+          <p>[One line on JellyBreak — what it does and who it's for.]</p>
+          <div class="p-foot">
+            <a href="case-jellybreak.html" class="p-go" aria-label="Open JellyBreak case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="c-6 proj reveal-self" id="loop" data-screen-label="Project Hatchloom">
+        <a href="case-hatchloom.html" class="p-media" aria-label="Open Hatchloom case study">
+          <span class="frame"><image-slot id="proj-loop" placeholder="Drop a Loop screen" radius="0"></image-slot></span>
+        </a>
+        <div class="p-body">
+          <div class="p-head">
+            <h3 style="font-weight: 500">Hatchloom</h3>
+            <div class="p-tags"><span class="tag">Startup</span><span class="tag">Prototyping</span></div>
+          </div>
+          <p>Making design feedback feel like a conversation, not a thread no one wants to open. A focused space for async design review.</p>
+          <div class="p-foot">
+            <a href="case-hatchloom.html" class="p-go" aria-label="Open Hatchloom case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- homepage footer — minimal ASCII rain on the white page, with a
+         centered sign-off (ascii-rain.js). -->
+    <footer class="home-foot" data-screen-label="Footer">
+      <div id="footer-ascii-rain" class="rain-scene" aria-hidden="true"></div>
+      <div class="home-foot-inner">
+        <p class="ff-made">Made by Elaine</p>
+        <p class="ff-place">Vancouver, BC</p>
+        <p class="ff-love">made with love</p>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about" data-screen-label="About">
+    <div class="about-grid">
+      <div class="about-body reveal-self">
+        <p class="about-lead">Hi, I'm Elaine!</p>
+        <p>I’m a designer at heart — shaped by years of curiosity and hands-on experimentation with both digital and analog tools. I started by creating logos and profile pictures for Instagram influencers, then expanded into customizing shoes, making posters, and exploring design as a form of expression and problem-solving.</p>
+        <p style="padding: 0px">What draws me to design is the intersection of creativity, research, analysis, and human-centered thinking. I enjoy digging into the “why” behind a problem just as much as the visual craft.</p>
+        <p>Outside of design, I’m usually exploring vintage markets, gaming, practicing yoga, or catching a DJ set.</p>
+      </div>
+      <div class="portrait reveal-self"><image-slot id="portrait" placeholder="Drop a portrait" radius="0"></image-slot></div>
+    </div>
+
+    <div class="xp reveal-self" aria-label="Experience">
+      <span class="mono eyebrow">Experience</span>
+      <ol class="xp-list">
+        <li class="xp-item">
+          <div class="xp-main">
+            <h4 class="xp-role">Design Lead <span class="xp-org">· nwPlus</span></h4>
+            <p class="xp-desc">Driving design for Western Canada's largest hackathons.</p>
+          </div>
+          <span class="xp-when">2025 — Now</span>
+        </li>
+        <li class="xp-item">
+          <div class="xp-main">
+            <h4 class="xp-role">Design Coordinator <span class="xp-org">· nwPlus</span></h4>
+            <p class="xp-desc ph">[One short line on what you owned.]</p>
+          </div>
+          <span class="xp-when">2024 — 2025</span>
+        </li>
+        <li class="xp-item">
+          <div class="xp-main">
+            <h4 class="xp-role">Web Designer <span class="xp-org">· Perky</span></h4>
+            <p class="xp-desc ph">[One short line on what you owned.]</p>
+          </div>
+          <span class="xp-when">2024</span>
+        </li>
+        <li class="xp-item">
+          <div class="xp-main">
+            <h4 class="xp-role">Neuroscience Research Assistant <span class="xp-org">· UBC MINT</span></h4>
+            <p class="xp-desc ph">[One short line on what you did.]</p>
+          </div>
+          <span class="xp-when">2023</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="about-sign reveal-self">
+      <span class="cloud">☁︎</span>
+      <span>Made by Elaine · Powered by <span class="ph">[matcha]</span></span>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+<script src="image-slot.js"></script>
+<script src="ascii-sketch.js"></script>
+<script src="ascii-rain.js"></script>
+<!-- cursor engine (circle + cloud modes). Old standalone cursors kept for revert:
+     pixel-cursor.js · cloud-cursor.js -->
+<script src="cursor.js"></script>
+
+<!-- Tweaks panel (cursor controls) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-app.jsx"></script>
+<script>
+  // ---- reveal (visible state forced without depending on transition clock) ----
+  function hardShow(el) { el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }
+  const revealEls = [...document.querySelectorAll('.reveal-self')];
+  const scheduled = new WeakSet();
+  function reveal(el) {
+    if (el.classList.contains('in-view')) return;
+    el.classList.add('in-view');
+    if (!scheduled.has(el)) { scheduled.add(el); setTimeout(() => hardShow(el), 950); }
+  }
+  function checkReveals() {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    for (const el of revealEls) {
+      if (el.classList.contains('in-view')) continue;
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.92 && r.bottom > 0) reveal(el);
+    }
+  }
+  checkReveals();
+  window.addEventListener('scroll', checkReveals, { passive: true });
+  window.addEventListener('resize', checkReveals);
+  window.addEventListener('load', () => { checkReveals(); setTimeout(checkReveals, 250); });
+  setTimeout(() => revealEls.forEach(hardShow), 1250); // ultimate failsafe
+
+  // ---- footer azure rain scene: slide-up reveal as it nears the viewport ----
+  const homeFoot = document.querySelector('.home-foot');
+  function checkFootReveal() {
+    if (!homeFoot || homeFoot.classList.contains('in-view')) return;
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const r = homeFoot.getBoundingClientRect();
+    if (r.top < vh * 0.88 && r.bottom > 0) homeFoot.classList.add('in-view');
+  }
+  checkFootReveal();
+  window.addEventListener('scroll', checkFootReveal, { passive: true });
+  window.addEventListener('resize', checkFootReveal);
+  setTimeout(() => homeFoot && homeFoot.classList.add('in-view'), 1600); // failsafe
+
+  // ---- mobile drawer ----
+  const body = document.body;
+  const menuBtn = document.getElementById('menuBtn');
+  const backdrop = document.getElementById('backdrop');
+  function closeNav() { body.classList.remove('nav-open'); }
+  menuBtn.addEventListener('click', () => body.classList.toggle('nav-open'));
+  backdrop.addEventListener('click', closeNav);
+
+  // ---- section views: work / about shown one at a time ----
+  const viewIds = ['work', 'about'];
+  const views = viewIds.map((id) => document.getElementById(id));
+  const navItems = [...document.querySelectorAll('.toc-item[data-spy]')];
+  const subOf = { cadence: 'work', palette: 'work', saved: 'work', loop: 'work' };
+
+  function showView(id, scrollTargetId) {
+    views.forEach((s) => s.classList.toggle('view-active', s.id === id));
+    navItems.forEach((a) => a.classList.toggle('active', a.dataset.spy === id));
+    if (scrollTargetId) {
+      const t = document.getElementById(scrollTargetId);
+      if (t) {
+        const top = t.getBoundingClientRect().top + window.scrollY - 18;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    } else {
+      window.scrollTo({ top: 0 });
+    }
+    checkReveals();
+  }
+
+  function route() {
+    const h = (location.hash || '#work').slice(1);
+    if (subOf[h]) showView(subOf[h], h);
+    else if (viewIds.includes(h)) showView(h);
+    else showView('work');
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (ev) => {
+      const id = a.getAttribute('href');
+      if (id.length < 2) return;
+      ev.preventDefault();
+      closeNav();
+      if (location.hash === id) route();
+      else location.hash = id;
+    });
+  });
+  window.addEventListener('hashchange', route);
+  route();
+
+  // ---- ensure muted videos actually autoplay (some browsers stall despite attrs) ----
+  function kickVideos() {
+    document.querySelectorAll('video[autoplay]').forEach((v) => {
+      v.muted = true;
+      if (v.paused) { const p = v.play(); if (p) p.catch(() => {}); }
+    });
+  }
+  window.addEventListener('load', kickVideos);
+  kickVideos();
+  window.addEventListener('pointermove', kickVideos, { once: true });
+
+  // ---- returning from a project page (back/forward cache) can leave looping
+  //      thumbnails blank or frozen — fully re-mount their source and replay ----
+  window.addEventListener('pageshow', (e) => {
+    document.querySelectorAll('video[autoplay]').forEach((v) => {
+      v.muted = true;
+      if (e.persisted || v.readyState === 0 || v.error) {
+        try { v.load(); } catch (err) {}
+      }
+      const p = v.play(); if (p) p.catch(() => {});
+    });
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') kickVideos();
+  });
+
+  // ---- local time (Vancouver) ----
+  const clockEl = document.getElementById('localClock');
+  if (clockEl) {
+    const tf = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Vancouver', hour: '2-digit', minute: '2-digit',
+      second: '2-digit', hour12: true
+    });
+    function tick() {
+      clockEl.textContent = tf.format(new Date());
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hatchloom — Case Study — Elaine Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="case-study.css" />
+</head>
+<body>
+
+<div id="ascii-bg" aria-hidden="true"></div>
+
+<main class="cs-wrap">
+  <div class="cs-top">
+    <a class="back" href="index.html#work">&larr; Elaine Chen</a>
+    <span class="crumb">Case Study</span>
+  </div>
+
+  <!-- HERO MEDIA -->
+  <div class="cs-hero" data-screen-label="Hatchloom hero">
+    <div class="media"><image-slot id="hatchloom-hero" placeholder="Drop the Hatchloom hero image" radius="0"></image-slot></div>
+  </div>
+
+  <!-- TITLE + META -->
+  <header class="cs-head">
+    <h1>Hatchloom</h1>
+    <p class="cs-sub">[One-line description — what Hatchloom is and what you designed.]</p>
+    <div class="cs-meta">
+      <div><span class="k">Role</span><span class="v">[Your role]</span></div>
+      <div><span class="k">Team</span><span class="v">[X designers · X devs]</span></div>
+      <div><span class="k">Timeline</span><span class="v">[Month — Month, Year]</span></div>
+      <div><span class="k">Tools</span><span class="v">[Figma, …]</span></div>
+    </div>
+  </header>
+
+  <!-- OVERVIEW -->
+  <section class="cs-section" data-screen-label="Overview">
+    <h2>Overview</h2>
+    <p class="ph">[2–3 sentences: what the product is, who it's for, and what you shipped. Keep it scannable — a recruiter should get the gist in 10 seconds.]</p>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="cs-section" data-screen-label="Problem">
+    <h2>The problem</h2>
+    <p class="ph">[What was broken or missing, and for whom? Frame the stakes: what happened if this didn't get solved?]</p>
+    <p class="ph">[If you have a sharp quote from research or a stat, it can live here.]</p>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="cs-section" data-screen-label="Process">
+    <h2>Process</h2>
+    <p class="ph">[How you approached it: research, audits, sketches, iterations. What did you learn that changed your direction?]</p>
+    <div class="cs-media two">
+      <div><div class="slot"><image-slot id="hatchloom-process-1" placeholder="Drop a process shot (sketch, audit, wireframe)" radius="0"></image-slot></div><div class="cap">[Caption]</div></div>
+      <div><div class="slot"><image-slot id="hatchloom-process-2" placeholder="Drop a process shot" radius="0"></image-slot></div><div class="cap">[Caption]</div></div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="cs-section" data-screen-label="Solution">
+    <h2>The solution</h2>
+    <p class="ph">[Walk through the shipped design. What are the key decisions, and why are they right for the users and constraints?]</p>
+    <div class="cs-media">
+      <div><div class="slot"><image-slot id="hatchloom-solution-1" placeholder="Drop a key screen / flow" radius="0"></image-slot></div><div class="cap">[Caption]</div></div>
+    </div>
+    <div class="cs-media two">
+      <div><div class="slot"><image-slot id="hatchloom-solution-2" placeholder="Drop a detail shot" radius="0"></image-slot></div><div class="cap">[Caption]</div></div>
+      <div><div class="slot"><image-slot id="hatchloom-solution-3" placeholder="Drop a detail shot" radius="0"></image-slot></div><div class="cap">[Caption]</div></div>
+    </div>
+  </section>
+
+  <!-- OUTCOME -->
+  <section class="cs-section" data-screen-label="Outcome">
+    <h2>Outcome &amp; learnings</h2>
+    <p class="ph">[What happened after launch — adoption, feedback, metrics. Then one honest reflection: what you'd do differently next time.]</p>
+  </section>
+
+  <!-- NEXT -->
+  <nav class="cs-next">
+    <a href="index.html#work">&larr; All projects</a>
+    <a href="case-nwplus.html" style="text-align: right"><span><span class="lbl">Next project</span>nwPlus &rarr;</span></a>
+  </nav>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+<script src="image-slot.js"></script>
+<script src="ascii-sketch.js"></script>
+<script src="pixel-cursor.js"></script>
+<script>
+  // muted videos sometimes stall despite autoplay attrs — give them a kick
+  function kickVideos() {
+    document.querySelectorAll('video[autoplay]').forEach(function (v) {
+      v.muted = true;
+      if (v.paused) { var p = v.play(); if (p) p.catch(function () {}); }
+    });
+  }
+  window.addEventListener('load', kickVideos);
+  kickVideos();
+  window.addEventListener('pointermove', kickVideos, { once: true });
+</script>
+</body>
+</html>

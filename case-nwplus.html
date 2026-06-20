@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>nwPlus — Elaine Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="case-study.css" />
+<link rel="stylesheet" href="sidebar.css" />
+</head>
+<body>
+
+<!-- mobile topbar (sidebar is always visible on desktop) -->
+<div class="topbar">
+  <a href="index.html" class="brand">Elaine Chen</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span> Menu</button>
+</div>
+<div class="backdrop" id="backdrop"></div>
+
+<!-- persistent sidebar / table of contents -->
+<aside class="spine" id="spine">
+  <div class="spine-id">
+    <a href="index.html" class="brand" style="font-weight: 400; font-size: 21px">Elaine&nbsp;Chen</a>
+    <span class="descriptor" style="font-size: 13px">Product Designer</span>
+  </div>
+
+  <nav class="toc">
+    <a href="index.html#work" class="toc-item"><span>Projects</span></a>
+    <a href="case-nwplus.html" class="toc-item toc-proj active"><span>nwPlus</span></a>
+    <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
+    <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
+    <a href="case-hatchloom.html" class="toc-item toc-proj"><span>Hatchloom</span></a>
+    <a href="index.html#about" class="toc-item"><span>About</span></a>
+    <a href="playground.html" class="toc-item"><span>Playground</span></a>
+  </nav>
+
+  <div class="spine-foot">
+    <div class="spine-links">
+      <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
+      <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
+      <a href="#">Resume ↗</a>
+    </div>
+    <div class="spine-copy"><span>© 2026 Elaine Chen</span><span>Portfolio</span></div>
+  </div>
+</aside>
+
+<main class="cs-wrap">
+  <div class="cs-top">
+    <a class="back" href="index.html#work">&larr; Back</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="cs-hero reveal-self" data-screen-label="nwPlus hero">
+    <div class="screen">
+      <div class="media"><img src="assets/nwplus.jpg" alt="nwPlus — space illustration with logo" /></div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <header class="cs-head reveal-self">
+    <h1>nwPlus</h1>
+    <p class="cs-sub">Driving design for Western Canada's largest hackathons — <span class="ph">[one line on what you design: brand, hacker-facing products, event tooling]</span>.</p>
+    <div class="cs-meta">
+      <div><span class="k">Timeline</span><span class="v ph">[Month Year — present]</span></div>
+      <div><span class="k">Role</span><span class="v ph">[Design team role]</span></div>
+      <div><span class="k">Skills</span><span class="v ph">[Product · Systems · Brand]</span></div>
+      <div><span class="k">Team</span><span class="v ph">[X designers · X devs]</span></div>
+      <div><span class="k">Tools</span><span class="v ph">[Figma, …]</span></div>
+      <div><span class="k">Platform</span><span class="v ph">[Web · live events]</span></div>
+    </div>
+  </header>
+
+  <!-- WHAT I OWNED + IMPACT -->
+  <div class="cs-band reveal-self" data-screen-label="What I owned and impact">
+    <section aria-label="What I owned">
+      <h2><span class="eyebrow">What I owned</span></h2>
+      <ul class="owned-list">
+        <li>I <span class="ph">[owned area one — e.g. led design for HackCamp's hacker-facing experience]</span>.</li>
+        <li>I <span class="ph">[owned area two — e.g. built and maintained shared components across events]</span>.</li>
+        <li>I <span class="ph">[owned area three — e.g. shipped X features with the dev team]</span>.</li>
+      </ul>
+    </section>
+    <section aria-label="Impact">
+      <h2><span class="eyebrow">Impact</span></h2>
+      <div class="impact-grid">
+        <div class="imp"><span class="n ph">[x,xxx]</span><span class="l ph">[hackers reached across events]</span></div>
+        <div class="imp"><span class="n ph">[x]</span><span class="l ph">[events shipped per year]</span></div>
+        <div class="imp"><span class="n ph">[xx]</span><span class="l ph">[components in the shared system]</span></div>
+        <div class="imp"><span class="n ph">[xx%]</span><span class="l ph">[a metric you moved]</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 01 CONTEXT -->
+  <section class="cs-section reveal-self" data-screen-label="Context">
+    <h2 class="sec-title ph">[One line that frames nwPlus and your seat at the table.]</h2>
+    <p class="ph">[2–3 sentences: what nwPlus is, the events it runs, and where design fits in the org.]</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="nwplus-context-1" placeholder="Drop a wide shot — event site, brand spread, or team artifact" radius="0" class="wide"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- 02 PROBLEM -->
+  <section class="cs-section reveal-self" data-screen-label="Problem">
+    <p class="statement ph">[The core design problem in one sharp sentence.]</p>
+    <ul class="points">
+      <li><span class="ph">[Pain point one.]</span></li>
+      <li><span class="ph">[Pain point two.]</span></li>
+      <li><span class="ph">[Pain point three.]</span></li>
+    </ul>
+  </section>
+
+  <!-- 03 PROCESS — snapshots -->
+  <section class="cs-section reveal-self" data-screen-label="Process">
+    <h2 class="sec-title">Process</h2>
+    <p class="ph">[Short note on how you worked — then let the snapshots show the iterations.]</p>
+    <div class="blk blk-snaps">
+      <div><div class="slot"><image-slot id="nwplus-process-1" placeholder="Iteration 1" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="nwplus-process-2" placeholder="Iteration 2" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="nwplus-process-3" placeholder="Iteration 3" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="nwplus-process-4" placeholder="Shipped" radius="0"></image-slot></div></div>
+    </div>
+  </section>
+
+  <!-- 04 KEY DECISIONS — side-by-side -->
+  <section class="cs-section reveal-self" data-screen-label="Key decisions">
+    <h2 class="sec-title ph">[The decision that mattered most]</h2>
+    <p class="ph">[2–3 sentences on the tradeoff and why you landed where you did.]</p>
+    <div class="blk blk-compare">
+      <div><div class="slot"><image-slot id="nwplus-decision-1" placeholder="Option / detail A" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="nwplus-decision-2" placeholder="Option / detail B" radius="0"></image-slot></div></div>
+    </div>
+  </section>
+
+  <!-- 05 FINAL DESIGNS — full + gallery -->
+  <section class="cs-section reveal-self" data-screen-label="Final designs">
+    <h2 class="sec-title">What shipped</h2>
+    <p class="ph">[One short paragraph — the visuals do the talking.]</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="nwplus-solution-1" placeholder="Drop the flagship screen or flow" radius="0" class="wide"></image-slot></div>
+    </div>
+    <div class="blk blk-gallery">
+      <div><div class="slot"><image-slot id="nwplus-solution-2" placeholder="Detail" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="nwplus-solution-3" placeholder="Detail" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="nwplus-solution-4" placeholder="Detail" radius="0"></image-slot></div></div>
+    </div>
+  </section>
+
+  <!-- 06 OUTCOMES -->
+  <section class="cs-section reveal-self" data-screen-label="Outcomes">
+    <h2 class="sec-title">Outcomes</h2>
+    <div class="blk blk-stats">
+      <div class="stat"><span class="n ph">[x,xxx]</span><span class="l ph">[metric — e.g. applicants]</span></div>
+      <div class="stat"><span class="n ph">[xx%]</span><span class="l ph">[metric — e.g. completion rate]</span></div>
+      <div class="stat"><span class="n ph">[xx]</span><span class="l ph">[metric — e.g. NPS or feedback score]</span></div>
+    </div>
+    <div class="blk-quote">
+      <blockquote class="ph">[A line of feedback from a hacker, organizer, or teammate.]</blockquote>
+      <div class="who ph">[Name, role]</div>
+    </div>
+  </section>
+
+  <!-- 07 REFLECTION -->
+  <section class="cs-section reveal-self" data-screen-label="Reflection">
+    <h2 class="sec-title">Reflection</h2>
+    <p class="ph">[2–3 honest sentences: what you'd do differently, and what designing at event scale taught you.]</p>
+  </section>
+
+  <!-- PREV / NEXT -->
+  <nav class="cs-next reveal-self" aria-label="Project navigation">
+    <div class="pn prev"><span class="lbl">Previous</span><a class="pn-title" href="case-hatchloom.html">&larr; Hatchloom</a></div>
+    <a class="all" href="index.html#work">All projects</a>
+    <div class="pn next"><span class="lbl">Next</span><a class="pn-title" href="case-hackathon.html">Hackathon Judging Portal &rarr;</a></div>
+  </nav>
+</main>
+
+<script src="image-slot.js"></script>
+<!-- cursor engine (matches homepage — circle default). Old cloud cursor kept for revert:
+     pixel-cursor.js · cloud-cursor.js -->
+<script src="cursor.js"></script>
+<script src="case-study.js"></script>
+</body>
+</html>

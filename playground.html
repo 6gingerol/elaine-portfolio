@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elaine Chen — Playground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body.pg { height: 100vh; overflow: hidden; }
+  .pg-stage { margin-left: var(--spine-w); height: 100vh; padding: 0; position: relative; overflow: hidden; }
+
+  .pg-viewport {
+    position: absolute; inset: 0; overflow: hidden;
+    background-color: var(--bg);
+    background-image: radial-gradient(circle at center, var(--line-2) 1.1px, transparent 1.1px);
+    background-size: 28px 28px;
+    cursor: grab; touch-action: none;
+  }
+  .pg-viewport.grabbing { cursor: grabbing; }
+  .pg-canvas { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+
+  .pg-node {
+    position: absolute;
+    border: 1px solid var(--line-2); border-radius: 16px;
+    background: var(--bg); padding: 26px 28px;
+    user-select: none;
+  }
+  .pg-node.center { border: none; background: transparent; padding: 0; }
+  .pg-node.center .eyebrow { color: var(--silver); display: block; margin-bottom: 16px; }
+  .pg-node.center h1 {
+    font-family: var(--font-display); font-weight: 500; letter-spacing: -0.035em;
+    font-size: 56px; line-height: 1; margin: 0;
+  }
+  .pg-node.center p { color: var(--graphite); max-width: 42ch; margin: 18px 0 0; font-size: 16px; }
+
+  .pg-slot {
+    display: flex; flex-direction: column; justify-content: space-between;
+    border: 1px dashed var(--line-2); background: color-mix(in srgb, var(--paper) 70%, transparent);
+  }
+  .pg-slot .lab { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--silver); }
+  .pg-slot .plus {
+    align-self: flex-start; margin-top: 22px;
+    width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line-2);
+    display: grid; place-items: center; color: var(--steel); font-size: 17px; line-height: 1;
+  }
+  .pg-slot .cap { font-size: 13px; color: var(--steel); margin-top: 14px; max-width: 26ch; }
+
+  /* floating chrome */
+  .pg-hud {
+    position: absolute; top: clamp(20px,3vw,34px); left: clamp(20px,3vw,38px); z-index: 5; pointer-events: none;
+  }
+  .pg-hud .tag-top { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); display: flex; align-items: center; gap: 8px; }
+  .pg-hud .tag-top::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
+  .pg-hud h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(22px,2.4vw,30px); letter-spacing: -0.03em; margin: 12px 0 0; }
+  .pg-hud p { font-size: 13.5px; color: var(--steel); margin: 6px 0 0; max-width: 36ch; }
+
+  .pg-controls {
+    position: absolute; bottom: clamp(20px,3vw,32px); right: clamp(20px,3vw,32px); z-index: 5;
+    display: flex; align-items: center; gap: 6px;
+    background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(10px);
+    border: 1px solid var(--line); border-radius: 12px; padding: 6px;
+  }
+  .pg-controls button {
+    appearance: none; border: none; background: transparent; cursor: pointer;
+    width: 34px; height: 34px; border-radius: 8px; color: var(--ink);
+    font-size: 17px; line-height: 1; display: grid; place-items: center;
+    transition: background 0.2s var(--ease);
+  }
+  .pg-controls button:hover { background: var(--surface); }
+  .pg-controls .pct { font-family: var(--font-mono); font-size: 12px; color: var(--steel); min-width: 46px; text-align: center; }
+  .pg-controls .sep { width: 1px; height: 20px; background: var(--line); }
+  .pg-controls .reset { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; width: auto; padding: 0 10px; text-transform: uppercase; }
+
+  .pg-hint {
+    position: absolute; bottom: clamp(22px,3vw,34px); left: clamp(20px,3vw,38px); z-index: 5; pointer-events: none;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--silver);
+    display: flex; gap: 18px;
+  }
+  @media (max-width: 1040px) { .pg-stage { margin-left: 0; } .pg-hint { display: none; } }
+</style>
+</head>
+<body class="pg">
+
+<div class="topbar">
+  <a href="index.html" class="brand">Elaine Chen</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span> Menu</button>
+</div>
+<div class="backdrop" id="backdrop"></div>
+
+<aside class="spine" id="spine">
+  <div class="spine-id">
+    <a href="index.html" class="brand">Elaine&nbsp;Chen</a>
+    <span class="descriptor">Product &amp; UX Designer</span>
+  </div>
+  <nav class="toc">
+    <a href="index.html#work" class="toc-item"><span>Projects</span></a>
+    <a href="index.html#cadence" class="toc-item toc-proj"><span>Cadence</span></a>
+    <a href="index.html#palette" class="toc-item toc-proj"><span>Palette</span></a>
+    <a href="index.html#loop" class="toc-item toc-proj"><span>Loop</span></a>
+    <a href="index.html#about" class="toc-item"><span>About</span></a>
+    <a href="playground.html" class="toc-item active"><span>Playground</span></a>
+  </nav>
+  <div class="spine-foot">
+    <div class="spine-links">
+      <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
+      <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
+      <a href="#">Résumé <span class="ar">↗</span></a>
+    </div>
+    <div class="spine-copy"><span>© 2026 Elaine Chen</span><span>Playground</span></div>
+  </div>
+</aside>
+
+<main class="stage pg-stage">
+  <div class="pg-hud">
+    <span class="tag-top">Playground</span>
+    <p>A canvas for experiments — pieces land here over time.</p>
+  </div>
+
+  <div class="pg-viewport" id="vp">
+    <div class="pg-canvas" id="canvas">
+
+      <div class="pg-node center" style="left:-280px; top:-160px; width:560px;">
+        <span class="mono eyebrow">Work in progress</span>
+        <h1>Playground</h1>
+        <p>An infinite canvas for design experiments — micro-interactions, generative sketches, and prototypes. Drag to roam, scroll to zoom.</p>
+      </div>
+
+      <div class="pg-node pg-slot" style="left:400px; top:-300px; width:300px; height:220px;">
+        <span class="lab">Slot 01</span>
+        <div><div class="plus">+</div><div class="cap">Interaction experiment</div></div>
+      </div>
+
+      <div class="pg-node pg-slot" style="left:440px; top:60px; width:280px; height:240px;">
+        <span class="lab">Slot 02</span>
+        <div><div class="plus">+</div><div class="cap">Generative / motion sketch</div></div>
+      </div>
+
+      <div class="pg-node pg-slot" style="left:-620px; top:-40px; width:300px; height:240px;">
+        <span class="lab">Slot 03</span>
+        <div><div class="plus">+</div><div class="cap">Component or prototype</div></div>
+      </div>
+
+      <div class="pg-node pg-slot" style="left:-280px; top:240px; width:560px; height:170px;">
+        <span class="lab">Slot 04</span>
+        <div><div class="plus">+</div><div class="cap">Wide embed — a tool, toy, or live demo</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pg-hint"><span>Drag to pan</span><span>Scroll to zoom</span></div>
+
+  <div class="pg-controls">
+    <button id="zoomOut" aria-label="Zoom out">−</button>
+    <span class="pct" id="pct">100%</span>
+    <button id="zoomIn" aria-label="Zoom in">+</button>
+    <span class="sep"></span>
+    <button class="reset" id="reset" aria-label="Reset view">Reset</button>
+  </div>
+</main>
+
+<script>
+  const vp = document.getElementById('vp');
+  const canvas = document.getElementById('canvas');
+  const pct = document.getElementById('pct');
+  let scale = 1, tx = 0, ty = 0;
+  const MIN = 0.4, MAX = 2.4;
+
+  function apply() {
+    canvas.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+    vp.style.backgroundSize = (28 * scale) + 'px ' + (28 * scale) + 'px';
+    vp.style.backgroundPosition = tx + 'px ' + ty + 'px';
+    pct.textContent = Math.round(scale * 100) + '%';
+  }
+  function center() {
+    scale = 1;
+    tx = vp.clientWidth / 2;
+    ty = vp.clientHeight / 2;
+    apply();
+  }
+  function zoomTo(ns, cx, cy) {
+    ns = Math.min(MAX, Math.max(MIN, ns));
+    tx = cx - (cx - tx) * (ns / scale);
+    ty = cy - (cy - ty) * (ns / scale);
+    scale = ns; apply();
+  }
+
+  // drag to pan
+  let dragging = false, lx = 0, ly = 0;
+  vp.addEventListener('pointerdown', (e) => { dragging = true; lx = e.clientX; ly = e.clientY; vp.classList.add('grabbing'); vp.setPointerCapture(e.pointerId); });
+  vp.addEventListener('pointermove', (e) => { if (!dragging) return; tx += e.clientX - lx; ty += e.clientY - ly; lx = e.clientX; ly = e.clientY; apply(); });
+  function endDrag() { dragging = false; vp.classList.remove('grabbing'); }
+  vp.addEventListener('pointerup', endDrag);
+  vp.addEventListener('pointercancel', endDrag);
+  vp.addEventListener('pointerleave', endDrag);
+
+  // scroll / pinch to zoom toward cursor
+  vp.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const r = vp.getBoundingClientRect();
+    const factor = Math.exp(-e.deltaY * 0.0028);
+    zoomTo(scale * factor, e.clientX - r.left, e.clientY - r.top);
+  }, { passive: false });
+
+  document.getElementById('zoomIn').addEventListener('click', () => zoomTo(scale * 1.5, vp.clientWidth / 2, vp.clientHeight / 2));
+  document.getElementById('zoomOut').addEventListener('click', () => zoomTo(scale / 1.5, vp.clientWidth / 2, vp.clientHeight / 2));
+  document.getElementById('reset').addEventListener('click', center);
+  window.addEventListener('resize', () => { /* keep current offsets */ apply(); });
+
+  // mobile drawer
+  const body = document.body;
+  document.getElementById('menuBtn').addEventListener('click', () => body.classList.toggle('nav-open'));
+  document.getElementById('backdrop').addEventListener('click', () => body.classList.remove('nav-open'));
+
+  center();
+</script>
+<!-- star cursor kept for revert: <script src="pixel-cursor.js"></script> -->
+<script src="cloud-cursor.js"></script>
+</body>
+</html>

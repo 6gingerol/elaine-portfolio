@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<script>document.documentElement.classList.add('js');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elaine Chen — Product Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============ MOBILE TOPBAR ============ -->
+<div class="topbar">
+  <a href="#index" class="brand">Elaine Chen</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">
+    <span class="bars"><span></span><span></span><span></span></span> Menu
+  </button>
+</div>
+<div class="backdrop" id="backdrop"></div>
+
+<!-- ============ SIDEBAR SPINE ============ -->
+<aside class="spine" id="spine">
+  <div class="spine-id">
+    <a href="#index" class="brand">Elaine&nbsp;Chen</a>
+    <span class="descriptor">Product &amp; UX Designer</span>
+    <span class="status"><span class="live"></span> Available — Summer ’26</span>
+    <p class="spine-intro">Student designer shaping clear, calm interfaces for SaaS &amp; creative software.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <nav class="toc" id="toc">
+    <a href="#index" class="toc-item" data-spy="index"><span class="ix">01</span><span>Index</span></a>
+    <a href="#work" class="toc-item" data-spy="work"><span class="ix">02</span><span>Selected Work</span></a>
+    <div class="toc-sub">
+      <a href="#cadence">Cadence</a>
+      <a href="#palette">Palette</a>
+      <a href="#loop">Loop</a>
+    </div>
+    <a href="#about" class="toc-item" data-spy="about"><span class="ix">03</span><span>About</span></a>
+    <a href="#contact" class="toc-item" data-spy="contact"><span class="ix">04</span><span>Contact</span></a>
+  </nav>
+
+  <div class="spine-foot">
+    <div class="spine-links">
+      <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
+      <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
+      <a href="#">Résumé <span class="ar">↗</span></a>
+    </div>
+    <div class="spine-copy"><span>© 2026 Elaine Chen</span><span>Portfolio v2</span></div>
+  </div>
+</aside>
+
+<!-- ============ MAIN STAGE ============ -->
+<main class="stage">
+
+  <!-- INDEX / HERO -->
+  <section class="section first" id="index" data-screen-label="Hero">
+    <div class="bento">
+      <div class="cell c-8 hero-head" data-screen-label="Hero headline">
+        <h1 class="headline">
+          <span class="line-mask"><span class="line-inner">Clear, calm</span></span>
+          <span class="line-mask"><span class="line-inner">interfaces for</span></span>
+          <span class="line-mask"><span class="line-inner"><em>complex</em> work.</span></span>
+        </h1>
+        <p class="hero-lede reveal-self">I'm Elaine — a product designer working at the intersection of <strong>systems thinking, usability, and interaction detail</strong>. I design SaaS and creative tools that feel obvious to use and quietly considered.</p>
+      </div>
+
+      <div class="cell c-4 r-2 box ascii-cell hero-ascii" data-screen-label="ASCII field">
+        <span class="ascii-label">// ascii.field</span>
+        <div id="ascii-panel"></div>
+        <span class="ascii-hint"><span>move&nbsp;cursor</span><span>render: text-mode</span></span>
+      </div>
+
+      <div class="cell c-4 box pad meta-card reveal-self">
+        <span class="k">Focus</span>
+        <span class="v">SaaS<small>Dashboards, tools, design systems</small></span>
+      </div>
+      <div class="cell c-4 box pad meta-card reveal-self">
+        <span class="k">Also</span>
+        <span class="v">Creative software<small>Editors, canvases, asset tools</small></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work" data-screen-label="Work">
+    <div class="sec-label reveal-self"><span class="ix">02</span><span class="nm">Selected Work</span><span class="ln"></span><span class="mono">2026 · 03</span></div>
+
+    <div class="bento">
+      <!-- Feature -->
+      <article class="cell c-8 r-2 box hover proj feature reveal-self" id="cadence" data-screen-label="Project Cadence">
+        <a href="#" class="p-media">
+          <span class="badge">cadence.app/plan</span>
+          <span class="frame"><image-slot id="proj-cadence" placeholder="Drop a Cadence screen" radius="0"></image-slot></span>
+        </a>
+        <div class="p-body">
+          <div class="p-row"><span class="p-ix">01</span><span class="p-cat">SaaS · Planning</span></div>
+          <h3>Cadence</h3>
+          <p>Rethinking how small creative teams plan a week of work — without trading momentum for process.</p>
+          <div class="p-foot">
+            <div class="p-tags"><span class="tag">0 → 1</span><span class="tag">Product Design</span><span class="tag">Design System</span></div>
+            <a href="#" class="p-go" aria-label="Open Cadence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Palette -->
+      <article class="cell c-4 box hover proj reveal-self" id="palette" data-screen-label="Project Palette">
+        <a href="#" class="p-media">
+          <span class="badge">palette · library</span>
+          <span class="frame"><image-slot id="proj-palette" placeholder="Drop a Palette screen" radius="0"></image-slot></span>
+        </a>
+        <div class="p-body">
+          <div class="p-row"><span class="p-ix">02</span><span class="p-cat">Creative Tool</span></div>
+          <h3>Palette</h3>
+          <p>A single home for the colors, type, and assets scattered across a designer's open tabs.</p>
+          <div class="p-foot">
+            <div class="p-tags"><span class="tag">UX &amp; UI</span><span class="tag">Interaction</span></div>
+            <a href="#" class="p-go" aria-label="Open Palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Loop -->
+      <article class="cell c-4 box hover proj reveal-self" id="loop" data-screen-label="Project Loop">
+        <a href="#" class="p-media">
+          <span class="badge">loop · review</span>
+          <span class="frame"><image-slot id="proj-loop" placeholder="Drop a Loop screen" radius="0"></image-slot></span>
+        </a>
+        <div class="p-body">
+          <div class="p-row"><span class="p-ix">03</span><span class="p-cat">SaaS · Collaboration</span></div>
+          <h3>Loop</h3>
+          <p>Making design feedback feel like a conversation, not a thread no one wants to open.</p>
+          <div class="p-foot">
+            <div class="p-tags"><span class="tag">Async Review</span><span class="tag">Prototyping</span></div>
+            <a href="#" class="p-go" aria-label="Open Loop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about" data-screen-label="About">
+    <div class="sec-label reveal-self"><span class="ix">03</span><span class="nm">About</span><span class="ln"></span><span class="mono">Designer · Systems</span></div>
+
+    <div class="bento">
+      <div class="cell c-4 r-2 box portrait reveal-self" data-screen-label="Portrait">
+        <image-slot id="portrait" placeholder="Drop a portrait" radius="0"></image-slot>
+      </div>
+
+      <div class="cell c-8 box pad reveal-self about-body">
+        <p class="about-lead">I design software that gets out of the way — so the <em>work</em> can take the spotlight.</p>
+        <p>I'm drawn to the unglamorous problems inside SaaS and creative tools: the empty states, the keyboard shortcuts, the moment a workflow either clicks or collapses. I turn fuzzy product questions into clear, usable systems.</p>
+        <p>My approach pairs product thinking with visual refinement — I want a screen to be both obvious to use and quietly nice to look at.</p>
+        <div class="about-cta" style="margin-top:24px">
+          <a href="#" class="btn primary">View résumé <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 4v12m0 0 5-5m-5 5-5-5M5 20h14"/></svg></a>
+          <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener" class="btn ghost">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="cell c-4 box pad value reveal-self"><span class="num">01</span><div><h4>Systems over screens</h4><p>Components, patterns, and logic that hold up as a product grows — not one-off pixels.</p></div></div>
+      <div class="cell c-4 box pad value reveal-self"><span class="num">02</span><div><h4>Usability is the feature</h4><p>The best interaction is the one you never have to think about. Clarity beats cleverness.</p></div></div>
+      <div class="cell c-4 box pad value reveal-self"><span class="num">03</span><div><h4>Considered, not decorated</h4><p>Restraint, rhythm, and detail over noise. Every element earns its place.</p></div></div>
+
+      <div class="cell c-8 box pad now-card reveal-self">
+        <span class="tag-top">Now</span>
+        <div class="now-row"><span class="k">Studying</span><span class="v">Human–Computer Interaction</span></div>
+        <div class="now-row"><span class="k">Toolkit</span><span class="v">Figma · Prototyping · Design systems</span></div>
+        <div class="now-row"><span class="k">Seeking</span><span class="v">Summer 2026 product design internship</span></div>
+      </div>
+      <div class="cell c-4 box pad meta-card reveal-self">
+        <span class="k">Currently</span>
+        <span class="v">Open to work<small>SaaS &amp; creative tools teams</small></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact" data-screen-label="Contact">
+    <div class="bento">
+      <div class="cell c-12 box contact-cell reveal-self">
+        <span class="mono eyebrow">Open to internships &amp; collaborations</span>
+        <h2>Let's build<br>something <em>clear</em>.</h2>
+        <a href="mailto:elaiinechen@gmail.com" class="mail">elaiinechen@gmail.com
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <span class="mono">© 2026 Elaine Chen</span>
+      <div class="fl">
+        <a href="mailto:elaiinechen@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#">Résumé</a>
+      </div>
+      <span class="mono">Designed &amp; built by Elaine</span>
+    </footer>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<script src="image-slot.js"></script>
+<script src="ascii-sketch.js"></script>
+<script>
+  // ---- hero load reveal ----
+  function runHero() { document.body.classList.add('loaded'); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', runHero);
+  else runHero();
+
+  // ---- scroll reveal (rAF + rect; no IO dependency) ----
+  // Reveals animate via CSS transitions in normal browsers. But visibility must
+  // NEVER depend on the transition clock advancing — in throttled/static render
+  // contexts transitions can stay frozen at the hidden start. So once an element
+  // is revealed we also force its final state with transition:none after a short
+  // delay (harmless once the animation has finished), guaranteeing visibility.
+  const lineInners = [...document.querySelectorAll('.line-inner')];
+  function hardShow(el) {
+    el.style.transition = 'none';
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  }
+  function hardShowLines() {
+    lineInners.forEach((li) => { li.style.transition = 'none'; li.style.transform = 'translateY(0)'; });
+  }
+  document.querySelectorAll('.reveal').forEach((g) => [...g.children].forEach((c, i) => c.style.setProperty('--i', i)));
+  const revealEls = [...document.querySelectorAll('.reveal, .reveal-self, .proj')];
+  const scheduled = new WeakSet();
+  function reveal(el) {
+    if (el.classList.contains('in-view')) return;
+    el.classList.add('in-view');
+    // force final state after the transition would have finished (or immediately
+    // matters if it never ticks) — preserves the animation in working browsers.
+    if (!scheduled.has(el)) { scheduled.add(el); setTimeout(() => hardShow(el), 1000); }
+  }
+  function checkReveals() {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    for (const el of revealEls) {
+      if (el.classList.contains('in-view')) continue;
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.9 && r.bottom > 0) reveal(el);
+    }
+  }
+  checkReveals();
+  window.addEventListener('scroll', checkReveals, { passive: true });
+  window.addEventListener('resize', checkReveals);
+  window.addEventListener('load', () => { checkReveals(); setTimeout(checkReveals, 250); });
+  // hero lines: let them animate, then guarantee the end state
+  setTimeout(hardShowLines, 1100);
+  // ultimate failsafe: nothing stays hidden regardless of transition support
+  setTimeout(() => { revealEls.forEach(hardShow); hardShowLines(); }, 1300);
+
+  // ---- mobile drawer ----
+  const body = document.body;
+  const menuBtn = document.getElementById('menuBtn');
+  const backdrop = document.getElementById('backdrop');
+  function closeNav() { body.classList.remove('nav-open'); }
+  menuBtn.addEventListener('click', () => body.classList.toggle('nav-open'));
+  backdrop.addEventListener('click', closeNav);
+
+  // ---- smooth anchor scroll (no scrollIntoView) ----
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (ev) => {
+      const id = a.getAttribute('href');
+      if (id.length < 2) return;
+      const t = document.querySelector(id);
+      if (!t) return;
+      ev.preventDefault();
+      closeNav();
+      const top = t.getBoundingClientRect().top + window.scrollY - 18;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+
+  // ---- scroll-spy ----
+  const spy = [...document.querySelectorAll('.toc-item[data-spy]')];
+  const sections = spy.map((a) => document.getElementById(a.dataset.spy)).filter(Boolean);
+  function updateSpy() {
+    const mid = window.scrollY + window.innerHeight * 0.34;
+    let cur = sections[0];
+    for (const s of sections) { if (s.offsetTop <= mid) cur = s; }
+    spy.forEach((a) => a.classList.toggle('active', cur && a.dataset.spy === cur.id));
+  }
+  updateSpy();
+  window.addEventListener('scroll', updateSpy, { passive: true });
+  window.addEventListener('resize', updateSpy);
+</script>
+</body>
+</html>

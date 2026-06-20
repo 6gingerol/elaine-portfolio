@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JellyBreak — Elaine Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="case-study.css" />
+<link rel="stylesheet" href="sidebar.css" />
+</head>
+<body>
+
+<!-- mobile topbar (sidebar is always visible on desktop) -->
+<div class="topbar">
+  <a href="index.html" class="brand">Elaine Chen</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span> Menu</button>
+</div>
+<div class="backdrop" id="backdrop"></div>
+
+<!-- persistent sidebar / table of contents -->
+<aside class="spine" id="spine">
+  <div class="spine-id">
+    <a href="index.html" class="brand" style="font-weight: 400; font-size: 21px">Elaine&nbsp;Chen</a>
+    <span class="descriptor" style="font-size: 13px">Product Designer</span>
+  </div>
+
+  <nav class="toc">
+    <a href="index.html#work" class="toc-item"><span>Projects</span></a>
+    <a href="case-nwplus.html" class="toc-item toc-proj"><span>nwPlus</span></a>
+    <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
+    <a href="case-jellybreak.html" class="toc-item toc-proj active"><span>JellyBreak</span></a>
+    <a href="case-hatchloom.html" class="toc-item toc-proj"><span>Hatchloom</span></a>
+    <a href="index.html#about" class="toc-item"><span>About</span></a>
+    <a href="playground.html" class="toc-item"><span>Playground</span></a>
+  </nav>
+
+  <div class="spine-foot">
+    <div class="spine-links">
+      <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
+      <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
+      <a href="#">Resume ↗</a>
+    </div>
+    <div class="spine-copy"><span>© 2026 Elaine Chen</span><span>Portfolio</span></div>
+  </div>
+</aside>
+
+<main class="cs-wrap">
+  <div class="cs-top">
+    <a class="back" href="index.html#work">&larr; Back</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="cs-hero reveal-self" data-screen-label="JellyBreak hero">
+    <div class="screen">
+      <div class="media"><image-slot id="jb-hero" placeholder="Drop the JellyBreak hero — a demo loop or flagship screen" radius="0" class="wide"></image-slot></div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <header class="cs-head reveal-self">
+    <h1>JellyBreak</h1>
+    <p class="cs-sub ph">[One line — what JellyBreak is, who it's for, and the itch it scratches.]</p>
+    <div class="cs-meta">
+      <div><span class="k">Timeline</span><span class="v ph">[X weeks, Year]</span></div>
+      <div><span class="k">Role</span><span class="v ph">[Your role]</span></div>
+      <div><span class="k">Skills</span><span class="v ph">[UX · UI · Prototyping]</span></div>
+      <div><span class="k">Team</span><span class="v ph">[Solo / X designers]</span></div>
+      <div><span class="k">Tools</span><span class="v ph">[Figma, …]</span></div>
+      <div><span class="k">Platform</span><span class="v ph">[Mobile / Web]</span></div>
+    </div>
+  </header>
+
+  <!-- WHAT I OWNED + IMPACT -->
+  <div class="cs-band reveal-self" data-screen-label="What I owned and impact">
+    <section aria-label="What I owned">
+      <h2><span class="eyebrow">What I owned</span></h2>
+      <ul class="owned-list">
+        <li>I <span class="ph">[owned area one — e.g. defined the product concept and core flows]</span>.</li>
+        <li>I <span class="ph">[owned area two — e.g. designed the end-to-end UI and interaction model]</span>.</li>
+        <li>I <span class="ph">[owned area three — e.g. prototyped and tested with X users]</span>.</li>
+      </ul>
+    </section>
+    <section aria-label="Impact">
+      <h2><span class="eyebrow">Impact</span></h2>
+      <div class="impact-grid">
+        <div class="imp"><span class="n ph">[xx]</span><span class="l ph">[users tested / screens shipped]</span></div>
+        <div class="imp"><span class="n ph">[xx%]</span><span class="l ph">[task success or a metric you moved]</span></div>
+        <div class="imp"><span class="n ph">[x]</span><span class="l ph">[iterations to the final flow]</span></div>
+        <div class="imp"><span class="n ph">[—]</span><span class="l ph">[your metric]</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 01 CONTEXT -->
+  <section class="cs-section reveal-self" data-screen-label="Context">
+    <h2 class="sec-title ph">[One line that frames the space JellyBreak lives in.]</h2>
+    <p class="ph">[2–3 sentences: where the idea came from and why now.]</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="jb-context-1" placeholder="Drop a wide context shot — the landscape, research, or moodboard" radius="0" class="wide"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- 02 PROBLEM -->
+  <section class="cs-section reveal-self" data-screen-label="Problem">
+    <p class="statement ph">[The problem in one sharp sentence.]</p>
+    <ul class="points">
+      <li><span class="ph">[Pain point one.]</span></li>
+      <li><span class="ph">[Pain point two.]</span></li>
+      <li><span class="ph">[Pain point three.]</span></li>
+    </ul>
+  </section>
+
+  <!-- 03 PROCESS — sticky caption + scrolling visuals -->
+  <section class="cs-section reveal-self" data-screen-label="Process">
+    <div class="blk blk-sticky">
+      <div class="sticky-copy">
+        <h3 class="ph">[How I worked]</h3>
+        <p class="ph">[Short note on your approach — research, sketches, testing.]</p>
+        <p class="ph">[One insight that changed the direction.]</p>
+      </div>
+      <div class="scroll-media">
+        <div><div class="slot"><image-slot id="jb-process-1" placeholder="Drop an early sketch or flow" radius="0"></image-slot></div></div>
+        <div><div class="slot"><image-slot id="jb-process-2" placeholder="Drop a wireframe or iteration" radius="0"></image-slot></div></div>
+        <div><div class="slot"><image-slot id="jb-process-3" placeholder="Drop a testing artifact" radius="0"></image-slot></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 KEY DECISIONS — before / after -->
+  <section class="cs-section reveal-self" data-screen-label="Key decisions">
+    <h2 class="sec-title ph">[The decision that mattered most]</h2>
+    <p class="ph">[2–3 sentences on the tradeoff and why you chose this path.]</p>
+    <div class="blk blk-ba">
+      <div class="before">
+        <span class="ba-tag">Before</span>
+        <div class="slot"><image-slot id="jb-ba-before" placeholder="Drop the earlier version" radius="0"></image-slot></div>
+      </div>
+      <div class="after">
+        <span class="ba-tag">After</span>
+        <div class="slot"><image-slot id="jb-ba-after" placeholder="Drop the final version" radius="0"></image-slot></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 FINAL DESIGNS -->
+  <section class="cs-section reveal-self" data-screen-label="Final designs">
+    <h2 class="sec-title">The final flow</h2>
+    <p class="ph">[One short paragraph — let the screens speak.]</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="jb-solution-1" placeholder="Drop the flagship screen or loop" radius="0" class="wide"></image-slot></div>
+    </div>
+    <div class="blk blk-gallery">
+      <div><div class="slot"><image-slot id="jb-solution-2" placeholder="Screen" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="jb-solution-3" placeholder="Screen" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="jb-solution-4" placeholder="Screen" radius="0"></image-slot></div></div>
+    </div>
+  </section>
+
+  <!-- 06 OUTCOMES -->
+  <section class="cs-section reveal-self" data-screen-label="Outcomes">
+    <h2 class="sec-title">Outcomes</h2>
+    <div class="blk blk-stats">
+      <div class="stat"><span class="n ph">[xx]</span><span class="l ph">[metric]</span></div>
+      <div class="stat"><span class="n ph">[xx%]</span><span class="l ph">[metric]</span></div>
+      <div class="stat"><span class="n ph">[x]</span><span class="l ph">[metric]</span></div>
+    </div>
+    <div class="blk-quote">
+      <blockquote class="ph">[A line of user feedback or your sharpest takeaway.]</blockquote>
+      <div class="who ph">[Name, context]</div>
+    </div>
+  </section>
+
+  <!-- 07 REFLECTION -->
+  <section class="cs-section reveal-self" data-screen-label="Reflection">
+    <h2 class="sec-title">Reflection</h2>
+    <p class="ph">[2–3 honest sentences on what you'd do differently next time.]</p>
+  </section>
+
+  <!-- PREV / NEXT -->
+  <nav class="cs-next reveal-self" aria-label="Project navigation">
+    <div class="pn prev"><span class="lbl">Previous</span><a class="pn-title" href="case-hackathon.html">&larr; Hackathon Judging Portal</a></div>
+    <a class="all" href="index.html#work">All projects</a>
+    <div class="pn next"><span class="lbl">Next</span><a class="pn-title" href="case-hatchloom.html">Hatchloom &rarr;</a></div>
+  </nav>
+</main>
+
+<script src="image-slot.js"></script>
+<!-- cursor engine (matches homepage — circle default). Old cloud cursor kept for revert:
+     pixel-cursor.js · cloud-cursor.js -->
+<script src="cursor.js"></script>
+<script src="case-study.js"></script>
+</body>
+</html>

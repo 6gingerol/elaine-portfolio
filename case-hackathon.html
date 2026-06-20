@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hackathon Judging Portal — Elaine Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="case-study.css" />
+<link rel="stylesheet" href="sidebar.css" />
+<style>
+  /* Intro meta: four items in a single full-width row under the title. */
+  .cs-head .cs-meta { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 920px) { .cs-head .cs-meta { grid-template-columns: repeat(2, 1fr); } }
+  /* Highlighted "How might we" problem statement */
+  .statement.hmw {
+    max-width: none;
+    margin: 32px 0 22px;
+    padding-left: clamp(20px, 2.2vw, 28px);
+    border-left: 3px solid var(--ink);
+    font-weight: 600;
+    font-size: clamp(20px, 2.1vw, 27px);
+    line-height: 1.32;
+    color: var(--ink);
+  }
+  .statement.hmw .hmw-lead {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 12px;
+  }
+  /* paragraph that follows a media block needs the same breathing room
+     above it as a media block gets, so it isn't glued to the image */
+  .cs-section .blk + p { margin-top: clamp(26px, 4vh, 40px); }
+  /* scoped-down question in the scope section — quieter than the big HMW */
+  .scope-q {
+    max-width: none;
+    margin: 24px 0 4px;
+    padding-left: clamp(20px, 2.2vw, 28px);
+    border-left: 3px solid var(--silver);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(17px, 1.5vw, 21px);
+    line-height: 1.4;
+    color: var(--graphite);
+  }
+  /* spotlight on the user-flow diagram: dim everything but my section */
+  .flow-figure { position: relative; overflow: hidden; }
+  .flow-spotlight {
+    position: absolute;
+    left: 51.4%; top: 16%; width: 16.6%; height: 63%;
+    border: 2.5px solid var(--ink);
+    border-radius: 9px;
+    box-shadow: 0 0 0 9999px rgba(250,250,249,0.66);
+    pointer-events: none;
+  }
+  .flow-spotlight { overflow: visible; }
+  .flow-spotlight-label {
+    position: absolute; left: 8px; top: 8px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--ink); color: #fff;
+    font-family: var(--font-mono); font-size: clamp(10px, 0.85vw, 12px);
+    font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 5px 9px; border-radius: 5px; white-space: nowrap;
+  }
+  .flow-spotlight-label::before {
+    content: ""; width: 9px; height: 9px; border-radius: 50%;
+    background: #fff; box-shadow: 0 0 0 2px var(--ink) inset;
+  }
+  /* legend under the diagram removed — label inside the box is the signifier */
+</style>
+</head>
+<body>
+
+<!-- mobile topbar (sidebar is always visible on desktop) -->
+<div class="topbar">
+  <a href="index.html" class="brand">Elaine Chen</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span> Menu</button>
+</div>
+<div class="backdrop" id="backdrop"></div>
+
+<!-- persistent sidebar / table of contents -->
+<aside class="spine" id="spine">
+  <div class="spine-id">
+    <a href="index.html" class="brand" style="font-weight: 400; font-size: 21px">Elaine&nbsp;Chen</a>
+    <span class="descriptor" style="font-size: 13px">Product Designer</span>
+  </div>
+
+  <nav class="toc">
+    <a href="index.html#work" class="toc-item"><span>Projects</span></a>
+    <a href="case-nwplus.html" class="toc-item toc-proj"><span>nwPlus</span></a>
+    <a href="case-hackathon.html" class="toc-item toc-proj active"><span>Hackathon Judging Portal</span></a>
+    <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
+    <a href="case-hatchloom.html" class="toc-item toc-proj"><span>Hatchloom</span></a>
+    <a href="index.html#about" class="toc-item"><span>About</span></a>
+    <a href="playground.html" class="toc-item"><span>Playground</span></a>
+  </nav>
+
+  <div class="spine-foot">
+    <div class="spine-links">
+      <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
+      <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
+      <a href="#">Resume ↗</a>
+    </div>
+    <div class="spine-copy"><span>© 2026 Elaine Chen</span><span>Portfolio</span></div>
+  </div>
+</aside>
+
+<main class="cs-wrap">
+  <div class="cs-top">
+    <a class="back" href="index.html#work">&larr; Back</a>
+  </div>
+
+  <!-- HERO — featured product loop -->
+  <div class="cs-hero reveal-self" data-screen-label="Hackathon Judging Portal hero">
+    <div class="screen">
+      <div class="media"><video src="assets/award-admin.mp4" autoplay muted loop playsinline preload="auto" aria-label="Judging portal — admin view of a specific award in motion"></video></div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <header class="cs-head reveal-self">
+    <h1>Hackathon Judging Portal</h1>
+    <p class="cs-sub">A judging system designed to replace spreadsheet-heavy hackathon operations with a connected workflow for assigning judges, reviewing projects, and making award decisions.</p>
+    <div class="cs-meta">
+      <div><span class="k">Timeline</span><span class="v">May 2025 – August 2025</span></div>
+      <div><span class="k">Team</span><span class="v">4 Designers<br>3 Developers</span></div>
+      <div><span class="k">Role</span><span class="v">Product Designer</span></div>
+      <div><span class="k">Skills</span><span class="v">Systems thinking<br>Interaction design<br>Design systems</span></div>
+    </div>
+  </header>
+
+  <!-- WHAT I OWNED + IMPACT -->
+  <div class="cs-band reveal-self" data-screen-label="What I owned and impact">
+    <section aria-label="What I owned">
+      <h2><span class="eyebrow">What I owned</span></h2>
+      <ul class="owned-list">
+        <li>I designed the Statistics Viewer, the part of the portal organizers use to review rankings and finalize awards.</li>
+        <li>I mapped the end-to-end judging flow with the dev and logistics teams, from event setup to final award decisions.</li>
+        <li>I ran the design loop with the team, reviewing each screen with developers and logistics and iterating to ship for HackCamp.</li>
+      </ul>
+    </section>
+    <section aria-label="Impact">
+      <h2><span class="eyebrow">Impact</span></h2>
+      <div class="impact-grid">
+        <div class="imp"><span class="n ph">[xx]</span><span class="l">projects judged through the portal</span></div>
+        <div class="imp"><span class="n ph">[xx%]</span><span class="l">faster to finalize awards</span></div>
+        <div class="imp"><span class="n ph">[xx]</span><span class="l">organizers using it live</span></div>
+        <div class="imp"><span class="n ph">[0]</span><span class="l">spreadsheets at the finish line</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 01 — The problem -->
+  <section class="cs-section reveal-self" data-screen-label="Problem">
+    <h2 class="sec-title">The problem</h2>
+    <p>nwPlus runs hackathons where hundreds of projects move through judging in a short, high-pressure window. Much of that process depended on Google Sheets and manually assigning judges, tracking project reviews and finalizing awards.<br><br><span style="font-size: 15px;">Not only was this inefficient, but it was also extremely disconnected: important decisions were spread across many steps, which made it harder to track progress and handle edge cases.</span></p>
+    <p class="statement hmw"><span class="hmw-lead">So we asked:</span>How might we help organizers turn incomplete, changing judging data into award decisions they can review, trust, and act on quickly?</p>
+    <p>To answer that, we started with requirements. We sat down with the developers and the logistics team, our main stakeholders, to figure out what the system actually had to do and the constraints it needed to work within. Those conversations turned into the end-to-end judging flow below, covering every step from event setup and rubric definition through task assignment, judging, and final award decisions.</p>
+    <div class="blk blk-full">
+      <div class="slot framed flow-figure">
+        <img src="assets/judging-portal-flow.png" alt="End-to-end judging portal flow — from selecting an event and defining the rubric through task assignment, judging, statistics, and award decisions" style="display:block; width:100%; height:auto; background:#fff;" />
+        <div class="flow-spotlight" aria-hidden="true"><span class="flow-spotlight-label">The part I designed</span></div>
+      </div>
+    </div>
+    <p>Once the flow was agreed on, we moved into design. We reviewed screens with the dev and logistics teams as we went, and kept iterating as new constraints and edge cases came up.</p>
+  </section>
+
+  <!-- 02 — Scope -->
+  <section class="cs-section reveal-self" data-screen-label="Scope">
+    <h2 class="sec-title"><span style="color: #000000;">The scope</span></h2>
+    <p>I focused on the Statistics Viewer. It's the part organizers turn to once judging is underway, where they review rankings, dig into anything that looks off, and lock in the final award decisions. My job was to make that last stretch feel clear and trustworthy, even when the data underneath was still messy or coming in.</p>
+    <p>That meant designing for a moving target. Scores were still landing while organizers were trying to make calls, so the view had to stay readable whether it was half full or complete, and it had to make the state of the data obvious at a glance.</p>
+    <p class="scope-q"><span class="hmw-lead">The question for my piece</span>How do you help an organizer make a confident award call when the scores are still incomplete and shifting under them?</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="hackathon-pain-1" placeholder="Drop a shot of where the Statistics Viewer sits in the portal" radius="0" class="wide"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- 03 — Pain points -->
+  <section class="cs-section reveal-self" data-screen-label="Pain points">
+    <h2 class="sec-title">Where it kept breaking</h2>
+    <p>Before the portal, finalizing awards on top of spreadsheets created the same problems at every event:</p>
+    <ul class="points">
+      <li>Rankings were always a little out of date. Scores came in throughout judging, so any list organizers looked at could change minutes later.</li>
+      <li>Exceptions hid in the noise. Projects with missing scores, uneven judge counts, or flags were buried in rows, with nothing to pull them to the surface.</li>
+      <li>There was no single source of truth. Scores, judge assignments, and awards lived in separate sheets, so picking a winner meant cross-checking by hand.</li>
+      <li>Decisions were hard to defend. Organizers needed to explain why a project won, but the numbers didn't make that reasoning easy to see.</li>
+    </ul>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="hackathon-constraints-1" placeholder="Drop the old spreadsheet way, marked up to show the friction" radius="0" class="wide"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- 04 — Process -->
+  <section class="cs-section reveal-self" data-screen-label="Process">
+    <h2 class="sec-title">From requirements to flows</h2>
+    <p>I started from the requirements we gathered with the dev and logistics teams, then mapped the organizer's path through judging and turned it into screens. From there it was a tight loop: design a view, walk through it with the devs to check it was feasible and with logistics to check it matched how events actually run, then iterate.</p>
+    <p>The biggest shift came from watching how organizers actually use this data. They don't read a table top to bottom, they scan for what's wrong. That pushed the design away from "show everything" and toward surfacing the projects that need attention first, then letting organizers drill in from there.</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="hackathon-process-1" placeholder="Drop early sketches, wireframes, or iteration shots" radius="0" class="wide"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- 05 — Key decision -->
+  <section class="cs-section reveal-self" data-screen-label="Key decisions">
+    <h2 class="sec-title">One award at a time</h2>
+    <p>The hardest call was how to structure the view. A single master leaderboard felt powerful, but it forced organizers to hold every award, category, and edge case in their head at once. Instead, I organized the Statistics Viewer around individual awards: each one opens into its own ranked list, with exceptions and missing data flagged in context.</p>
+    <p>It's a little more clicking, but it matches how decisions actually get made, one award at a time, and it keeps each call focused and easy to defend. It also kept the data honest, since organizers always saw the full picture for the award in front of them instead of a flattened summary.</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="hackathon-ba-after" placeholder="Drop the per-award view, before vs. after if you have it" radius="0" class="wide"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- 06 — Final designs -->
+  <section class="cs-section reveal-self" data-screen-label="Final designs">
+    <h2 class="sec-title">The shipped portal</h2>
+    <p>The result is a Statistics Viewer that lets organizers move through awards one by one, see ranked projects with their scores, catch anything that needs a second look, and finalize decisions in the same place. No exporting, no cross-referencing sheets.</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><video src="assets/award-admin.mp4" muted loop playsinline preload="metadata" data-play-on-visible aria-label="Admin view of managing a specific award"></video></div>
+    </div>
+  </section>
+
+  <!-- 07 — Outcomes -->
+  <section class="cs-section reveal-self" data-screen-label="Outcomes">
+    <h2 class="sec-title">Outcomes</h2>
+    <p>The portal shipped and ran judging at HackCamp, where organizers finalized awards inside the tool instead of stitching spreadsheets together at the end of the night.</p>
+    <div class="blk blk-stats">
+      <div class="stat"><span class="n ph">[xx]</span><span class="l">projects judged through the portal</span></div>
+      <div class="stat"><span class="n ph">[xx%]</span><span class="l">faster to finalize awards vs. spreadsheets</span></div>
+      <div class="stat"><span class="n ph">[xx]</span><span class="l">organizers using it live, no training</span></div>
+    </div>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="hackathon-outcomes-1" placeholder="Drop an event-day photo or the final dashboard in use" radius="0" class="wide"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- 08 — Reflection -->
+  <section class="cs-section reveal-self" data-screen-label="Reflection">
+    <h2 class="sec-title">Reflection</h2>
+    <p>Designing for data that's incomplete and constantly changing taught me to design for the messy middle, not just the finished state. A view that looks great with perfect data falls apart the moment a score is missing, so the real work was making "not done yet" feel just as clear as "done."</p>
+    <p>Building this close to the dev and logistics teams also changed how I work. Reviewing each screen with them as I went meant fewer surprises and a design that held up on event day. If I did it again, I'd test earlier with organizers under real time pressure, since that's when the edge cases really show up.</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="hackathon-reflection-1" placeholder="Drop a closing visual, a team photo or final screen" radius="0" class="wide"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- PREV / NEXT -->
+  <nav class="cs-next reveal-self" aria-label="Project navigation">
+    <div class="pn prev"><span class="lbl">Previous</span><a class="pn-title" href="case-nwplus.html">&larr; nwPlus</a></div>
+    <a class="all" href="index.html#work">All projects</a>
+    <div class="pn next"><span class="lbl">Next</span><a class="pn-title" href="case-jellybreak.html">JellyBreak &rarr;</a></div>
+  </nav>
+</main>
+
+<script src="image-slot.js"></script>
+<!-- cursor engine (matches homepage — circle default). Old cloud cursor kept for revert:
+     pixel-cursor.js · cloud-cursor.js -->
+<script src="cursor.js"></script>
+<script src="case-study.js"></script>
+</body>
+</html>
+
+<style id="__om-edit-overrides">
+:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-size: 22px !important }
+:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-size: 16px !important }
+:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-weight: 300 !important }
+:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-weight: 600 !important }
+:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-weight: 500 !important }
+</style>

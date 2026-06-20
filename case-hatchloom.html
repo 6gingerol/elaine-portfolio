@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<script>
+  /* password gate — lock before first paint unless already unlocked this session */
+  try {
+    if (sessionStorage.getItem('hatchloom-unlocked') !== '1') document.documentElement.classList.add('locked');
+  } catch (e) { document.documentElement.classList.add('locked'); }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hatchloom — Elaine Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="case-study.css" />
+<link rel="stylesheet" href="sidebar.css" />
+</head>
+<body>
+
+<!-- mobile topbar (sidebar is always visible on desktop) -->
+<div class="topbar">
+  <a href="index.html" class="brand">Elaine Chen</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span> Menu</button>
+</div>
+<div class="backdrop" id="backdrop"></div>
+
+<!-- persistent sidebar / table of contents -->
+<aside class="spine" id="spine">
+  <div class="spine-id">
+    <a href="index.html" class="brand" style="font-weight: 400; font-size: 21px">Elaine&nbsp;Chen</a>
+    <span class="descriptor" style="font-size: 13px">Product Designer</span>
+  </div>
+
+  <nav class="toc">
+    <a href="index.html#work" class="toc-item"><span>Projects</span></a>
+    <a href="case-nwplus.html" class="toc-item toc-proj"><span>nwPlus</span></a>
+    <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
+    <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
+    <a href="case-hatchloom.html" class="toc-item toc-proj active"><span>Hatchloom</span></a>
+    <a href="index.html#about" class="toc-item"><span>About</span></a>
+    <a href="playground.html" class="toc-item"><span>Playground</span></a>
+  </nav>
+
+  <div class="spine-foot">
+    <div class="spine-links">
+      <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
+      <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
+      <a href="#">Resume ↗</a>
+    </div>
+    <div class="spine-copy"><span>© 2026 Elaine Chen</span><span>Portfolio</span></div>
+  </div>
+</aside>
+
+<!-- PASSWORD GATE -->
+<div class="cs-gate" id="csGate" data-screen-label="Password gate">
+  <div class="gate-card">
+    <span class="eyebrow">Protected case study</span>
+    <h1>Hatchloom</h1>
+    <p>This freelance work is shared on request. Enter the password to view the case study.</p>
+    <form class="gate-form" id="gateForm" autocomplete="off">
+      <input type="password" id="gatePw" placeholder="Password" aria-label="Password" autocomplete="current-password" />
+      <button type="submit">Unlock</button>
+    </form>
+    <p class="gate-err" id="gateErr" role="alert">That's not it — double-check the password and try again.</p>
+    <a class="gate-back" href="index.html#work">&larr; Back to projects</a>
+  </div>
+</div>
+
+<main class="cs-wrap">
+  <div class="cs-top">
+    <a class="back" href="index.html#work">&larr; Back</a>
+  </div>
+
+  <!-- UNDER CONSTRUCTION -->
+  <div class="uc-banner reveal-self" data-screen-label="Under construction notice">
+    <span class="uc-dot" aria-hidden="true"></span>
+    <p style="margin: 0"><strong>This case study is currently under construction.</strong><span class="sub">A fuller walkthrough is in progress.</span></p>
+  </div>
+
+  <!-- HERO -->
+  <div class="cs-hero reveal-self" data-screen-label="Hatchloom hero">
+    <div class="screen">
+      <div class="media"><image-slot id="hatchloom-hero" placeholder="Drop the Hatchloom hero — a product loop or key screen" radius="0"></image-slot></div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <header class="cs-head reveal-self">
+    <h1>Hatchloom</h1>
+    <p class="cs-sub">Making design feedback feel like a conversation, not a thread no one wants to open — a focused space for async design review.</p>
+    <div class="cs-meta">
+      <div><span class="k">Timeline</span><span class="v ph">[X weeks, Year]</span></div>
+      <div><span class="k">Role</span><span class="v ph">[Your role]</span></div>
+      <div><span class="k">Skills</span><span class="v ph">[UX · Prototyping · IA]</span></div>
+      <div><span class="k">Team</span><span class="v ph">[X designers · X devs]</span></div>
+      <div><span class="k">Tools</span><span class="v ph">[Figma, …]</span></div>
+      <div><span class="k">Platform</span><span class="v ph">[Web]</span></div>
+    </div>
+  </header>
+
+  <!-- WHAT I OWNED + IMPACT -->
+  <div class="cs-band reveal-self" data-screen-label="What I owned and impact">
+    <section aria-label="What I owned">
+      <h2><span class="eyebrow">What I owned</span></h2>
+      <ul class="owned-list">
+        <li>I <span class="ph">[owned area one — e.g. designed the review flow from share to resolution]</span>.</li>
+        <li>I <span class="ph">[owned area two — e.g. shaped the commenting and threading model]</span>.</li>
+        <li>I <span class="ph">[owned area three — e.g. prototyped interactions and validated with X designers]</span>.</li>
+      </ul>
+    </section>
+    <section aria-label="Impact">
+      <h2><span class="eyebrow">Impact</span></h2>
+      <div class="impact-grid">
+        <div class="imp"><span class="n ph">[xx]</span><span class="l ph">[reviewers in early testing]</span></div>
+        <div class="imp"><span class="n ph">[xx%]</span><span class="l ph">[faster feedback loops — or your metric]</span></div>
+        <div class="imp"><span class="n ph">[x]</span><span class="l ph">[major iterations to ship]</span></div>
+        <div class="imp"><span class="n ph">[—]</span><span class="l ph">[your metric]</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 01 CONTEXT -->
+  <section class="cs-section reveal-self" data-screen-label="Context">
+    <h2 class="sec-title ph">[One line that frames async review and why it's broken.]</h2>
+    <p class="ph">[2–3 sentences: the team, the origin of the project, the opportunity.]</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="hatchloom-context-1" placeholder="Drop a wide context shot — research, journey map, or landscape" radius="0" class="wide"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- 02 PROBLEM -->
+  <section class="cs-section reveal-self" data-screen-label="Problem">
+    <p class="statement ph">[The problem in one sharp sentence — what makes feedback threads unbearable.]</p>
+    <ul class="points">
+      <li><span class="ph">[Pain point one.]</span></li>
+      <li><span class="ph">[Pain point two.]</span></li>
+      <li><span class="ph">[Pain point three.]</span></li>
+    </ul>
+  </section>
+
+  <!-- 03 CONSTRAINTS -->
+  <section class="cs-section reveal-self" data-screen-label="Constraints">
+    <h2 class="sec-title">Constraints</h2>
+    <ul class="points">
+      <li><span class="ph">[Constraint — e.g. freelance scope: a fixed budget of hours each week.]</span></li>
+      <li><span class="ph">[Constraint — e.g. an existing codebase that limited interaction patterns.]</span></li>
+      <li><span class="ph">[Constraint — e.g. async-first client, so decisions had to survive without meetings.]</span></li>
+    </ul>
+  </section>
+
+  <!-- 04 PROCESS — sticky caption + scrolling visuals -->
+  <section class="cs-section reveal-self" data-screen-label="Process">
+    <div class="blk blk-sticky">
+      <div class="sticky-copy">
+        <h3 class="ph">[How I worked]</h3>
+        <p class="ph">[Short note on your approach.]</p>
+        <p class="ph">[One insight that changed the direction.]</p>
+      </div>
+      <div class="scroll-media">
+        <div><div class="slot"><image-slot id="hatchloom-process-1" placeholder="Drop an early sketch or flow" radius="0"></image-slot></div></div>
+        <div><div class="slot"><image-slot id="hatchloom-process-2" placeholder="Drop a wireframe or iteration" radius="0"></image-slot></div></div>
+        <div><div class="slot"><image-slot id="hatchloom-process-3" placeholder="Drop a testing artifact" radius="0"></image-slot></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 KEY DECISIONS — side-by-side -->
+  <section class="cs-section reveal-self" data-screen-label="Key decisions">
+    <h2 class="sec-title ph">[The decision that mattered most]</h2>
+    <p class="ph">[2–3 sentences on the tradeoff and why you landed where you did.]</p>
+    <div class="blk blk-compare">
+      <div><div class="slot"><image-slot id="hatchloom-decision-1" placeholder="Option / detail A" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="hatchloom-decision-2" placeholder="Option / detail B" radius="0"></image-slot></div></div>
+    </div>
+  </section>
+
+  <!-- 06 FINAL DESIGNS -->
+  <section class="cs-section reveal-self" data-screen-label="Final designs">
+    <h2 class="sec-title">The shipped experience</h2>
+    <p class="ph">[One short paragraph — let the visuals carry it.]</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="hatchloom-solution-1" placeholder="Drop the flagship screen or loop" radius="0" class="wide"></image-slot></div>
+    </div>
+    <div class="blk blk-compare">
+      <div><div class="slot"><image-slot id="hatchloom-solution-2" placeholder="Detail shot" radius="0"></image-slot></div></div>
+      <div><div class="slot"><image-slot id="hatchloom-solution-3" placeholder="Detail shot" radius="0"></image-slot></div></div>
+    </div>
+  </section>
+
+  <!-- 07 IMPACT -->
+  <section class="cs-section reveal-self" data-screen-label="Impact">
+    <h2 class="sec-title">Impact</h2>
+    <div class="blk blk-stats">
+      <div class="stat"><span class="n ph">[xx]</span><span class="l ph">[metric]</span></div>
+      <div class="stat"><span class="n ph">[xx%]</span><span class="l ph">[metric]</span></div>
+      <div class="stat"><span class="n ph">[x]</span><span class="l ph">[metric]</span></div>
+    </div>
+    <div class="blk-quote">
+      <blockquote class="ph">[A line of feedback from a reviewer or teammate.]</blockquote>
+      <div class="who ph">[Name, role]</div>
+    </div>
+  </section>
+
+  <!-- 08 REFLECTION -->
+  <section class="cs-section reveal-self" data-screen-label="Reflection">
+    <h2 class="sec-title">Reflection</h2>
+    <p class="ph">[2–3 honest sentences on what this project taught you.]</p>
+  </section>
+
+  <!-- PREV / NEXT -->
+  <nav class="cs-next reveal-self" aria-label="Project navigation">
+    <div class="pn prev"><span class="lbl">Previous</span><a class="pn-title" href="case-jellybreak.html">&larr; JellyBreak</a></div>
+    <a class="all" href="index.html#work">All projects</a>
+    <div class="pn next"><span class="lbl">Next</span><a class="pn-title" href="case-nwplus.html">nwPlus &rarr;</a></div>
+  </nav>
+</main>
+
+<script src="image-slot.js"></script>
+<!-- cursor engine (matches homepage — circle default). Old cloud cursor kept for revert:
+     pixel-cursor.js · cloud-cursor.js -->
+<script src="cursor.js"></script>
+<script src="case-study.js"></script>
+<script>
+  /* static password gate — SHA-256 check, no backend.
+     Unlock persists for the browser session only. */
+  (function () {
+    var HASH = 'a1fe8f79a121256842e7aaef2ab1e339a553a74fe05834ca081259cf66ac5fb5';
+    var form = document.getElementById('gateForm');
+    var input = document.getElementById('gatePw');
+    var err = document.getElementById('gateErr');
+    if (!form) return;
+
+    function unlock() {
+      try { sessionStorage.setItem('hatchloom-unlocked', '1'); } catch (e) {}
+      document.documentElement.classList.remove('locked');
+      window.scrollTo(0, 0);
+      window.dispatchEvent(new Event('scroll')); // let reveals re-check
+    }
+    function checkPassword(pw) {
+      if (window.crypto && crypto.subtle) {
+        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw)).then(function (d) {
+          var hex = Array.prototype.map.call(new Uint8Array(d), function (b) {
+            return ('0' + b.toString(16)).slice(-2);
+          }).join('');
+          return hex === HASH;
+        });
+      }
+      return Promise.resolve(pw === atob('aGVsbG93b3JsZDEyMw=='));
+    }
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      checkPassword(input.value).then(function (ok) {
+        if (ok) { unlock(); }
+        else { err.classList.add('show'); input.select(); }
+      });
+    });
+    input.addEventListener('input', function () { err.classList.remove('show'); });
+  })();
+</script>
+</body>
+</html>
