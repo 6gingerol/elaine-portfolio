@@ -80,6 +80,40 @@
     display: flex; gap: 18px;
   }
   @media (max-width: 1040px) { .pg-stage { margin-left: 0; } .pg-hint { display: none; } }
+
+  /* locked / in-progress state */
+  .pg-locked { display: grid; place-items: center; text-align: center; padding: 40px; position: relative; overflow: hidden; }
+  .pg-lock-inner { position: relative; z-index: 2; max-width: 560px; display: flex; flex-direction: column; align-items: center; }
+  .lock-eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--silver);
+  }
+  .lock-eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--steel); }
+  .lock-title {
+    font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
+    font-weight: 400; font-size: clamp(38px, 5vw, 62px); line-height: 1;
+    letter-spacing: 0.01em; color: var(--ink); margin: 0; white-space: nowrap;
+  }
+  .lock-sub { font-family: 'Space Grotesk', var(--font-display); font-weight: 400; font-size: 16px; line-height: 1.5; color: var(--steel); margin: 16px 0 0; max-width: 40ch; text-wrap: pretty; }
+  .lock-title .dots { display: inline-flex; }
+  .lock-title .dots span { display: inline-block; animation: dotBob 1.4s var(--ease) infinite; }
+  .lock-title .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .lock-title .dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dotBob {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-0.09em); }
+  }
+  @media (prefers-reduced-motion: reduce) { .lock-title .dots span { animation: none; } }
+  .lock-copy { font-size: 16px; line-height: 1.6; color: var(--graphite); margin: 20px 0 0; max-width: 42ch; text-wrap: pretty; }
+  .lock-back {
+    margin-top: 30px; font-family: 'Space Grotesk', var(--font-display); font-weight: 500; font-size: 16px;
+    letter-spacing: -0.01em; color: var(--steel);
+    display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s var(--ease);
+  }
+  .lock-back .arr { display: inline-block; transition: transform 0.3s var(--ease); }
+  .lock-back:hover { color: var(--ink); }
+  .lock-back:hover .arr { transform: translateX(-5px); }
 </style>
 </head>
 <body class="pg">
@@ -92,14 +126,15 @@
 
 <aside class="spine" id="spine">
   <div class="spine-id">
-    <a href="index.html" class="brand">Elaine&nbsp;Chen</a>
-    <span class="descriptor">Product &amp; UX Designer</span>
+    <a href="index.html#work" class="brand" style="font-weight: 400; font-size: 21px">Elaine&nbsp;Chen</a>
+    <span class="descriptor" style="font-size: 13px">Product Designer</span>
   </div>
   <nav class="toc">
     <a href="index.html#work" class="toc-item"><span>Projects</span></a>
-    <a href="index.html#cadence" class="toc-item toc-proj"><span>Cadence</span></a>
-    <a href="index.html#palette" class="toc-item toc-proj"><span>Palette</span></a>
-    <a href="index.html#loop" class="toc-item toc-proj"><span>Loop</span></a>
+    <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="toc-item toc-proj"><span>nwPlus</span></a>
+    <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
+    <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
+    <a href="case-hatchloom.html" class="toc-item toc-proj"><span>Hatchloom</span></a>
     <a href="index.html#about" class="toc-item"><span>About</span></a>
     <a href="playground.html" class="toc-item active"><span>Playground</span></a>
   </nav>
@@ -107,117 +142,31 @@
     <div class="spine-links">
       <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
       <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
-      <a href="#">Résumé <span class="ar">↗</span></a>
+      <a href="https://drive.google.com/file/d/1vxYn7xOy-5q4O5IvfGfGOulfoWx7YWI0/view?usp=sharing" target="_blank" rel="noopener">Resume <span class="ar">↗</span></a>
     </div>
-    <div class="spine-copy"><span>© 2026 Elaine Chen</span><span>Playground</span></div>
   </div>
 </aside>
 
-<main class="stage pg-stage">
-  <div class="pg-hud">
-    <span class="tag-top">Playground</span>
-    <p>A canvas for experiments — pieces land here over time.</p>
-  </div>
-
-  <div class="pg-viewport" id="vp">
-    <div class="pg-canvas" id="canvas">
-
-      <div class="pg-node center" style="left:-280px; top:-160px; width:560px;">
-        <span class="mono eyebrow">Work in progress</span>
-        <h1>Playground</h1>
-        <p>An infinite canvas for design experiments — micro-interactions, generative sketches, and prototypes. Drag to roam, scroll to zoom.</p>
-      </div>
-
-      <div class="pg-node pg-slot" style="left:400px; top:-300px; width:300px; height:220px;">
-        <span class="lab">Slot 01</span>
-        <div><div class="plus">+</div><div class="cap">Interaction experiment</div></div>
-      </div>
-
-      <div class="pg-node pg-slot" style="left:440px; top:60px; width:280px; height:240px;">
-        <span class="lab">Slot 02</span>
-        <div><div class="plus">+</div><div class="cap">Generative / motion sketch</div></div>
-      </div>
-
-      <div class="pg-node pg-slot" style="left:-620px; top:-40px; width:300px; height:240px;">
-        <span class="lab">Slot 03</span>
-        <div><div class="plus">+</div><div class="cap">Component or prototype</div></div>
-      </div>
-
-      <div class="pg-node pg-slot" style="left:-280px; top:240px; width:560px; height:170px;">
-        <span class="lab">Slot 04</span>
-        <div><div class="plus">+</div><div class="cap">Wide embed — a tool, toy, or live demo</div></div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="pg-hint"><span>Drag to pan</span><span>Scroll to zoom</span></div>
-
-  <div class="pg-controls">
-    <button id="zoomOut" aria-label="Zoom out">−</button>
-    <span class="pct" id="pct">100%</span>
-    <button id="zoomIn" aria-label="Zoom in">+</button>
-    <span class="sep"></span>
-    <button class="reset" id="reset" aria-label="Reset view">Reset</button>
+<main class="stage pg-stage pg-locked">
+  <div class="pg-lock-inner">
+    <h1 class="lock-title">Under construction<span class="dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span></h1>
+    <p class="lock-sub">Hi, I’m glad you wandered in! I’m tinkering with some experiments. Check back soon ✦</p>
+    <a class="lock-back" href="index.html#work"><span class="arr">&larr;</span> Back to work</a>
   </div>
 </main>
 
 <script>
-  const vp = document.getElementById('vp');
-  const canvas = document.getElementById('canvas');
-  const pct = document.getElementById('pct');
-  let scale = 1, tx = 0, ty = 0;
-  const MIN = 0.4, MAX = 2.4;
-
-  function apply() {
-    canvas.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
-    vp.style.backgroundSize = (28 * scale) + 'px ' + (28 * scale) + 'px';
-    vp.style.backgroundPosition = tx + 'px ' + ty + 'px';
-    pct.textContent = Math.round(scale * 100) + '%';
-  }
-  function center() {
-    scale = 1;
-    tx = vp.clientWidth / 2;
-    ty = vp.clientHeight / 2;
-    apply();
-  }
-  function zoomTo(ns, cx, cy) {
-    ns = Math.min(MAX, Math.max(MIN, ns));
-    tx = cx - (cx - tx) * (ns / scale);
-    ty = cy - (cy - ty) * (ns / scale);
-    scale = ns; apply();
-  }
-
-  // drag to pan
-  let dragging = false, lx = 0, ly = 0;
-  vp.addEventListener('pointerdown', (e) => { dragging = true; lx = e.clientX; ly = e.clientY; vp.classList.add('grabbing'); vp.setPointerCapture(e.pointerId); });
-  vp.addEventListener('pointermove', (e) => { if (!dragging) return; tx += e.clientX - lx; ty += e.clientY - ly; lx = e.clientX; ly = e.clientY; apply(); });
-  function endDrag() { dragging = false; vp.classList.remove('grabbing'); }
-  vp.addEventListener('pointerup', endDrag);
-  vp.addEventListener('pointercancel', endDrag);
-  vp.addEventListener('pointerleave', endDrag);
-
-  // scroll / pinch to zoom toward cursor
-  vp.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    const r = vp.getBoundingClientRect();
-    const factor = Math.exp(-e.deltaY * 0.0028);
-    zoomTo(scale * factor, e.clientX - r.left, e.clientY - r.top);
-  }, { passive: false });
-
-  document.getElementById('zoomIn').addEventListener('click', () => zoomTo(scale * 1.5, vp.clientWidth / 2, vp.clientHeight / 2));
-  document.getElementById('zoomOut').addEventListener('click', () => zoomTo(scale / 1.5, vp.clientWidth / 2, vp.clientHeight / 2));
-  document.getElementById('reset').addEventListener('click', center);
-  window.addEventListener('resize', () => { /* keep current offsets */ apply(); });
-
   // mobile drawer
   const body = document.body;
   document.getElementById('menuBtn').addEventListener('click', () => body.classList.toggle('nav-open'));
   document.getElementById('backdrop').addEventListener('click', () => body.classList.remove('nav-open'));
-
-  center();
 </script>
-<!-- star cursor kept for revert: <script src="pixel-cursor.js"></script> -->
-<script src="cloud-cursor.js"></script>
+<!-- cursor engine (circle default — matches the rest of the site). Old cloud/star cursors kept for revert:
+     pixel-cursor.js · cloud-cursor.js -->
+<script src="cursor.js"></script>
+<script>
+  // playground uses a lighter grey circle
+  if (window.__cursor) window.__cursor.set({ color: '#aeaeb2' });
+</script>
 </body>
 </html>

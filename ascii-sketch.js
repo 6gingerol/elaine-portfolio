@@ -33,7 +33,7 @@
       if (!measure()) { p.noLoop(); return; }
       var c = p.createCanvas(w, h);
       c.parent(host);
-      p.textFont("JetBrains Mono");
+      p.textFont("Pixelify Sans");
       p.textSize(10.5);
       p.textAlign(p.LEFT, p.TOP);
       p.noStroke();
@@ -81,18 +81,15 @@
     function onMove(e) {
       mx = e.clientX - rectL;
       my = e.clientY - rectT;
-      // don't light up the field beneath text — headings, project copy, nav
-      var t = e.target;
-      var overText = t instanceof Element &&
-        t.closest(".p-body, .p-head, .opening-head, h1, h2, h3, .about-body, .values, .info, .spine, .toc, .contact");
-      if (!overText) hoverT = 1;
+      // cursor reveal disabled on the main background — the field stays a
+      // calm ambient grain here; the interactive reveal lives in the footer.
       if (reduced) p.redraw();
     }
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("resize", function () {
       if (!measure()) return;
       p.resizeCanvas(w, h);
-      p.textFont("JetBrains Mono"); p.textSize(10.5); p.textAlign(p.LEFT, p.TOP);
+      p.textFont("Pixelify Sans"); p.textSize(10.5); p.textAlign(p.LEFT, p.TOP);
     });
     window.addEventListener("scroll", function () {
       var r = host.getBoundingClientRect(); rectL = r.left; rectT = r.top;

@@ -3,12 +3,14 @@
    Black & white · editorial · quiet
    ============================================================ */
 
-@font-face {
-  font-family: 'PP Mondwest';
-  src: url('assets/fonts/PPMondwest-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+/* Cross-document view transitions (MPA navigation cross-fade) */
+@view-transition { navigation: auto; }
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.32s; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
 }
 
 :root {
@@ -25,7 +27,8 @@
 
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-sans:    "Schibsted Grotesk", system-ui, sans-serif;
-  /* labels share the body family — site uses 2 fonts total */
+  /* 3 fonts total: pixel (PP Mondwest/Pixelify) for hero titles,
+     Space Grotesk for headings, Schibsted Grotesk for body + labels */
   --font-mono:    "Schibsted Grotesk", system-ui, sans-serif;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -302,7 +305,7 @@ html.js .stage > .section.view-active { display: block; }
   margin-top: clamp(80px, 14vh, 170px);
   /* full-bleed across the stage content box (cancel --pad) */
   margin-inline: calc(var(--pad) * -1);
-  min-height: clamp(300px, 42vh, 420px);
+  min-height: clamp(210px, 30vh, 300px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -321,9 +324,9 @@ html.js .stage > .section.view-active { display: block; }
 .home-foot .rain-scene {
   position: absolute; inset: 0; z-index: 1;
   pointer-events: none;
-  /* fade the field in from the top edge so it never crowds the sign-off */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  /* keep the dense top of the field, let it dissolve toward the sign-off */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);
 }
 .home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; }
 .home-foot-inner {
@@ -356,7 +359,7 @@ html.js .stage > .section.view-active { display: block; }
   .home-foot { opacity: 1; transform: none; transition: none; }
 }
 @media (max-width: 760px) {
-  .home-foot { margin-top: clamp(60px, 11vh, 110px); min-height: clamp(260px, 40vh, 360px); }
+  .home-foot { margin-top: clamp(60px, 11vh, 110px); min-height: clamp(190px, 28vh, 240px); }
 }
 
 /* ============================================================
@@ -367,11 +370,11 @@ html.js .stage > .section.view-active { display: block; }
    neither the text↔photo gap nor the right margin ever balloons */
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(0, 62ch) minmax(280px, 1fr);
+  grid-template-columns: minmax(0, 56ch) minmax(360px, 1fr);
   gap: clamp(40px, 4vw, 72px);
   align-items: center;
 }
-.about-grid .portrait { width: 100%; max-width: 312px; justify-self: center; }
+.about-grid .portrait { width: 100%; max-width: 460px; justify-self: center; }
 .about-body p.about-lead, .about-lead {
   font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
   font-weight: 300; letter-spacing: 0;
@@ -383,6 +386,7 @@ html.js .stage > .section.view-active { display: block; }
 .about-body p { font-size: 15.5px; color: var(--graphite); margin: 0 0 16px; max-width: 56ch; }
 .portrait { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 .portrait image-slot { width: 100%; height: 100%; display: block; aspect-ratio: 5/7; }
+.portrait-img { width: 100%; height: 100%; display: block; aspect-ratio: 4/5; object-fit: cover; object-position: 43% 30%; }
 
 .values { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px,2.4vw,44px); margin-top: clamp(40px,6vh,72px); }
 @media (max-width: 760px) { .values { grid-template-columns: 1fr; gap: 0; } }
@@ -436,7 +440,7 @@ html.js .stage > .section.view-active { display: block; }
 .xp-desc { font-size: 13.5px; color: var(--steel); margin: 5px 0 0; max-width: 48ch; }
 @media (max-width: 760px) {
   .about-grid { grid-template-columns: 1fr; gap: 26px; }
-  .about-grid .portrait { order: -1; max-width: 260px; }
+  .about-grid .portrait { order: -1; max-width: 320px; }
 }
 
 /* ============================================================

@@ -49,30 +49,26 @@
     line-height: 1.4;
     color: var(--graphite);
   }
+  .scope-q .hmw-lead {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 12px;
+  }
   /* spotlight on the user-flow diagram: dim everything but my section */
   .flow-figure { position: relative; overflow: hidden; }
   .flow-spotlight {
     position: absolute;
-    left: 51.4%; top: 16%; width: 16.6%; height: 63%;
+    left: 51.4%; top: 20%; width: 16.6%; height: 60%;
     border: 2.5px solid var(--ink);
     border-radius: 9px;
     box-shadow: 0 0 0 9999px rgba(250,250,249,0.66);
     pointer-events: none;
   }
-  .flow-spotlight { overflow: visible; }
-  .flow-spotlight-label {
-    position: absolute; left: 8px; top: 8px;
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--ink); color: #fff;
-    font-family: var(--font-mono); font-size: clamp(10px, 0.85vw, 12px);
-    font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 5px 9px; border-radius: 5px; white-space: nowrap;
-  }
-  .flow-spotlight-label::before {
-    content: ""; width: 9px; height: 9px; border-radius: 50%;
-    background: #fff; box-shadow: 0 0 0 2px var(--ink) inset;
-  }
-  /* legend under the diagram removed — label inside the box is the signifier */
 </style>
 </head>
 <body>
@@ -93,7 +89,7 @@
 
   <nav class="toc">
     <a href="index.html#work" class="toc-item"><span>Projects</span></a>
-    <a href="case-nwplus.html" class="toc-item toc-proj"><span>nwPlus</span></a>
+    <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="toc-item toc-proj"><span>nwPlus</span></a>
     <a href="case-hackathon.html" class="toc-item toc-proj active"><span>Hackathon Judging Portal</span></a>
     <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
     <a href="case-hatchloom.html" class="toc-item toc-proj"><span>Hatchloom</span></a>
@@ -105,9 +101,8 @@
     <div class="spine-links">
       <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
       <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
-      <a href="#">Resume ↗</a>
+      <a href="https://drive.google.com/file/d/1vxYn7xOy-5q4O5IvfGfGOulfoWx7YWI0/view?usp=sharing" target="_blank" rel="noopener">Resume <span class="ar">↗</span></a>
     </div>
-    <div class="spine-copy"><span>© 2026 Elaine Chen</span><span>Portfolio</span></div>
   </div>
 </aside>
 
@@ -135,27 +130,6 @@
     </div>
   </header>
 
-  <!-- WHAT I OWNED + IMPACT -->
-  <div class="cs-band reveal-self" data-screen-label="What I owned and impact">
-    <section aria-label="What I owned">
-      <h2><span class="eyebrow">What I owned</span></h2>
-      <ul class="owned-list">
-        <li>I designed the Statistics Viewer, the part of the portal organizers use to review rankings and finalize awards.</li>
-        <li>I mapped the end-to-end judging flow with the dev and logistics teams, from event setup to final award decisions.</li>
-        <li>I ran the design loop with the team, reviewing each screen with developers and logistics and iterating to ship for HackCamp.</li>
-      </ul>
-    </section>
-    <section aria-label="Impact">
-      <h2><span class="eyebrow">Impact</span></h2>
-      <div class="impact-grid">
-        <div class="imp"><span class="n ph">[xx]</span><span class="l">projects judged through the portal</span></div>
-        <div class="imp"><span class="n ph">[xx%]</span><span class="l">faster to finalize awards</span></div>
-        <div class="imp"><span class="n ph">[xx]</span><span class="l">organizers using it live</span></div>
-        <div class="imp"><span class="n ph">[0]</span><span class="l">spreadsheets at the finish line</span></div>
-      </div>
-    </section>
-  </div>
-
   <!-- 01 — The problem -->
   <section class="cs-section reveal-self" data-screen-label="Problem">
     <h2 class="sec-title">The problem</h2>
@@ -165,7 +139,7 @@
     <div class="blk blk-full">
       <div class="slot framed flow-figure">
         <img src="assets/judging-portal-flow.png" alt="End-to-end judging portal flow — from selecting an event and defining the rubric through task assignment, judging, statistics, and award decisions" style="display:block; width:100%; height:auto; background:#fff;" />
-        <div class="flow-spotlight" aria-hidden="true"><span class="flow-spotlight-label">The part I designed</span></div>
+        <div class="flow-spotlight" aria-hidden="true"></div>
       </div>
     </div>
     <p>Once the flow was agreed on, we moved into design. We reviewed screens with the dev and logistics teams as we went, and kept iterating as new constraints and edge cases came up.</p>
@@ -176,7 +150,7 @@
     <h2 class="sec-title"><span style="color: #000000;">The scope</span></h2>
     <p>I focused on the Statistics Viewer. It's the part organizers turn to once judging is underway, where they review rankings, dig into anything that looks off, and lock in the final award decisions. My job was to make that last stretch feel clear and trustworthy, even when the data underneath was still messy or coming in.</p>
     <p>That meant designing for a moving target. Scores were still landing while organizers were trying to make calls, so the view had to stay readable whether it was half full or complete, and it had to make the state of the data obvious at a glance.</p>
-    <p class="scope-q"><span class="hmw-lead">The question for my piece</span>How do you help an organizer make a confident award call when the scores are still incomplete and shifting under them?</p>
+    <p class="scope-q"><span class="hmw-lead">The question for my piece</span>How do you help an organizer make a confident award call when the scores are still incomplete and shifting?</p>
     <div class="blk blk-full">
       <div class="slot framed"><image-slot id="hackathon-pain-1" placeholder="Drop a shot of where the Statistics Viewer sits in the portal" radius="0" class="wide"></image-slot></div>
     </div>
@@ -249,15 +223,19 @@
       <div class="slot framed"><image-slot id="hackathon-reflection-1" placeholder="Drop a closing visual, a team photo or final screen" radius="0" class="wide"></image-slot></div>
     </div>
   </section>
-
-  <!-- PREV / NEXT -->
-  <nav class="cs-next reveal-self" aria-label="Project navigation">
-    <div class="pn prev"><span class="lbl">Previous</span><a class="pn-title" href="case-nwplus.html">&larr; nwPlus</a></div>
-    <a class="all" href="index.html#work">All projects</a>
-    <div class="pn next"><span class="lbl">Next</span><a class="pn-title" href="case-jellybreak.html">JellyBreak &rarr;</a></div>
-  </nav>
 </main>
 
+<footer class="home-foot" data-screen-label="Footer">
+  <div class="rain-scene footer-pixel-grid" aria-hidden="true"></div>
+  <div class="home-foot-inner">
+    <p class="ff-made">Made by Elaine</p>
+    <p class="ff-place">Vancouver, BC</p>
+    <p class="ff-love">made with love</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+<script src="pixel-grid.js"></script>
 <script src="image-slot.js"></script>
 <!-- cursor engine (matches homepage — circle default). Old cloud cursor kept for revert:
      pixel-cursor.js · cloud-cursor.js -->
