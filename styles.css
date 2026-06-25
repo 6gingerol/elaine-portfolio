@@ -286,6 +286,21 @@ html.js .stage > .section.view-active { display: block; }
 .proj:hover .p-go { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 .proj:hover .p-go svg { transform: translate(2px,-2px); }
 
+.proj.locked .p-media {
+  position: relative;   /* ← this is the key line */
+  cursor: default;
+  pointer-events: none;
+}
+
+.locked-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  /* ... rest of styles */
+}
+
 /* ============================================================
    HOMEPAGE FOOTER — a distinct, poetic ending
    Centered personal sign-off over an ASCII water surface. The section
