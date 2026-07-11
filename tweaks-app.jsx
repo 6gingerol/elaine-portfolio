@@ -13,7 +13,6 @@ function mapToCursor(t) {
   return {
     mode: String(t.cursorStyle).toLowerCase(),
     size: t.cursorSize,
-    color: t.cursorShade,
     shrink: 1 - t.cursorShrink / 100,
     trail: ({ Snappy: 0.34, Smooth: 0.22, Liquid: 0.12 })[t.cursorFeel] || 0.22
   };
@@ -25,7 +24,7 @@ function CursorTweaks() {
   // push to the vanilla cursor engine on mount + whenever a value changes
   React.useEffect(() => {
     if (window.__cursor) window.__cursor.set(mapToCursor(t));
-  }, [t.cursorStyle, t.cursorSize, t.cursorShade, t.cursorShrink, t.cursorFeel]);
+  }, [t.cursorStyle, t.cursorSize, t.cursorShrink, t.cursorFeel]);
 
   return (
     <TweaksPanel title="Tweaks">
