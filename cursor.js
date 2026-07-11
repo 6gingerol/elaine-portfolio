@@ -20,10 +20,12 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---- live config (defaults work even without the Tweaks panel) ---- */
+  // LOCKED_COLOR ensures the cursor stays the same light-grey across pages
+  var LOCKED_COLOR = '#aeaeb2';
   var cfg = {
     mode: 'circle',     // 'circle' | 'cloud'
     size: 22,           // circle diameter (px)
-    color: '#aeaeb2',   // lighter grey fill / ring
+    color: LOCKED_COLOR,// lighter grey fill / ring (locked)
     shrink: 0.45,       // scale at full press (0..1) — smaller = more shrink
     trail: 0.22         // follow easing 0..1 — lower = laggier / more liquid
   };
@@ -108,7 +110,8 @@
 
   function applyCfg() {
     el.style.setProperty('--cc-size', cfg.size + 'px');
-    el.style.setProperty('--cc-color', cfg.color);
+    // Always use the locked color so page-to-page navigation doesn't alter it
+    el.style.setProperty('--cc-color', LOCKED_COLOR);
     el.style.setProperty('--cc-glyph', Math.round(cfg.size * 1.28) + 'px');
     el.classList.toggle('is-circle', cfg.mode === 'circle');
     el.classList.toggle('is-cloud', cfg.mode === 'cloud');
@@ -205,7 +208,6 @@
     var next = {};
     if ('cursorStyle' in d) next.mode = String(d.cursorStyle).toLowerCase();
     if ('cursorSize' in d) next.size = d.cursorSize;
-    if ('cursorShade' in d) next.color = d.cursorShade;
     if ('cursorShrink' in d) next.shrink = 1 - d.cursorShrink / 100;
     if ('cursorFeel' in d) next.trail = ({ Snappy: 0.34, Smooth: 0.22, Liquid: 0.12 })[d.cursorFeel] || cfg.trail;
     window.__cursor.set(next);
