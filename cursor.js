@@ -23,7 +23,7 @@
   var cfg = {
     mode: 'circle',     // 'circle' | 'cloud'
     size: 22,           // circle diameter (px)
-    color: '#6c6c70',   // grey fill / ring
+    color: '#aeaeb2',   // lighter grey fill / ring
     shrink: 0.45,       // scale at full press (0..1) — smaller = more shrink
     trail: 0.22         // follow easing 0..1 — lower = laggier / more liquid
   };
