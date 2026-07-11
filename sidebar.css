@@ -38,10 +38,22 @@ body { margin-left: var(--spine-w); }
 .toc { display: flex; flex-direction: column; gap: 2px; }
 .toc a.toc-item {
   display: flex; align-items: center;
+  gap: 10px;
   padding: 8px 10px; border-radius: 8px;
   font-size: 14px; font-weight: 500; color: var(--steel);
   transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
+.toc a.toc-item .nav-ic-wrap {
+  width: 18px; height: 18px; flex: 0 0 18px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: currentColor;
+}
+.toc a.toc-item .nav-ic {
+  width: 16px; height: 16px; display: block;
+  stroke-width: 1.8; opacity: 0.78;
+}
+.toc a.toc-item:hover .nav-ic,
+.toc a.toc-item.active .nav-ic { opacity: 1; }
 .toc a.toc-item:hover { background: var(--surface); color: var(--ink); }
 .toc a.toc-item.active { background: var(--surface); color: var(--ink); }
 .toc a.toc-proj {
@@ -76,10 +88,10 @@ body { margin-left: var(--spine-w); }
 }
 .topbar .brand { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.03em; }
 .menu-btn {
-  appearance: none; border: 1px solid var(--line-2); background: var(--bg);
-  border-radius: 100px; padding: 8px 14px; font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
-  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  appearance: none; border: none; background: transparent;
+  border-radius: 0; padding: 8px; font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.03em; text-transform: none; color: var(--ink);
+  cursor: pointer; display: flex; align-items: center; gap: 0;
 }
 .menu-btn .bars { display: inline-flex; flex-direction: column; gap: 3px; }
 .menu-btn .bars span { width: 14px; height: 1.5px; background: var(--ink); transition: transform 0.3s var(--ease), opacity 0.3s; }
