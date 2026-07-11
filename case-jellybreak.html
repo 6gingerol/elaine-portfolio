@@ -9,6 +9,62 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="case-study.css" />
 <link rel="stylesheet" href="sidebar.css" />
+<style>
+  /* Match Hackathon case-study rhythm/layout */
+  .cs-head .cs-meta { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 920px) { .cs-head .cs-meta { grid-template-columns: repeat(2, 1fr); } }
+  .statement.hmw {
+    max-width: none;
+    margin: 32px 0 22px;
+    padding-left: clamp(20px, 2.2vw, 28px);
+    border-left: 3px solid var(--ink);
+    font-weight: 600;
+    font-size: clamp(20px, 2.1vw, 27px);
+    line-height: 1.32;
+    color: var(--ink);
+  }
+  .statement.hmw .hmw-lead {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 12px;
+  }
+  .cs-section .blk + p { margin-top: clamp(26px, 4vh, 40px); }
+  .scope-q {
+    max-width: none;
+    margin: 24px 0 4px;
+    padding-left: clamp(20px, 2.2vw, 28px);
+    border-left: 3px solid var(--silver);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(17px, 1.5vw, 21px);
+    line-height: 1.4;
+    color: var(--graphite);
+  }
+  .scope-q .hmw-lead {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 12px;
+  }
+  .flow-figure { position: relative; overflow: hidden; }
+  .flow-spotlight {
+    position: absolute;
+    left: 51.4%; top: 20%; width: 16.6%; height: 60%;
+    border: 2.5px solid var(--ink);
+    border-radius: 9px;
+    box-shadow: 0 0 0 9999px rgba(250,250,249,0.66);
+    pointer-events: none;
+  }
+</style>
 </head>
 <body>
 
@@ -63,115 +119,103 @@
     <p class="cs-sub ph">[One line — what JellyBreak is, who it's for, and the itch it scratches.]</p>
     <div class="cs-meta">
       <div><span class="k">Timeline</span><span class="v ph">[X weeks, Year]</span></div>
+      <div><span class="k">Team</span><span class="v ph">[Solo / X designers]</span></div>
       <div><span class="k">Role</span><span class="v ph">[Your role]</span></div>
       <div><span class="k">Skills</span><span class="v ph">[UX · UI · Prototyping]</span></div>
-      <div><span class="k">Team</span><span class="v ph">[Solo / X designers]</span></div>
-      <div><span class="k">Tools</span><span class="v ph">[Figma, …]</span></div>
-      <div><span class="k">Platform</span><span class="v ph">[Mobile / Web]</span></div>
     </div>
   </header>
 
-  <!-- WHAT I OWNED + IMPACT -->
-  <div class="cs-band reveal-self" data-screen-label="What I owned and impact">
-    <section aria-label="What I owned">
-      <h2><span class="eyebrow">What I owned</span></h2>
-      <ul class="owned-list">
-        <li>I <span class="ph">[owned area one — e.g. defined the product concept and core flows]</span>.</li>
-        <li>I <span class="ph">[owned area two — e.g. designed the end-to-end UI and interaction model]</span>.</li>
-        <li>I <span class="ph">[owned area three — e.g. prototyped and tested with X users]</span>.</li>
-      </ul>
-    </section>
-    <section aria-label="Impact">
-      <h2><span class="eyebrow">Impact</span></h2>
-      <div class="impact-grid">
-        <div class="imp"><span class="n ph">[xx]</span><span class="l ph">[users tested / screens shipped]</span></div>
-        <div class="imp"><span class="n ph">[xx%]</span><span class="l ph">[task success or a metric you moved]</span></div>
-        <div class="imp"><span class="n ph">[x]</span><span class="l ph">[iterations to the final flow]</span></div>
-        <div class="imp"><span class="n ph">[—]</span><span class="l ph">[your metric]</span></div>
+  <!-- 01 — The problem -->
+  <section class="cs-section reveal-self" data-screen-label="Problem">
+    <h2 class="sec-title">The problem</h2>
+    <p>JellyBreak is a concept exploration for <span class="ph">[what it is / who it is for]</span>, built around <span class="ph">[the core problem or friction]</span>. The opportunity was to turn that into a clear, playful experience that still felt easy to understand and use.</p>
+    <p class="statement hmw"><span class="hmw-lead">So we asked:</span>How might we help people <span class="ph">[do the main action]</span> without losing the sense of delight that makes JellyBreak interesting?</p>
+    <p>To answer that, I started by mapping the experience end to end and defining the key moments that needed to feel instant, readable, and fun. That became the structure for the rest of the concept.</p>
+    <div class="blk blk-full">
+      <div class="slot framed flow-figure">
+        <image-slot id="jb-context-1" placeholder="Drop a wide context shot — the landscape, research, or moodboard" radius="0" class="wide"></image-slot>
+        <div class="flow-spotlight" aria-hidden="true"></div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 
-  <!-- 01 CONTEXT -->
-  <section class="cs-section reveal-self" data-screen-label="Context">
-    <h2 class="sec-title ph">[One line that frames the space JellyBreak lives in.]</h2>
-    <p class="ph">[2–3 sentences: where the idea came from and why now.]</p>
+  <!-- 02 — Scope -->
+  <section class="cs-section reveal-self" data-screen-label="Scope">
+    <h2 class="sec-title"><span style="color: #000000;">The scope</span></h2>
+    <p>I focused on the <span class="ph">[primary part of JellyBreak you owned]</span>, where users <span class="ph">[main behavior]</span> and the experience needed to stay understandable even as interactions got more playful.</p>
+    <p>That meant designing for a moving target: the layout needed to work in different states, and the structure had to make the important actions obvious at a glance.</p>
+    <p class="scope-q"><span class="hmw-lead">The question for my piece</span>How do you keep a playful interface feeling clear, intentional, and easy to navigate?</p>
     <div class="blk blk-full">
       <div class="slot framed"><image-slot id="jb-context-1" placeholder="Drop a wide context shot — the landscape, research, or moodboard" radius="0" class="wide"></image-slot></div>
     </div>
   </section>
 
-  <!-- 02 PROBLEM -->
+  <!-- 03 — Pain points -->
   <section class="cs-section reveal-self" data-screen-label="Problem">
-    <p class="statement ph">[The problem in one sharp sentence.]</p>
+    <h2 class="sec-title">Where it kept breaking</h2>
+    <p>Before the concept felt cohesive, a few recurring problems showed up:</p>
     <ul class="points">
-      <li><span class="ph">[Pain point one.]</span></li>
-      <li><span class="ph">[Pain point two.]</span></li>
-      <li><span class="ph">[Pain point three.]</span></li>
+      <li><span class="ph">[Pain point one — e.g. users couldn't tell what to do first.]</span></li>
+      <li><span class="ph">[Pain point two — e.g. the interaction felt fun but visually noisy.]</span></li>
+      <li><span class="ph">[Pain point three — e.g. states and feedback weren't obvious enough.]</span></li>
+      <li><span class="ph">[Pain point four — e.g. the flow needed more structure.]</span></li>
     </ul>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="jb-process-1" placeholder="Drop an early sketch or the rough version that showed the friction" radius="0" class="wide"></image-slot></div>
+    </div>
   </section>
 
-  <!-- 03 PROCESS — sticky caption + scrolling visuals -->
+  <!-- 04 — Process -->
   <section class="cs-section reveal-self" data-screen-label="Process">
-    <div class="blk blk-sticky">
-      <div class="sticky-copy">
-        <h3 class="ph">[How I worked]</h3>
-        <p class="ph">[Short note on your approach — research, sketches, testing.]</p>
-        <p class="ph">[One insight that changed the direction.]</p>
-      </div>
-      <div class="scroll-media">
-        <div><div class="slot"><image-slot id="jb-process-1" placeholder="Drop an early sketch or flow" radius="0"></image-slot></div></div>
-        <div><div class="slot"><image-slot id="jb-process-2" placeholder="Drop a wireframe or iteration" radius="0"></image-slot></div></div>
-        <div><div class="slot"><image-slot id="jb-process-3" placeholder="Drop a testing artifact" radius="0"></image-slot></div></div>
-      </div>
+    <h2 class="sec-title">From requirements to flows</h2>
+    <p>I started by mapping the main journey, then kept moving between sketches, layout decisions, and small interaction tests. The point was to keep the playful parts, but not let them get in the way of the structure underneath.</p>
+    <p>The biggest shift came from realizing the experience needed clearer signposting. That pushed the design toward stronger hierarchy and more deliberate transitions.</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="jb-process-2" placeholder="Drop a wireframe or iteration" radius="0" class="wide"></image-slot></div>
     </div>
   </section>
 
-  <!-- 04 KEY DECISIONS — before / after -->
+  <!-- 05 — Key decision -->
   <section class="cs-section reveal-self" data-screen-label="Key decisions">
-    <h2 class="sec-title ph">[The decision that mattered most]</h2>
-    <p class="ph">[2–3 sentences on the tradeoff and why you chose this path.]</p>
-    <div class="blk blk-ba">
-      <div class="before">
-        <span class="ba-tag">Before</span>
-        <div class="slot"><image-slot id="jb-ba-before" placeholder="Drop the earlier version" radius="0"></image-slot></div>
-      </div>
-      <div class="after">
-        <span class="ba-tag">After</span>
-        <div class="slot"><image-slot id="jb-ba-after" placeholder="Drop the final version" radius="0"></image-slot></div>
-      </div>
+    <h2 class="sec-title">One decision at a time</h2>
+    <p>The hardest call was how much information to show at once. A denser layout could have exposed more upfront, but it made the experience harder to scan. Instead, I broke the flow into clearer steps and let each screen carry one job.</p>
+    <p>That kept the system feeling simpler and made each state easier to understand, which mattered more than trying to show everything at once.</p>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="jb-ba-before" placeholder="Drop the earlier version" radius="0" class="wide"></image-slot></div>
     </div>
   </section>
 
-  <!-- 05 FINAL DESIGNS -->
+  <!-- 06 — Final designs -->
   <section class="cs-section reveal-self" data-screen-label="Final designs">
-    <h2 class="sec-title">The final flow</h2>
-    <p class="ph">[One short paragraph — let the screens speak.]</p>
+    <h2 class="sec-title">The shipped experience</h2>
+    <p>The result is a JellyBreak flow that feels more intentional: the core interaction is easier to follow, the hierarchy is clearer, and the playful parts still come through.</p>
     <div class="blk blk-full">
       <div class="slot framed"><image-slot id="jb-solution-1" placeholder="Drop the flagship screen or loop" radius="0" class="wide"></image-slot></div>
     </div>
-    <div class="blk blk-gallery">
+    <div class="blk blk-compare">
       <div><div class="slot"><image-slot id="jb-solution-2" placeholder="Screen" radius="0"></image-slot></div></div>
       <div><div class="slot"><image-slot id="jb-solution-3" placeholder="Screen" radius="0"></image-slot></div></div>
-      <div><div class="slot"><image-slot id="jb-solution-4" placeholder="Screen" radius="0"></image-slot></div></div>
     </div>
   </section>
 
-  <!-- 06 OUTCOMES -->
+  <!-- 07 — Outcomes -->
   <section class="cs-section reveal-self" data-screen-label="Outcomes">
     <h2 class="sec-title">Outcomes</h2>
     <div class="blk blk-stats">
-      <div class="stat"><span class="n ph">[xx]</span><span class="l ph">[metric]</span></div>
-      <div class="stat"><span class="n ph">[xx%]</span><span class="l ph">[metric]</span></div>
-      <div class="stat"><span class="n ph">[x]</span><span class="l ph">[metric]</span></div>
+      <div class="stat"><span class="n ph">[xx]</span><span class="l">users tested / screens shipped</span></div>
+      <div class="stat"><span class="n ph">[xx%]</span><span class="l">faster / clearer to navigate</span></div>
+      <div class="stat"><span class="n ph">[x]</span><span class="l">iterations to the final flow</span></div>
     </div>
     <div class="blk-quote">
       <blockquote class="ph">[A line of user feedback or your sharpest takeaway.]</blockquote>
       <div class="who ph">[Name, context]</div>
     </div>
+    <div class="blk blk-full">
+      <div class="slot framed"><image-slot id="jb-solution-4" placeholder="Screen" radius="0" class="wide"></image-slot></div>
+    </div>
   </section>
 
-  <!-- 07 REFLECTION -->
+  <!-- 08 — Reflection -->
   <section class="cs-section reveal-self" data-screen-label="Reflection">
     <h2 class="sec-title">Reflection</h2>
     <p class="ph">[2–3 honest sentences on what you'd do differently next time.]</p>
