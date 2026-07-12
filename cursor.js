@@ -27,7 +27,7 @@
     size: 22,           // circle diameter (px)
     color: LOCKED_COLOR,// lighter grey fill / ring (locked)
     shrink: 0.45,       // scale at full press (0..1) — smaller = more shrink
-    trail: 0.22         // follow easing 0..1 — lower = laggier / more liquid
+    trail: 0.44         // follow easing 0..1 — higher = more responsive
   };
 
   var CLOUD = '\u2601\uFE0E'; // ☁ text presentation, never colour emoji
@@ -124,7 +124,7 @@
   var scale = 1, vScale = 0;          // spring state for the circle
   var hoverScale = 1, pressed = false;
 
-  function ease() { return reduced ? 1 : Math.max(0.06, Math.min(0.5, cfg.trail)); }
+  function ease() { return reduced ? 1 : Math.max(0.14, Math.min(0.75, cfg.trail)); }
 
   function frame() {
     var e = ease();
@@ -209,7 +209,7 @@
     if ('cursorStyle' in d) next.mode = String(d.cursorStyle).toLowerCase();
     if ('cursorSize' in d) next.size = d.cursorSize;
     if ('cursorShrink' in d) next.shrink = 1 - d.cursorShrink / 100;
-    if ('cursorFeel' in d) next.trail = ({ Snappy: 0.34, Smooth: 0.22, Liquid: 0.12 })[d.cursorFeel] || cfg.trail;
+    if ('cursorFeel' in d) next.trail = ({ Snappy: 0.58, Smooth: 0.44, Liquid: 0.24 })[d.cursorFeel] || cfg.trail;
     window.__cursor.set(next);
   });
 })();
