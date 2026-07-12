@@ -56,9 +56,12 @@ body { margin-left: var(--spine-w); }
 .toc a.toc-item.active .nav-ic { opacity: 1; }
 .toc a.toc-item:hover { background: var(--surface); color: var(--ink); }
 .toc a.toc-item.active { background: var(--surface); color: var(--ink); }
+.toc-group-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--faint); padding: 14px 10px 4px; margin-top: 4px;
+}
 .toc a.toc-proj {
-  font-size: 13px; color: var(--silver);
-  padding: 6px 10px 6px 22px;
+  color: var(--silver); padding-left: 22px;
 }
 .toc a.toc-proj:hover { color: var(--ink); }
 .toc a.toc-proj.active { color: var(--ink); }
@@ -66,12 +69,18 @@ body { margin-left: var(--spine-w); }
 .spine-foot { margin-top: auto; padding-top: 28px; }
 .spine-links { display: flex; flex-direction: column; gap: 2px; }
 .spine-links a {
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 13.5px; font-weight: 500; color: var(--graphite);
-  padding: 7px 10px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: flex-start; gap: 10px;
+  font-size: 14px; font-weight: 500; color: var(--graphite);
+  padding: 8px 10px; border-radius: 8px;
   transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
-.spine-links a .ar { color: var(--faint); transition: transform 0.3s var(--ease), color 0.3s var(--ease); }
+.spine-links a .ar { color: var(--faint); margin-left: auto; transition: transform 0.3s var(--ease), color 0.3s var(--ease); }
+.spine-links a .nav-ic-wrap {
+  width: 18px; height: 18px; flex: 0 0 18px;
+  display: inline-flex; align-items: center; justify-content: center; color: currentColor;
+}
+.spine-links a .nav-ic { width: 16px; height: 16px; display: block; stroke-width: 1.8; opacity: 0.78; }
+.spine-links a:hover .nav-ic { opacity: 1; }
 .spine-links a:hover { background: var(--surface); color: var(--ink); }
 .spine-links a:hover .ar { transform: translate(2px,-2px); color: var(--ink); }
 .spine-copy { margin-top: 18px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--faint); display: flex; justify-content: space-between; }

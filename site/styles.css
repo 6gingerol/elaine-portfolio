@@ -1,0 +1,545 @@
+/* ============================================================
+   Elaine Chen — Portfolio v3
+   Black & white · editorial · quiet
+   ============================================================ */
+
+/* Cross-document view transitions (MPA navigation cross-fade) */
+@view-transition { navigation: auto; }
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.32s; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}
+
+:root {
+  --bg:       #ffffff;
+  --paper:    #fafafa;
+  --surface:  #f2f2f2;
+  --ink:      #0b0b0c;
+  --graphite: #2b2b2d;
+  --steel:    #6c6c70;
+  --silver:   #9a9a9e;
+  --faint:    #c0c0c4;
+  --line:     #e7e7e8;
+  --line-2:   #d8d8da;
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans:    "Schibsted Grotesk", system-ui, sans-serif;
+  /* 3 fonts total: pixel (PP Mondwest/Pixelify) for hero titles,
+     Space Grotesk for headings, Schibsted Grotesk for body + labels */
+  --font-mono:    "Schibsted Grotesk", system-ui, sans-serif;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --spine-w: 248px;
+  --gap: clamp(16px, 1.6vw, 26px);
+  --pad: clamp(24px, 3.6vw, 64px);
+  --radius: 12px;
+}
+
+* , *::before, *::after { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.62;
+  letter-spacing: -0.006em;
+  overflow-x: hidden;
+}
+::selection { background: var(--ink); color: var(--bg); }
+a { color: inherit; text-decoration: none; }
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.03em; text-transform: none;
+  color: var(--steel);
+}
+
+/* ============================================================
+   FAINT ASCII BACKGROUND
+   ============================================================ */
+#ascii-bg {
+  position: fixed;
+  top: 0; left: var(--spine-w); right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+#ascii-bg canvas { display: block; }
+
+/* subtle diagonal rain — faint background texture, masked away from
+   the hero so it never competes with the headline. Sits behind content. */
+#rain-bg {
+  position: fixed;
+  top: 0; left: var(--spine-w); right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.18) 26%, rgba(0,0,0,0.6) 64%, rgba(0,0,0,0.85) 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.18) 26%, rgba(0,0,0,0.6) 64%, rgba(0,0,0,0.85) 100%);
+}
+#rain-bg canvas { display: block; }
+
+/* ============================================================
+   SIDEBAR SPINE — persistent table of contents
+   ============================================================ */
+.spine {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--spine-w);
+  height: 100vh;
+  padding: clamp(30px, 3.2vw, 44px) 32px 28px;
+  display: flex; flex-direction: column;
+  border-right: 1px solid var(--line);
+  background: var(--bg);
+  z-index: 40;
+  overflow-y: auto;
+}
+.spine::-webkit-scrollbar { width: 0; }
+
+.spine-id .brand {
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 21px;
+  letter-spacing: -0.03em; line-height: 1; display: block;
+}
+.spine-id .descriptor { font-size: 13.5px; color: var(--steel); margin-top: 8px; display: block; }
+
+.rule { height: 1px; background: var(--line); margin: 24px 0; }
+.spine-id { margin-bottom: 28px; }
+
+/* nav — shadcn-style menu: quiet rounded rows, soft active state */
+.toc { display: flex; flex-direction: column; gap: 2px; }
+.toc a.toc-item {
+  display: flex; align-items: center;
+  gap: 10px;
+  padding: 8px 10px; border-radius: 8px;
+  font-size: 14px; font-weight: 500; color: var(--steel);
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.toc a.toc-item .nav-ic-wrap {
+  width: 18px; height: 18px; flex: 0 0 18px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: currentColor;
+}
+.toc a.toc-item .nav-ic {
+  width: 16px; height: 16px; display: block;
+  stroke-width: 1.8; opacity: 0.78;
+}
+.toc a.toc-item:hover .nav-ic,
+.toc a.toc-item.active .nav-ic { opacity: 1; }
+.toc a.toc-item:hover { background: var(--surface); color: var(--ink); }
+.toc a.toc-item.active { background: var(--surface); color: var(--ink); }
+
+/* project tabs — same quiet rows, indented + smaller, no connector line */
+.toc a.toc-proj {
+  font-size: 13px; color: var(--silver);
+  padding: 6px 10px 6px 22px;
+}
+.toc a.toc-proj:hover { color: var(--ink); }
+
+.spine-foot { margin-top: auto; padding-top: 28px; }
+.spine-links { display: flex; flex-direction: column; gap: 2px; }
+.spine-links a {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13.5px; font-weight: 500; color: var(--graphite);
+  padding: 7px 10px; border-radius: 8px;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.spine-links a .ar { color: var(--faint); transition: transform 0.3s var(--ease), color 0.3s var(--ease); }
+.spine-links a:hover { background: var(--surface); color: var(--ink); }
+.spine-links a:hover .ar { transform: translate(2px,-2px); color: var(--ink); }
+.spine-copy { margin-top: 18px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--faint); display: flex; justify-content: space-between; }
+
+/* ============================================================
+   MOBILE TOPBAR + DRAWER (desktop: sidebar is always visible)
+   ============================================================ */
+.topbar {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 45;
+  padding: 14px var(--pad);
+  align-items: center; justify-content: space-between;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar .brand { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.03em; }
+.menu-btn {
+  appearance: none; border: none; background: transparent;
+  border-radius: 0; padding: 8px; font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.03em; text-transform: none; color: var(--ink);
+  cursor: pointer; display: flex; align-items: center; gap: 0;
+}
+.menu-btn .bars { display: inline-flex; flex-direction: column; gap: 3px; }
+.menu-btn .bars span { width: 14px; height: 1.5px; background: var(--ink); transition: transform 0.3s var(--ease), opacity 0.3s; }
+.backdrop { position: fixed; inset: 0; background: color-mix(in srgb, var(--ink) 22%, transparent); opacity: 0; pointer-events: none; transition: opacity 0.4s var(--ease); z-index: 39; }
+
+/* ============================================================
+   STAGE
+   ============================================================ */
+.stage { position: relative; z-index: 1; margin-left: var(--spine-w); padding: 0 var(--pad); }
+.section { padding-block: clamp(40px, 7vh, 96px); scroll-margin-top: 24px; }
+
+.sec-label { display: flex; align-items: center; gap: 14px; margin-bottom: clamp(20px, 3vh, 34px); }
+.sec-label .ix { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink); }
+.sec-label .nm { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.03em; text-transform: none; color: var(--steel); }
+.sec-label .ln { flex: 1; height: 1px; background: var(--line); }
+.sec-label .end { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--silver); }
+
+/* ============================================================
+   OPENING — full-width masthead, then work grid below
+   ============================================================ */
+.opening { padding-top: clamp(64px, 10vh, 108px); }
+.opening-head { margin-bottom: clamp(40px, 6vh, 64px); }
+
+/* top row — location/time, right-aligned */
+.opening-top {
+  display: flex; align-items: flex-start; justify-content: flex-end;
+  gap: 24px; margin-bottom: clamp(14px, 2vh, 24px);
+}
+
+/* hero caret — blinking block at the end of the headline */
+.opening-head h1 .h1-caret {
+  display: inline-block; width: 0.5ch; height: 0.74em;
+  background: var(--ink); margin-left: 0.18ch; transform: translateY(0.07em);
+  animation: caret-blink 1.15s steps(1, end) infinite;
+}
+@keyframes caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .opening-head h1 .h1-caret { animation: none; } }
+
+/* location / local time — quiet interface metadata under the headline */
+html.js .stage > .section { display: none; }
+html.js .stage > .section.view-active { display: block; }
+.locale {
+  display: flex; align-items: baseline; gap: 12px;
+  margin-top: clamp(16px, 2.4vh, 26px);
+}
+.locale .loc, .locale .clock {
+  font-size: 13px; font-weight: 500;
+  color: var(--steel); white-space: nowrap;
+}
+.locale .clock { font-variant-numeric: tabular-nums; }
+
+.opening-head h1 {
+  font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 4.4vw, 64px); line-height: 1.12;
+  letter-spacing: 0; margin: 0; color: var(--ink);
+  max-width: 56ch; text-wrap: balance;
+}
+.opening-sub {
+  margin-top: clamp(20px, 2.6vh, 30px);
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: clamp(28px, 5vw, 96px); flex-wrap: wrap;
+}
+.opening-sub p {
+  font-size: clamp(14.5px, 1vw, 16.5px); color: var(--graphite);
+  max-width: 46ch; margin: 0;
+}
+
+/* ============================================================
+   BENTO GRID
+   ============================================================ */
+.bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(20px,2.3vw,40px); align-items: stretch; }
+.c-4 { grid-column: span 4; } .c-5 { grid-column: span 5; } .c-6 { grid-column: span 6; }
+.c-7 { grid-column: span 7; } .c-8 { grid-column: span 8; } .c-12 { grid-column: span 12; }
+
+/* PROJECTS — borderless: photo + text, no card outline */
+.proj {
+  display: flex; flex-direction: column;
+}
+.proj .p-media {
+  position: relative; overflow: hidden; border-radius: 9px;
+  background: var(--surface); aspect-ratio: 16 / 11;
+}
+.proj .p-media image-slot { width: 100%; height: 100%; display: block; }
+.proj .p-media .frame img, .proj .p-media .frame video {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  padding: 14px;
+  background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%);
+  transition: transform 0.7s var(--ease);
+}
+.proj:hover .p-media .frame img, .proj:hover .p-media .frame video { transform: scale(1.025); }
+@media (prefers-reduced-motion: reduce) {
+  .proj:hover .p-media .frame img, .proj:hover .p-media .frame video { transform: none; }
+}
+/* full-bleed art that already matches the frame ratio */
+.proj .p-media .frame img.full { padding: 0; object-fit: cover; background: none; }
+.proj .p-media .frame { position: absolute; inset: 0; }
+.proj .p-media .badge {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--graphite);
+  background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(6px);
+  border: 1px solid var(--line-2); padding: 4px 9px; border-radius: 7px;
+}
+.proj .p-body { padding: 16px 0 8px; display: flex; flex-direction: column; flex: 1; }
+.proj .p-head { display: flex; align-items: center; justify-content: flex-start; gap: 10px 14px; flex-wrap: wrap; flex-shrink: 0; margin-bottom: 8px; }
+.proj .p-head .p-tags { justify-content: flex-start; }
+.proj p { flex-shrink: 0; }
+.proj h3 {
+  font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
+  font-weight: 400; letter-spacing: 0;
+  font-size: clamp(22px, 2vw, 30px); margin: 0; line-height: 1.04;
+}
+.proj p { font-size: 13.5px; color: var(--steel); margin: 0 0 18px; max-width: none; }
+.p-foot { margin-top: auto; display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+.p-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.tag {
+  font-size: 11.5px; font-weight: 500; color: var(--graphite);
+  border: 1px solid var(--line-2); border-radius: 8px; padding: 5px 11px; white-space: nowrap;
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+.proj:hover .tag { border-color: var(--silver); }
+.p-go { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; border: 1px solid var(--line-2); color: var(--ink); flex: none; transition: all 0.35s var(--ease); }
+.p-go svg { width: 12px; height: 12px; transition: transform 0.35s var(--ease); }
+.proj:hover .p-go { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.proj:hover .p-go svg { transform: translate(2px,-2px); }
+
+.proj.locked .p-media {
+  position: relative;   /* ← this is the key line */
+  cursor: default;
+  pointer-events: none;
+}
+
+.locked-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  /* ... rest of styles */
+}
+
+/* ============================================================
+   HOMEPAGE FOOTER — a distinct, poetic ending
+   Centered personal sign-off over an ASCII water surface. The section
+   is set apart by generous space and a soft basin lift (a faint radial
+   wash that pools toward the bottom) — no divider rule. The p5 canvas
+   is pointer-events:none so nothing it overlays becomes unclickable.
+   ============================================================ */
+/* ============================================================
+   HOMEPAGE FOOTER — minimal ASCII rain
+   A quiet sign-off on the white page over a faint field of monospace
+   rain characters (ascii-rain.js canvas). Full-bleed: cancels the
+   stage's horizontal padding so the field spans the whole content
+   column. Canvas is pointer-events:none.
+   ============================================================ */
+.home-foot {
+  position: relative;
+  margin-top: clamp(80px, 14vh, 170px);
+  /* full-bleed across the stage content box (cancel --pad) */
+  margin-inline: calc(var(--pad) * -1);
+  min-height: clamp(210px, 30vh, 300px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: clamp(40px, 7vh, 76px);
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  /* slide-up reveal: starts low + clipped, rises as it enters view */
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.9s var(--ease), transform 1.05s var(--ease);
+}
+.home-foot.in-view { opacity: 1; transform: none; }
+.home-foot .rain-scene {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none;
+  /* keep the dense top of the field, let it dissolve toward the sign-off */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);
+}
+.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; }
+.home-foot-inner {
+  position: relative; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  text-align: center;
+  pointer-events: none;
+}
+.home-foot .ff-made {
+  margin: 0;
+  /* pixelated display face — matches the headline / project titles */
+  font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
+  font-weight: 400; letter-spacing: 0.01em;
+  font-size: clamp(22px, 2.2vw, 30px); line-height: 1.05;
+  color: var(--ink); white-space: nowrap;
+}
+.home-foot .ff-place {
+  margin: 0;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.03em; text-transform: none;
+  color: var(--steel); white-space: nowrap;
+}
+.home-foot .ff-love {
+  margin: 1px 0 0;
+  font-family: 'PP Mondwest', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
+  font-weight: 400; font-size: clamp(12px, 1.1vw, 15px); letter-spacing: 0.02em;
+  color: var(--silver); white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-foot { opacity: 1; transform: none; transition: none; }
+}
+@media (max-width: 760px) {
+  .home-foot { margin-top: clamp(60px, 11vh, 110px); min-height: clamp(190px, 28vh, 240px); }
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+/* ABOUT — two-column composition: text column capped for measure, the
+   portrait fills the remaining width (capped + centered in its cell) so
+   neither the text↔photo gap nor the right margin ever balloons */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 56ch) minmax(360px, 1fr);
+  gap: clamp(40px, 4vw, 72px);
+  align-items: center;
+}
+.about-grid .portrait { width: 100%; max-width: 460px; justify-self: center; }
+.about-body p.about-lead, .about-lead {
+  font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
+  font-weight: 300; letter-spacing: 0;
+  font-size: 40px; line-height: 1.12; margin: 0 0 22px; max-width: 19ch;
+}
+/* About lead sits at the same Y as the homepage headliner:
+   home = 51px section padding + 100px headline padding */
+#about { padding-top: 151px; }
+.about-body p { font-size: 15.5px; color: var(--graphite); margin: 0 0 16px; max-width: 56ch; }
+.portrait { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.portrait image-slot { width: 100%; height: 100%; display: block; aspect-ratio: 5/7; }
+.portrait-img { width: 100%; height: 100%; display: block; aspect-ratio: 4/5; object-fit: cover; object-position: 43% 30%; }
+
+.values { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px,2.4vw,44px); margin-top: clamp(40px,6vh,72px); }
+@media (max-width: 760px) { .values { grid-template-columns: 1fr; gap: 0; } }
+.value { }
+.value .num { font-family: var(--font-mono); font-size: 11px; color: var(--steel); }
+.value h4 { font-family: var(--font-display); font-weight: 500; font-size: 18px; letter-spacing: -0.02em; margin: 14px 0 7px; }
+.value p { font-size: 13.5px; color: var(--steel); margin: 0; max-width: 34ch; }
+
+.info { margin-top: clamp(40px,6vh,72px); display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(20px,2.4vw,44px); }
+@media (max-width: 760px) { .info { grid-template-columns: 1fr; gap: 18px; } }
+.info .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.03em; text-transform: none; color: var(--silver); display: block; margin-bottom: 8px; }
+.info .v { font-size: 15px; color: var(--ink); font-weight: 500; }
+
+/* quiet sign-off where the values block used to live */
+.about-sign {
+  margin-top: clamp(48px, 8vh, 88px);
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.03em; text-transform: none; color: var(--silver);
+}
+.about-sign .cloud {
+  font-family: 'PP Mondwest', 'FS Mondwest', 'Pixelify Sans', system-ui, sans-serif;
+  font-size: 20px; line-height: 1; color: var(--graphite); text-transform: none; letter-spacing: 0;
+}
+
+.btn { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: 14px; padding: 11px 20px; border-radius: 100px; border: 1px solid var(--ink); transition: all 0.3s var(--ease); }
+.btn.primary { background: var(--ink); color: var(--bg); }
+.btn.primary:hover { background: var(--bg); color: var(--ink); }
+.btn.ghost:hover { background: var(--ink); color: var(--bg); }
+.about-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+
+/* ============================================================
+   EXPERIENCE — editorial timeline: role on the left, year pinned
+   to the right edge so each row spans the full section width.
+   No rails, no dividers, no cards — hierarchy does the work.
+   ============================================================ */
+.xp { margin-top: clamp(56px, 9vh, 104px); }
+.xp .eyebrow {
+  color: var(--silver); display: block; margin-bottom: clamp(24px, 4vh, 38px);
+  font-family: var(--font-display); font-size: 16px; font-weight: 500;
+  letter-spacing: -0.02em; text-transform: none;
+}
+.xp-list { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(26px, 4.2vh, 42px); }
+.xp-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 28px; align-items: baseline; }
+.xp-when {
+  font-family: var(--font-display); font-size: 16.5px; font-weight: 400;
+  letter-spacing: -0.01em; text-transform: none; color: var(--silver);
+  text-align: right; white-space: nowrap;
+}
+.xp-role {
+  font-family: var(--font-display); font-weight: 500; font-size: 16.5px;
+  letter-spacing: -0.01em; line-height: 1.3; margin: 0; color: var(--ink);
+}
+.xp-org { color: var(--steel); font-weight: 400; }
+.xp-desc { font-size: 13.5px; color: var(--steel); margin: 5px 0 0; max-width: 48ch; }
+@media (max-width: 760px) {
+  .about-grid { grid-template-columns: 1fr; gap: 26px; }
+  .about-grid .portrait { order: -1; max-width: 320px; }
+}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact { padding-block: clamp(64px, 12vh, 150px); }
+.contact .eyebrow { color: var(--silver); display: block; margin-bottom: 22px; }
+.contact h2 {
+  font-family: var(--font-display); font-weight: 500; letter-spacing: -0.04em;
+  font-size: clamp(36px, 6.4vw, 92px); line-height: 0.98; margin: 0;
+}
+.mail {
+  display: inline-flex; align-items: center; gap: 12px; margin-top: 30px;
+  font-family: var(--font-display); font-weight: 500; font-size: clamp(18px,2.4vw,30px);
+  letter-spacing: -0.02em; border-bottom: 1.5px solid var(--line-2); padding-bottom: 4px;
+  transition: border-color 0.3s var(--ease);
+}
+.mail svg { width: 20px; height: 20px; transition: transform 0.35s var(--ease); }
+.mail:hover { border-color: var(--ink); }
+.mail:hover svg { transform: translate(3px,-3px); }
+
+footer.foot { border-top: 1px solid var(--line); padding: 26px 0; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; }
+footer.foot .fl { display: flex; gap: 20px; }
+footer.foot a { font-size: 13px; color: var(--steel); transition: color 0.25s; }
+footer.foot a:hover { color: var(--ink); }
+
+/* ============================================================
+   REVEAL — quiet
+   ============================================================ */
+.reveal-self { opacity: 0; transform: translateY(16px); }
+.reveal-self.in-view { opacity: 1; transform: none; transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1040px) {
+  :root { --spine-w: 0px; }
+  #ascii-bg { left: 0; }
+  .topbar { display: flex; }
+  .spine {
+    width: min(86vw, 340px); transform: translateX(-102%);
+    transition: transform 0.5s var(--ease);
+    box-shadow: 0 0 60px -10px color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+  body.nav-open .spine { transform: translateX(0); }
+  body.nav-open .backdrop { opacity: 1; pointer-events: auto; }
+  body.nav-open .menu-btn .bars span:nth-child(1) { transform: translateY(4.5px) rotate(45deg); }
+  body.nav-open .menu-btn .bars span:nth-child(2) { opacity: 0; }
+  body.nav-open .menu-btn .bars span:nth-child(3) { transform: translateY(-4.5px) rotate(-45deg); }
+  .stage { margin-left: 0; padding-top: 66px; }
+}
+@media (max-width: 940px) {
+  .work-grid .c-4 { grid-column: span 6; }
+}
+@media (max-width: 760px) {
+  .c-4, .c-5, .c-6, .c-7, .c-8 { grid-column: span 12; }
+  .intro { height: auto; padding-right: 0; }
+  .intro-meta { padding-top: 24px; }
+  .intro h1 { font-size: clamp(28px, 8vw, 44px); }
+  .opening-head h1 { font-size: clamp(28px, 8vw, 44px); }
+  .opening-sub { gap: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal-self { opacity: 1 !important; transform: none !important; }
+}
+@media print {
+  .spine, .topbar, .backdrop, #ascii-bg, .home-foot { display: none !important; }
+  .stage { margin-left: 0 !important; }
+  .reveal-self { opacity: 1 !important; transform: none !important; }
+}

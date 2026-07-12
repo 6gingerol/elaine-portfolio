@@ -48,7 +48,7 @@ img, video { max-width: 100%; display: block; }
 
 /* shared label style — small caps eyebrow */
 .eyebrow {
-  font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: none;
   color: var(--silver);
 }
 
@@ -95,7 +95,7 @@ html.locked .cs-gate {
 .gate-err.show { display: block; }
 .gate-back {
   display: inline-block; margin-top: 30px;
-  font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: none;
   color: var(--silver); transition: color 0.25s var(--ease);
 }
 .gate-back:hover { color: var(--ink); }
@@ -132,7 +132,7 @@ html.locked .cs-gate {
 }
 .cs-top .back:hover { color: var(--steel); }
 .cs-top .back { white-space: nowrap; }
-.cs-top .crumb { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--silver); white-space: nowrap; }
+.cs-top .crumb { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: none; color: var(--silver); white-space: nowrap; }
 
 /* ============================================================
    HERO — framed spotlight screen
@@ -175,7 +175,7 @@ html.locked .cs-gate {
 }
 .cs-meta .k {
   display: block; font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--silver); margin-bottom: 7px;
+  text-transform: none; color: var(--silver); margin-bottom: 7px;
 }
 .cs-meta .v { font-size: 14px; color: var(--ink); font-weight: 500; line-height: 1.45; }
 
@@ -269,7 +269,7 @@ html.locked .cs-gate {
 .blk-ba { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(18px, 2.4vw, 28px); }
 .blk-ba .ba-tag {
   display: inline-block; font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--steel);
+  text-transform: none; color: var(--steel);
   border: 1px solid var(--line-2); border-radius: 7px; padding: 4px 10px; margin-bottom: 10px;
 }
 .blk-ba .after .ba-tag { background: var(--ink); border-color: var(--ink); color: var(--bg); }
@@ -315,7 +315,7 @@ html.locked .cs-gate {
 }
 .cs-next .pn { display: flex; flex-direction: column; gap: 6px; }
 .cs-next .pn.next { align-items: flex-end; text-align: right; }
-.cs-next .pn .lbl { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--silver); }
+.cs-next .pn .lbl { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: none; color: var(--silver); }
 .cs-next .pn .pn-title {
   font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
   font-size: clamp(19px, 1.9vw, 26px); line-height: 1.1;
@@ -324,7 +324,7 @@ html.locked .cs-gate {
 }
 .cs-next .pn .pn-title:hover { color: var(--steel); }
 .cs-next .all {
-  font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: none;
   color: var(--steel); border: 1px solid var(--line-2); border-radius: 100px; padding: 9px 18px;
   transition: all 0.3s var(--ease); white-space: nowrap;
 }
@@ -417,7 +417,7 @@ html.locked .cs-gate {
 .home-foot .ff-place {
   margin: 0;
   font-family: var(--font-mono); font-size: 11px; font-weight: 600;
-  letter-spacing: 0.16em; text-transform: uppercase;
+  letter-spacing: 0.16em; text-transform: none;
   color: var(--steel); white-space: nowrap;
 }
 .home-foot .ff-love {

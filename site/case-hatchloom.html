@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<script>
+  // Disable password gate for public 'under construction' display.
+  // Mark the session as unlocked so the gate doesn't hide the case study.
+  try {
+    sessionStorage.setItem('hatchloom-unlocked', '1');
+    document.documentElement.classList.remove('locked');
+  } catch (e) { /* ignore */ }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hatchloom — Elaine Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+</link>
+<link rel="stylesheet" href="case-study.css" />
+<link rel="stylesheet" href="sidebar.css" />
+
+<!-- add Playground's locked-page styles so Hatchloom shows the same under-construction view -->
+<style>
+  body.pg { height: 100vh; overflow: hidden; }
+  .pg-stage { margin-left: var(--spine-w); height: 100vh; padding: 0; position: relative; overflow: hidden; }
+
+  .pg-viewport {
+    position: absolute; inset: 0; overflow: hidden;
+    background-color: var(--bg);
+    background-image: radial-gradient(circle at center, var(--line-2) 1.1px, transparent 1.1px);
+    background-size: 28px 28px;
+    cursor: grab; touch-action: none;
+  }
+  .pg-viewport.grabbing { cursor: grabbing; }
+  .pg-canvas { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+
+  .pg-node {
+    position: absolute;
+    border: 1px solid var(--line-2); border-radius: 16px;
+    background: var(--bg); padding: 26px 28px;
+    user-select: none;
+  }
+  .pg-node.center { border: none; background: transparent; padding: 0; }
+  .pg-node.center .eyebrow { color: var(--silver); display: block; margin-bottom: 16px; }
+  .pg-node.center h1 {
+    font-family: var(--font-display); font-weight: 500; letter-spacing: -0.035em;
+    font-size: 56px; line-height: 1; margin: 0;
+  }
+  .pg-node.center p { color: var(--graphite); max-width: 42ch; margin: 18px 0 0; font-size: 16px; }
+
+  .pg-slot {
+    display: flex; flex-direction: column; justify-content: space-between;
+    border: 1px dashed var(--line-2); background: color-mix(in srgb, var(--paper) 70%, transparent);
+  }
+  .pg-slot .lab { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: none; color: var(--silver); }
+  .pg-slot .plus {
+    align-self: flex-start; margin-top: 22px;
+    width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line-2);
+    display: grid; place-items: center; color: var(--steel); font-size: 17px; line-height: 1;
+  }
+  .pg-slot .cap { font-size: 13px; color: var(--steel); margin-top: 14px; max-width: 26ch; }
+
+  /* floating chrome */
+  .pg-hud {
+    position: absolute; top: clamp(20px,3vw,34px); left: clamp(20px,3vw,38px); z-index: 5; pointer-events: none;
+  }
+  .pg-hud .tag-top { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: none; color: var(--steel); display: flex; align-items: center; gap: 8px; }
+  .pg-hud .tag-top::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
+  .pg-hud h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(22px,2.4vw,30px); letter-spacing: -0.03em; margin: 12px 0 0; }
+  .pg-hud p { font-size: 13.5px; color: var(--steel); margin: 6px 0 0; max-width: 36ch; }
+
+  .pg-controls {
+    position: absolute; bottom: clamp(20px,3vw,32px); right: clamp(20px,3vw,32px); z-index: 5;
+    display: flex; align-items: center; gap: 6px;
+    background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(10px);
+    border: 1px solid var(--line); border-radius: 12px; padding: 6px;
+  }
+  .pg-controls button {
+    appearance: none; border: none; background: transparent; cursor: pointer;
+    width: 34px; height: 34px; border-radius: 8px; color: var(--ink);
+    font-size: 17px; line-height: 1; display: grid; place-items: center;
+    transition: background 0.2s var(--ease);
+  }
+  .pg-controls button:hover { background: var(--surface); }
+  .pg-controls .pct { font-family: var(--font-mono); font-size: 12px; color: var(--steel); min-width: 46px; text-align: center; }
+  .pg-controls .sep { width: 1px; height: 20px; background: var(--line); }
+  .pg-controls .reset { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; width: auto; padding: 0 10px; text-transform: none; }
+
+  .pg-hint {
+    position: absolute; bottom: clamp(22px,3vw,34px); left: clamp(20px,3vw,38px); z-index: 5; pointer-events: none;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--silver);
+    display: flex; gap: 18px;
+  }
+  @media (max-width: 1040px) { .pg-stage { margin-left: 0; } .pg-hint { display: none; } }
+
+  /* locked / in-progress state */
+  .pg-locked { display: grid; place-items: center; text-align: center; padding: 40px; position: relative; overflow: hidden; }
+  .pg-lock-inner { position: relative; z-index: 2; max-width: 560px; display: flex; flex-direction: column; align-items: center; }
+  .lock-eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: none; color: var(--silver);
+  }
+  .lock-eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--steel); }
+  .lock-title {
+    font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
+    font-weight: 400; font-size: clamp(38px, 5vw, 62px); line-height: 1;
+    letter-spacing: 0.01em; color: var(--ink); margin: 0; white-space: nowrap;
+  }
+  .lock-sub { font-family: 'Space Grotesk', var(--font-display); font-weight: 400; font-size: 16px; line-height: 1.5; color: var(--steel); margin: 16px 0 0; max-width: 40ch; text-wrap: pretty; }
+  .lock-title .dots { display: inline-flex; }
+  .lock-title .dots span { display: inline-block; animation: dotBob 1.4s var(--ease) infinite; }
+  .lock-title .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .lock-title .dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dotBob {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-0.09em); }
+  }
+  @media (prefers-reduced-motion: reduce) { .lock-title .dots span { animation: none; } }
+  .lock-copy { font-size: 16px; line-height: 1.6; color: var(--graphite); margin: 20px 0 0; max-width: 42ch; text-wrap: pretty; }
+  .lock-back {
+    margin-top: 30px; font-family: 'Space Grotesk', var(--font-display); font-weight: 500; font-size: 16px;
+    letter-spacing: -0.01em; color: var(--steel);
+    display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s var(--ease);
+  }
+  .lock-back .arr { display: inline-block; transition: transform 0.3s var(--ease); }
+  .lock-back:hover { color: var(--ink); }
+  .lock-back:hover .arr { transform: translateX(-5px); }
+</style>
+</head>
+<body class="pg">
+
+<!-- mobile topbar (sidebar is always visible on desktop) -->
+<div class="topbar">
+  <a href="index.html" class="brand">Elaine Chen</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span></button>
+</div>
+<div class="backdrop" id="backdrop"></div>
+
+<!-- persistent sidebar / table of contents -->
+<aside class="spine" id="spine">
+  <div class="spine-id">
+    <a href="index.html" class="brand" style="font-weight: 400; font-size: 21px">Elaine&nbsp;Chen</a>
+    <span class="descriptor" style="font-size: 13px">Product Designer</span>
+  </div>
+
+  <nav class="toc">
+    <a href="index.html#work" class="toc-item"><span>Home</span></a>
+    <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="toc-item toc-proj"><span>nwPlus</span></a>
+    <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
+    <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
+    <a href="case-hatchloom.html" class="toc-item toc-proj active"><span>Hatchloom</span></a>
+    <a href="index.html#about" class="toc-item"><span>About</span></a>
+    <a href="playground.html" class="toc-item"><span>Playground</span></a>
+  </nav>
+
+  <div class="spine-foot">
+    <div class="spine-links">
+      <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
+      <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
+      <a href="https://drive.google.com/file/d/1vxYn7xOy-5q4O5IvfGfGOulfoWx7YWI0/view?usp=sharing" target="_blank" rel="noopener">Resume <span class="ar">↗</span></a>
+    </div>
+  </div>
+</aside>
+
+<!-- replace case study content with the Playground under-construction view -->
+<main class="stage pg-stage pg-locked">
+  <div class="pg-lock-inner">
+    <h1 class="lock-title">Under construction<span class="dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span></h1>
+    <p class="lock-sub">Hi, I’m glad you wandered in! I’m tinkering with some experiments. Check back soon ✦</p>
+    <a class="lock-back" href="index.html#work"><span class="arr">&larr;</span> Back to work</a>
+  </div>
+</main>
+
+<footer class="home-foot" data-screen-label="Footer">
+  <div class="rain-scene footer-pixel-grid" aria-hidden="true"></div>
+  <div class="home-foot-inner">
+    <p class="ff-made">Made by Elaine</p>
+    <p class="ff-place">Vancouver, BC</p>
+    <p class="ff-love">made with love</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+<script src="pixel-grid.js"></script>
+<script src="image-slot.js"></script>
+<script src="sidebar-icons.js"></script>
+<!-- cursor engine (matches homepage — circle default). Old cloud cursor kept for revert:
+     pixel-cursor.js · cloud-cursor.js -->
+<script src="cursor.js"></script>
+<script src="case-study.js"></script>
+<script>
+  /* static password gate — SHA-256 check, no backend.
+     Unlock persists for the browser session only. */
+  (function () {
+    var HASH = 'a1fe8f79a121256842e7aaef2ab1e339a553a74fe05834ca081259cf66ac5fb5';
+    var form = document.getElementById('gateForm');
+    var input = document.getElementById('gatePw');
+    var err = document.getElementById('gateErr');
+    if (!form) return;
+
+    function unlock() {
+      try { sessionStorage.setItem('hatchloom-unlocked', '1'); } catch (e) {}
+      document.documentElement.classList.remove('locked');
+      window.scrollTo(0, 0);
+      window.dispatchEvent(new Event('scroll')); // let reveals re-check
+    }
+    function checkPassword(pw) {
+      if (window.crypto && crypto.subtle) {
+        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw)).then(function (d) {
+          var hex = Array.prototype.map.call(new Uint8Array(d), function (b) {
+            return ('0' + b.toString(16)).slice(-2);
+          }).join('');
+          return hex === HASH;
+        });
+      }
+      return Promise.resolve(pw === atob('aGVsbG93b3JsZDEyMw=='));
+    }
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      checkPassword(input.value).then(function (ok) {
+        if (ok) { unlock(); }
+        else { err.classList.add('show'); input.select(); }
+      });
+    });
+    input.addEventListener('input', function () { err.classList.remove('show'); });
+  })();
+</script>
+</body>
+</html>

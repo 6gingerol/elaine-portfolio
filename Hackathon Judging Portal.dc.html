@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { margin: 0; background: #ffffff; color: #0b0b0c; font-family: "Schibsted Grotesk", system-ui, sans-serif; font-size: 16px; line-height: 1.65; letter-spacing: -0.006em; }
+  ::selection { background: #0b0b0c; color: #ffffff; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #6c6c70; }
+  img, video { max-width: 100%; display: block; }
+  @keyframes hjp-blink { 0%, 60% { opacity: 1; } 60.01%, 100% { opacity: 0.25; } }
+  .hjp-toc-item, .hjp-spine-link, .hjp-back, .hjp-flow-fig, .hjp-foot { transition: all .25s cubic-bezier(0.22,1,0.36,1); }
+  .hjp-toc-item:hover { background: #f2f2f2; color: #0b0b0c !important; }
+  .hjp-toc-item.active { background: #f2f2f2; color: #0b0b0c !important; }
+  .hjp-spine-link:hover { background: #f2f2f2; color: #0b0b0c !important; }
+  .hjp-spine-link:hover .hjp-ar { transform: translate(2px,-2px); color: #0b0b0c; }
+  .hjp-back:hover { color: #6c6c70; }
+  .hjp-topbar { display: none; }
+  @media (max-width: 1040px) {
+    .hjp-spine { width: min(86vw, 340px); transform: translateX(-102%); box-shadow: 0 0 60px -10px rgba(11,11,12,0.30); }
+    body.hjp-nav-open .hjp-spine { transform: translateX(0) !important; }
+    .hjp-main { margin-left: 0 !important; padding-top: 60px; }
+    .hjp-topbar { display: flex !important; }
+    body.hjp-nav-open .hjp-backdrop { opacity: 1 !important; pointer-events: auto !important; }
+    body.hjp-nav-open .hjp-bar1 { transform: translateY(4.5px) rotate(45deg); }
+    body.hjp-nav-open .hjp-bar2 { opacity: 0; }
+    body.hjp-nav-open .hjp-bar3 { transform: translateY(-4.5px) rotate(-45deg); }
+  }
+</style>
+</helmet>
+<div data-name="root" style="min-height: 100vh; background: #ffffff;">
+
+  <div class="hjp-topbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 45; padding: 14px 22px; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid #e7e7e8; box-sizing: border-box;">
+    <a href="#" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 18px; letter-spacing: -0.03em;">Elaine Chen</a>
+    <button class="hjp-menu-btn" aria-label="Toggle navigation" style="appearance: none; border: none; background: transparent; padding: 8px; cursor: pointer; display: flex; align-items: center;">
+      <span style="display: inline-flex; flex-direction: column; gap: 3px;">
+        <span class="hjp-bar1" style="width: 14px; height: 1.5px; background: #0b0b0c; transition: transform .3s cubic-bezier(0.22,1,0.36,1);"></span>
+        <span class="hjp-bar2" style="width: 14px; height: 1.5px; background: #0b0b0c; transition: opacity .3s;"></span>
+        <span class="hjp-bar3" style="width: 14px; height: 1.5px; background: #0b0b0c; transition: transform .3s cubic-bezier(0.22,1,0.36,1);"></span>
+      </span>
+    </button>
+  </div>
+  <div class="hjp-backdrop" style="position: fixed; inset: 0; background: rgba(11,11,12,0.22); opacity: 0; pointer-events: none; transition: opacity .4s cubic-bezier(0.22,1,0.36,1); z-index: 39;"></div>
+
+  <aside class="hjp-spine" style="position: fixed; top: 0; left: 0; width: 248px; height: 100vh; padding: 40px 32px 28px; display: flex; flex-direction: column; border-right: 1px solid #e7e7e8; background: #ffffff; z-index: 40; overflow-y: auto; box-sizing: border-box;">
+    <div style="margin-bottom: 28px;">
+      <a href="#" class="hjp-brand" style="font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: 21px; letter-spacing: -0.03em; line-height: 1; display: block;">Elaine&nbsp;Chen</a>
+      <span style="font-size: 13px; color: #6c6c70; margin-top: 8px; display: block;">Product Designer</span>
+    </div>
+    <nav style="display: flex; flex-direction: column; gap: 2px;">
+      <a href="#" class="hjp-toc-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; font-size: 14px; font-weight: 500; color: #6c6c70;"><span>Home</span></a>
+      <a href="#" class="hjp-toc-item" style="display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #9a9a9e;"><span>nwPlus</span></a>
+      <a href="#" class="hjp-toc-item active" style="display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #0b0b0c;"><span>Hackathon Judging Portal</span></a>
+      <a href="#" class="hjp-toc-item" style="display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #9a9a9e;"><span>JellyBreak</span></a>
+      <a href="#" class="hjp-toc-item" style="display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 22px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #9a9a9e;"><span>Hatchloom</span></a>
+      <a href="#" class="hjp-toc-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; font-size: 14px; font-weight: 500; color: #6c6c70;"><span>About</span></a>
+      <a href="#" class="hjp-toc-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; font-size: 14px; font-weight: 500; color: #6c6c70;"><span>Playground</span></a>
+    </nav>
+    <div style="margin-top: auto; padding-top: 28px;">
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <a href="mailto:elaiinechen@gmail.com" class="hjp-spine-link" style="display: flex; align-items: center; justify-content: space-between; font-size: 13.5px; font-weight: 500; color: #2b2b2d; padding: 7px 10px; border-radius: 8px;">Email <span class="hjp-ar" style="color: #c0c0c4; transition: all .3s cubic-bezier(0.22,1,0.36,1);">↗</span></a>
+        <a href="#" class="hjp-spine-link" style="display: flex; align-items: center; justify-content: space-between; font-size: 13.5px; font-weight: 500; color: #2b2b2d; padding: 7px 10px; border-radius: 8px;">LinkedIn <span class="hjp-ar" style="color: #c0c0c4; transition: all .3s cubic-bezier(0.22,1,0.36,1);">↗</span></a>
+        <a href="#" class="hjp-spine-link" style="display: flex; align-items: center; justify-content: space-between; font-size: 13.5px; font-weight: 500; color: #2b2b2d; padding: 7px 10px; border-radius: 8px;">Resume <span class="hjp-ar" style="color: #c0c0c4; transition: all .3s cubic-bezier(0.22,1,0.36,1);">↗</span></a>
+      </div>
+    </div>
+  </aside>
+
+  <main class="hjp-main" style="margin-left: 248px; position: relative; z-index: 1;">
+    <div style="max-width: 1080px; margin: 0 auto; padding: 0 36px 110px;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 28px 0 0; gap: 16px;">
+        <a href="#" class="hjp-back" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; color: #0b0b0c;">← Back</a>
+      </div>
+
+      <div data-screen-label="Hackathon Judging Portal hero" style="margin-top: 34px;">
+        <div style="background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%); border: 1px solid #e7e7e8; border-radius: 16px; padding: 30px;">
+          <div style="border-radius: 8px; overflow: hidden; background: #ffffff; box-shadow: 0 1px 2px rgba(11,11,12,0.06), 0 14px 44px -18px rgba(11,11,12,0.22);">
+            <video src="assets/award-admin.mp4" autoplay muted loop playsinline preload="auto" style="width: 100%; height: auto; display: block;" aria-label="Judging portal — admin view of a specific award in motion"></video>
+          </div>
+        </div>
+      </div>
+
+      <header data-screen-label="Intro" style="margin-top: 56px;">
+        <h1 style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(34px, 4.2vw, 52px); line-height: 1.08; margin: 0; letter-spacing: -0.03em; text-wrap: balance;">Hackathon Judging Portal</h1>
+        <p style="margin: 16px 0 0; font-size: clamp(16.5px, 1.3vw, 19px); color: #2b2b2d; line-height: 1.55;">A judging system designed to replace spreadsheet-heavy hackathon operations with a connected workflow for assigning judges, reviewing projects, and making award decisions.</p>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 26px; margin-top: 40px; padding-top: 26px; border-top: 1px solid #e7e7e8;">
+          <div><span style="display: block; font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: none; color: #9a9a9e; margin-bottom: 7px;">Timeline</span><span style="font-size: 14px; color: #0b0b0c; font-weight: 500; line-height: 1.45;">May 2025 – August 2025</span></div>
+          <div><span style="display: block; font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: none; color: #9a9a9e; margin-bottom: 7px;">Team</span><span style="font-size: 14px; color: #0b0b0c; font-weight: 500; line-height: 1.45;">4 Designers<br />3 Developers</span></div>
+          <div><span style="display: block; font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: none; color: #9a9a9e; margin-bottom: 7px;">Role</span><span style="font-size: 14px; color: #0b0b0c; font-weight: 500; line-height: 1.45;">Product Designer</span></div>
+          <div><span style="display: block; font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: none; color: #9a9a9e; margin-bottom: 7px;">Skills</span><span style="font-size: 14px; color: #0b0b0c; font-weight: 500; line-height: 1.45;">Systems thinking<br />Design systems<br />Interface design</span></div>
+        </div>
+      </header>
+
+      <section data-screen-label="Problem" style="margin-top: 96px;">
+        <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(23px, 2.5vw, 32px); line-height: 1.16; margin: 0 0 16px; letter-spacing: -0.025em; max-width: 46ch; text-wrap: balance;">The problem</h2>
+        <p style="color: #2b2b2d; margin: 0 0 14px; font-size: 15.5px;">nwPlus is a student-run organization that runs Western Canada's largest hackathons. With hundreds of participants and projects, judges had to grade hundreds of individual submissions in Google Sheets while organizers managed the whole process by hand. It was inefficient, confusing, and largely repetitive.</p>
+        <div style="margin-top: 34px;">
+          <div style="border-radius: 12px; overflow: hidden; background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%); border: 1px solid #e7e7e8; padding: 18px;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="hackathon-problem-sheets" placeholder="Drop the old spreadsheet workflow — marked up to show the friction" style="display:block; width:100%; aspect-ratio: 21 / 9; border-radius: 6px; overflow: hidden;" hint-size="100%,360px"></x-import>
+          </div>
+        </div>
+        <p style="color: #6c6c70; margin: 34px 0 6px; font-size: 16.5px;">From our user discovery sessions with organizers and judges, the same pain points surfaced:</p>
+        <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px;">
+          <li style="position: relative; padding-left: 18px; font-size: 15.5px; color: #2b2b2d;"><span style="position: absolute; left: 0; top: 0; color: #c0c0c4; font-weight: 700;">·</span><strong style="font-weight: 600; color: #0b0b0c;">Clarity —</strong> data was scattered across tabs with minimal labelling; only a few people actually understood what was going on.</li>
+          <li style="position: relative; padding-left: 18px; font-size: 15.5px; color: #2b2b2d;"><span style="position: absolute; left: 0; top: 0; color: #c0c0c4; font-weight: 700;">·</span><strong style="font-weight: 600; color: #0b0b0c;">Efficiency —</strong> judges manually entered scores into formulas across multiple sheets; organizers then had to corroborate all of them together.</li>
+          <li style="position: relative; padding-left: 18px; font-size: 15.5px; color: #2b2b2d;"><span style="position: absolute; left: 0; top: 0; color: #c0c0c4; font-weight: 700;">·</span><strong style="font-weight: 600; color: #0b0b0c;">Collaboration —</strong> only assigned organizers knew what was going on and what results meant; it was hard to loop anyone else in to help.</li>
+        </ul>
+        <p style="color: #2b2b2d; margin: 18px 0 0; font-size: 15.5px;">This created stress during the most time-sensitive moment of the event, and made it hard to explain why certain projects won.</p>
+      </section>
+
+      <section data-screen-label="How might we" style="margin-top: 96px;">
+        <div style="padding-left: 24px; border-left: 3px solid #0b0b0c; margin: 0 0 22px;">
+          <span style="display: block; font-family: 'Schibsted Grotesk', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: none; color: #6c6c70; margin-bottom: 12px;">So we asked</span>
+          <p style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(20px, 2.1vw, 27px); line-height: 1.32; color: #0b0b0c; margin: 0; text-wrap: balance;">How can we help hackathon organizers and judges turn messy project data into decisions they can trust and act on quickly?</p>
+        </div>
+        <p style="color: #2b2b2d; margin: 0 0 14px; font-size: 15.5px;">To answer that, we started with pain points and requirements. We sat down with the developers and the logistics team — our main stakeholders and users — to figure out what the system actually had to do and the constraints it needed to work within. Those conversations turned into the baseline flow below.</p>
+        <div style="margin-top: 34px;">
+          <div style="border-radius: 12px; overflow: hidden; background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%); border: 1px solid #e7e7e8; padding: 22px;">
+            <img src="assets/judging-user-flow.png" alt="End-to-end judging portal flow — from selecting an event and defining the rubric through task assignment, judging, statistics, and award decisions" style="display: block; width: 100%; height: auto; background: #fff; border-radius: 6px; box-shadow: 0 1px 2px rgba(11,11,12,0.06), 0 10px 32px -16px rgba(11,11,12,0.2);" />
+          </div>
+        </div>
+        <p style="color: #2b2b2d; margin: 34px 0 0; font-size: 15.5px;">With several groups involved in the judging process, we mapped each one into the flow so that different user groups had access to specific actions. As shown in the figure: white is all users, red is external judges, purple is external and internal judges (admin), and blue is collaborators.</p>
+      </section>
+
+      <section data-screen-label="Scope" style="margin-top: 96px;">
+        <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(23px, 2.5vw, 32px); line-height: 1.16; margin: 0 0 16px; letter-spacing: -0.025em; max-width: 46ch; text-wrap: balance;">My scope</h2>
+        <p style="color: #2b2b2d; margin: 0 0 14px; font-size: 15.5px;">The team designed the full end-to-end flow together: from event setup and rubric creation to assigning judges, scoring, and awards. Within that system, my focus was the Statistics Viewer — where organizers go once judging is underway to:</p>
+        <ul style="margin: 0 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px;">
+          <li style="position: relative; padding-left: 18px; font-size: 15px; color: #2b2b2d;"><span style="position: absolute; left: 0; top: 0; color: #c0c0c4; font-weight: 700;">·</span>Create or edit awards with their criteria scores</li>
+          <li style="position: relative; padding-left: 18px; font-size: 15px; color: #2b2b2d;"><span style="position: absolute; left: 0; top: 0; color: #c0c0c4; font-weight: 700;">·</span>See project rankings and data for a specific award</li>
+          <li style="position: relative; padding-left: 18px; font-size: 15px; color: #2b2b2d;"><span style="position: absolute; left: 0; top: 0; color: #c0c0c4; font-weight: 700;">·</span>Review projects and look for red flags</li>
+        </ul>
+        <p style="color: #2b2b2d; margin: 0; font-size: 15.5px;"><strong style="font-weight: 600; color: #0b0b0c;">My goal:</strong> make reviewing projects and locking in winners feel clear and trustworthy, even when the underlying data is still incomplete or changing.</p>
+        <div style="margin-top: 34px;">
+          <div style="border-radius: 12px; overflow: hidden; background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%); border: 1px solid #e7e7e8; padding: 22px;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="hackathon-scope-1" placeholder="Drop a shot of where the Statistics Viewer sits in the portal" style="display:block; width:100%; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden;" hint-size="100%,420px"></x-import>
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label="Design Insights" style="margin-top: 96px;">
+        <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(23px, 2.5vw, 32px); line-height: 1.16; margin: 0 0 16px; letter-spacing: -0.025em; max-width: 46ch; text-wrap: balance;">Design insights</h2>
+        <p style="color: #2b2b2d; margin: 0 0 14px; font-size: 15.5px;">During the early design stage, I ran group walkthroughs with 4 target users to validate the task flows. I wanted to see whether an organizer's mental model of reviewing projects for an award matched the statistics workflow I had designed.</p>
+        <p style="color: #2b2b2d; margin: 0 0 14px; font-size: 15.5px;">Originally we had a simple orange flagging system, where judges could flag a project, lock in a winner, and filter for flagged projects. But the walkthroughs surfaced two problems:</p>
+        <ul style="margin: 0 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px;">
+          <li style="position: relative; padding-left: 18px; font-size: 15px; color: #2b2b2d;"><span style="position: absolute; left: 0; top: 0; color: #c0c0c4; font-weight: 700;">·</span>The system for selecting winners and problematic projects felt too flat.</li>
+          <li style="position: relative; padding-left: 18px; font-size: 15px; color: #2b2b2d;"><span style="position: absolute; left: 0; top: 0; color: #c0c0c4; font-weight: 700;">·</span>There was no clear path from "I like this project" to "this is a winner."</li>
+        </ul>
+        <p style="color: #2b2b2d; margin: 0; font-size: 15.5px;">Judges needed more room to build trust before making a call — so the single flag gave way to a multi-step review system.</p>
+        <div style="margin-top: 34px;">
+          <div style="border-radius: 12px; overflow: hidden; background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%); border: 1px solid #e7e7e8; padding: 22px;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="hackathon-insights-1" placeholder="Drop the walkthrough findings or the old flagging system" style="display:block; width:100%; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden;" hint-size="100%,420px"></x-import>
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label="Refining details" style="margin-top: 96px;">
+        <p style="color: #2b2b2d; margin: 0; font-size: 15.5px;">On the visual side, the signifiers for flagging a project and choosing a winner weren't working as intended. A flagged project needed more distinction so organizers could tell at a glance that it was problematic — and the reason it was flagged mattered too, so I added flag notes. We also realized some awards could have more than one winner, so I added a multiple-winner action.</p>
+        <div style="margin-top: 34px;">
+          <div style="border-radius: 12px; overflow: hidden; background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%); border: 1px solid #e7e7e8; padding: 22px;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="hackathon-process-1" placeholder="Drop early sketches, wireframes, or iteration shots" style="display:block; width:100%; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden;" hint-size="100%,420px"></x-import>
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label="Final designs" style="margin-top: 96px;">
+        <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(23px, 2.5vw, 32px); line-height: 1.16; margin: 0 0 16px; letter-spacing: -0.025em; max-width: 46ch; text-wrap: balance;">The shipped portal</h2>
+        <p style="color: #2b2b2d; margin: 0; font-size: 15.5px;">The result is a Statistics Viewer that lets organizers move through awards one by one, see ranked projects with their scores, catch anything that needs a second look, and finalize decisions in the same place. No exporting, no cross-referencing sheets.</p>
+        <div style="margin-top: 34px;">
+          <div style="border-radius: 12px; overflow: hidden; background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%); border: 1px solid #e7e7e8; padding: 22px;">
+            <video src="assets/award-admin.mp4" muted loop playsinline preload="metadata" data-play-on-visible style="width: 100%; height: auto; display: block; border-radius: 6px; box-shadow: 0 1px 2px rgba(11,11,12,0.06), 0 10px 32px -16px rgba(11,11,12,0.2);" aria-label="Admin view of managing a specific award"></video>
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label="Reflection" style="margin-top: 96px;">
+        <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(23px, 2.5vw, 32px); line-height: 1.16; margin: 0 0 16px; letter-spacing: -0.025em; max-width: 46ch; text-wrap: balance;">Reflection</h2>
+        <p style="color: #2b2b2d; margin: 0; font-size: 15.5px;">Designing for data that's incomplete and constantly changing taught me to design for the messy middle, not just the finished state. A view that looks great with perfect data falls apart the moment a score is missing, so the real work was making "not done yet" feel just as clear as "done."</p>
+        <div style="margin-top: 34px;">
+          <div style="border-radius: 12px; overflow: hidden; background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%); border: 1px solid #e7e7e8; padding: 22px;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="hackathon-reflection-1" placeholder="Drop a closing visual — a team photo or final screen" style="display:block; width:100%; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden;" hint-size="100%,420px"></x-import>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer class="hjp-foot" data-screen-label="Footer" style="position: relative; margin-top: 0; min-height: clamp(210px, 30vh, 300px); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: clamp(40px, 7vh, 76px); overflow: hidden; isolation: isolate; border-top: 1px solid #e7e7e8; background: #ffffff;">
+      <div class="footer-pixel-grid" aria-hidden="true" style="position: absolute; inset: 0; z-index: 1; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%); mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);"></div>
+      <div style="position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; pointer-events: none;">
+        <p style="margin: 0; font-family: 'Pixelify Sans', 'Space Grotesk', sans-serif; font-weight: 400; letter-spacing: 0.01em; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.05; color: #0b0b0c; white-space: nowrap;">Made by Elaine</p>
+        <p style="margin: 0; font-family: 'Schibsted Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: none; color: #6c6c70; white-space: nowrap;">Vancouver, BC</p>
+        <p style="margin: 1px 0 0; font-family: 'Pixelify Sans', 'Space Grotesk', sans-serif; font-weight: 400; font-size: clamp(12px, 1.1vw, 15px); letter-spacing: 0.02em; color: #9a9a9e; white-space: nowrap;">made with love</p>
+      </div>
+    </footer>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    // Mobile nav toggle
+    try {
+      const btn = document.querySelector('.hjp-menu-btn');
+      const backdrop = document.querySelector('.hjp-backdrop');
+      const close = () => document.body.classList.remove('hjp-nav-open');
+      if (btn) btn.addEventListener('click', () => document.body.classList.toggle('hjp-nav-open'));
+      if (backdrop) backdrop.addEventListener('click', close);
+      document.querySelectorAll('.hjp-spine a').forEach((a) => a.addEventListener('click', close));
+    } catch (err) {}
+
+    // Play-on-visible for the shipped-portal video
+    try {
+      const vids = document.querySelectorAll('video[data-play-on-visible]');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          const v = e.target;
+          if (e.isIntersecting) { v.play && v.play().catch(() => {}); }
+          else { v.pause && v.pause(); }
+        });
+      }, { threshold: 0.25 });
+      vids.forEach((v) => io.observe(v));
+    } catch (err) {}
+
+    // Load p5 + the interactive pixel-grid footer, then the cursor engine.
+    const addScript = (src) => new Promise((res) => {
+      if ([...document.scripts].some((s) => s.src.includes(src))) { res(); return; }
+      const s = document.createElement('script');
+      s.src = src; s.onload = () => res(); s.onerror = () => res();
+      document.body.appendChild(s);
+    });
+    (async () => {
+      await addScript('https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js');
+      await addScript('pixel-grid.js');
+      await addScript('cursor.js');
+    })();
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

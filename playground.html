@@ -40,7 +40,7 @@
     display: flex; flex-direction: column; justify-content: space-between;
     border: 1px dashed var(--line-2); background: color-mix(in srgb, var(--paper) 70%, transparent);
   }
-  .pg-slot .lab { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--silver); }
+  .pg-slot .lab { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: none; color: var(--silver); }
   .pg-slot .plus {
     align-self: flex-start; margin-top: 22px;
     width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line-2);
@@ -52,7 +52,7 @@
   .pg-hud {
     position: absolute; top: clamp(20px,3vw,34px); left: clamp(20px,3vw,38px); z-index: 5; pointer-events: none;
   }
-  .pg-hud .tag-top { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); display: flex; align-items: center; gap: 8px; }
+  .pg-hud .tag-top { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: none; color: var(--steel); display: flex; align-items: center; gap: 8px; }
   .pg-hud .tag-top::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
   .pg-hud h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(22px,2.4vw,30px); letter-spacing: -0.03em; margin: 12px 0 0; }
   .pg-hud p { font-size: 13.5px; color: var(--steel); margin: 6px 0 0; max-width: 36ch; }
@@ -72,7 +72,7 @@
   .pg-controls button:hover { background: var(--surface); }
   .pg-controls .pct { font-family: var(--font-mono); font-size: 12px; color: var(--steel); min-width: 46px; text-align: center; }
   .pg-controls .sep { width: 1px; height: 20px; background: var(--line); }
-  .pg-controls .reset { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; width: auto; padding: 0 10px; text-transform: uppercase; }
+  .pg-controls .reset { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; width: auto; padding: 0 10px; text-transform: none; }
 
   .pg-hint {
     position: absolute; bottom: clamp(22px,3vw,34px); left: clamp(20px,3vw,38px); z-index: 5; pointer-events: none;
@@ -87,7 +87,7 @@
   .lock-eyebrow {
     display: inline-flex; align-items: center; gap: 9px;
     font-family: var(--font-mono); font-size: 11px; font-weight: 600;
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--silver);
+    letter-spacing: 0.18em; text-transform: none; color: var(--silver);
   }
   .lock-eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--steel); }
   .lock-title {
@@ -131,12 +131,12 @@
   </div>
   <nav class="toc">
     <a href="index.html#work" class="toc-item"><span>Home</span></a>
+    <a href="index.html#about" class="toc-item"><span>About</span></a>
+    <a href="playground.html" class="toc-item active"><span>Playground</span></a>
     <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="toc-item toc-proj"><span>nwPlus</span></a>
     <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
     <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
     <a href="case-hatchloom.html" class="toc-item toc-proj"><span>Hatchloom</span></a>
-    <a href="index.html#about" class="toc-item"><span>About</span></a>
-    <a href="playground.html" class="toc-item active"><span>Playground</span></a>
   </nav>
   <div class="spine-foot">
     <div class="spine-links">
