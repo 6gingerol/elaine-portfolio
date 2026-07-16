@@ -13,6 +13,21 @@
   ::view-transition-new(*) { animation: none !important; }
 }
 
+@font-face {
+  font-family: 'PP Mondwest';
+  src: url('assets/fonts/PPMondwest-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Mondwest';
+  src: url('assets/fonts/PPMondwest-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg:       #ffffff;
   --paper:    #fafafa;
@@ -134,22 +149,31 @@ a { color: inherit; text-decoration: none; }
 .toc a.toc-item:hover { background: var(--surface); color: var(--ink); }
 .toc a.toc-item.active { background: var(--surface); color: var(--ink); }
 
-/* project tabs — same quiet rows, indented + smaller, no connector line */
+/* project tabs — same quiet rows, same alignment + size */
+.toc-group-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--faint); padding: 14px 10px 4px; margin-top: 4px;
+}
 .toc a.toc-proj {
-  font-size: 13px; color: var(--silver);
-  padding: 6px 10px 6px 22px;
+  color: var(--silver); padding-left: 22px;
 }
 .toc a.toc-proj:hover { color: var(--ink); }
 
 .spine-foot { margin-top: auto; padding-top: 28px; }
 .spine-links { display: flex; flex-direction: column; gap: 2px; }
 .spine-links a {
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 13.5px; font-weight: 500; color: var(--graphite);
-  padding: 7px 10px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: flex-start; gap: 10px;
+  font-size: 14px; font-weight: 500; color: var(--graphite);
+  padding: 8px 10px; border-radius: 8px;
   transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
-.spine-links a .ar { color: var(--faint); transition: transform 0.3s var(--ease), color 0.3s var(--ease); }
+.spine-links a .ar { color: var(--faint); margin-left: auto; transition: transform 0.3s var(--ease), color 0.3s var(--ease); }
+.spine-links a .nav-ic-wrap {
+  width: 18px; height: 18px; flex: 0 0 18px;
+  display: inline-flex; align-items: center; justify-content: center; color: currentColor;
+}
+.spine-links a .nav-ic { width: 16px; height: 16px; display: block; stroke-width: 1.8; opacity: 0.78; }
+.spine-links a:hover .nav-ic { opacity: 1; }
 .spine-links a:hover { background: var(--surface); color: var(--ink); }
 .spine-links a:hover .ar { transform: translate(2px,-2px); color: var(--ink); }
 .spine-copy { margin-top: 18px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--faint); display: flex; justify-content: space-between; }
@@ -267,7 +291,7 @@ html.js .stage > .section.view-active { display: block; }
   .proj:hover .p-media .frame img, .proj:hover .p-media .frame video { transform: none; }
 }
 /* full-bleed art that already matches the frame ratio */
-.proj .p-media .frame img.full { padding: 0; object-fit: cover; background: none; }
+.proj .p-media .frame img.full, .proj .p-media .frame video.full { padding: 0; object-fit: cover; background: none; }
 .proj .p-media .frame { position: absolute; inset: 0; }
 .proj .p-media .badge {
   position: absolute; top: 12px; left: 12px; z-index: 2;
