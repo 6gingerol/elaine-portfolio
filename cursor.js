@@ -27,7 +27,7 @@
     size: 22,           // circle diameter (px)
     color: LOCKED_COLOR,// lighter grey fill / ring (locked)
     shrink: 0.45,       // scale at full press (0..1) — smaller = more shrink
-    trail: 0.70         // follow easing 0..1 — higher = more responsive
+    trail: 1.0          // follow easing 0..1 — higher = more responsive
   };
 
   var CLOUD = '\u2601\uFE0E'; // ☁ text presentation, never colour emoji

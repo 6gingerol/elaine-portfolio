@@ -7,9 +7,10 @@
 <title>Elaine Chen — Product Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
+<link rel="preload" href="assets/fonts/PPMondwest-Regular.otf" as="font" type="font/otf" crossorigin />
+<link rel="preload" href="assets/nwplus.jpg" as="image" />
 </head>
 <body>
 
@@ -102,7 +103,7 @@
       <article class="c-6 proj locked reveal-self" id="saved" data-screen-label="Project JellyBreak">
         <span class="p-media" aria-label="JellyBreak — case study coming soon" tabindex="-1" aria-disabled="true">
           <span class="frame">
-            <video src="assets/jellybreak-thumb.mp4" class="full" style="transform: scale(1.12) translateY(2.5%); object-position: center center;" autoplay muted playsinline preload="auto" data-loop-end="45.5" aria-label="JellyBreak — looping demo"></video>
+            <video src="assets/jellybreak-thumb.mp4" class="full" style="transform: scale(1.12) translateY(2.5%); object-position: center center;" autoplay muted playsinline preload="metadata" data-loop-end="45.5" aria-label="JellyBreak — looping demo"></video>
           </span>
         </span>
         </span>
@@ -158,7 +159,7 @@
         <p style="padding: 0px">What draws me to design is the intersection of creativity, research, analysis, and human-centered thinking. I enjoy digging into the “why” behind a problem just as much as the visual craft.</p>
         <p>Outside of design, I’m usually exploring vintage markets, gaming, practicing yoga, or catching a DJ set.</p>
       </div>
-      <div class="portrait reveal-self"><img src="assets/elaine-portrait.jpeg" alt="Elaine Chen" class="portrait-img" /></div>
+      <div class="portrait reveal-self"><img src="assets/elaine-portrait.jpeg" alt="Elaine Chen" class="portrait-img" loading="lazy" /></div>
     </div>
 
     <div class="xp reveal-self" aria-label="Experience">
@@ -201,21 +202,11 @@
   </section>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
-<script src="image-slot.js"></script>
-<script src="ascii-sketch.js"></script>
-<script src="pixel-grid.js"></script>
-<script src="sidebar-icons.js"></script>
-<!-- cursor engine (circle + cloud modes). Old standalone cursors kept for revert:
-     pixel-cursor.js · cloud-cursor.js -->
-<script src="cursor.js"></script>
-
-<!-- Tweaks panel (cursor controls) -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="tweaks-app.jsx"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js" defer></script>
+<script src="ascii-sketch.js" defer></script>
+<script src="pixel-grid.js" defer></script>
+<script src="sidebar-icons.js" defer></script>
+<script src="cursor.js" defer></script>
 <script>
   // ---- reveal (visible state forced without depending on transition clock) ----
   function hardShow(el) { el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; }

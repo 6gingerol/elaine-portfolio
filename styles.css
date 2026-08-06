@@ -84,6 +84,7 @@ a { color: inherit; text-decoration: none; }
   top: 0; left: var(--spine-w); right: 0; bottom: 0;
   z-index: 0;
   pointer-events: none;
+  contain: strict;
 }
 #ascii-bg canvas { display: block; }
 
@@ -375,6 +376,7 @@ html.js .stage > .section.view-active { display: block; }
 .home-foot .rain-scene {
   position: absolute; inset: 0; z-index: 1;
   pointer-events: none;
+  contain: strict;
   /* keep the dense top of the field, let it dissolve toward the sign-off */
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);
           mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);

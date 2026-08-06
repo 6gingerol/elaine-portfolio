@@ -60,6 +60,7 @@
         cnv.parent(host);
         p.noStroke();
         p.noiseSeed(7);
+        p.frameRate(20);
         if (reduced) { p.redraw(); p.noLoop(); }
       };
 
