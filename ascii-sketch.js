@@ -37,7 +37,7 @@
       p.textSize(10.5);
       p.textAlign(p.LEFT, p.TOP);
       p.noStroke();
-      p.frameRate(reduced ? 1 : 20);
+      p.frameRate(reduced ? 1 : 30);
     };
 
     p.draw = function () {

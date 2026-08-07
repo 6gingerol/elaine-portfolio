@@ -128,9 +128,11 @@
 
   function frame() {
     var e = ease();
-    x += (tx - x) * e;
-    y += (ty - y) * e;
-    el.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+    if (e < 1) {
+      x += (tx - x) * e;
+      y += (ty - y) * e;
+      el.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+    }
 
     // organic spring toward target scale (press shrink × hover grow)
     var target = (pressed ? cfg.shrink : 1) * hoverScale;
@@ -164,6 +166,7 @@
   window.addEventListener('mousemove', function (e) {
     tx = e.clientX; ty = e.clientY;
     if (!visible) { visible = true; x = tx; y = ty; el.classList.add('on'); }
+    if (ease() >= 1) { x = tx; y = ty; el.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)'; }
     applyHover(stateFor(e.target));
   }, { passive: true });
 
