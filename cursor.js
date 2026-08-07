@@ -12,7 +12,7 @@
   var css = [
     'html.cc-on, html.cc-on * { cursor: none !important; }',
     '#cc-cursor {',
-    '  position: fixed; z-index: 99999; pointer-events: none;',
+    '  position: fixed; left: 0; top: 0; z-index: 99999; pointer-events: none;',
     '  width: ' + CURSOR_SIZE + 'px; height: ' + CURSOR_SIZE + 'px;',
     '  margin-left: ' + (-CURSOR_SIZE / 2) + 'px;',
     '  margin-top: ' + (-CURSOR_SIZE / 2) + 'px;',
@@ -21,6 +21,7 @@
     '  box-shadow: 0 0 0 1px rgba(255,255,255,.5), 0 1px 6px rgba(0,0,0,.14);',
     '  opacity: 0;',
     '  transition: opacity .15s, background .2s, box-shadow .2s;',
+    '  will-change: transform;',
     '}',
     '#cc-cursor.on { opacity: 1; }',
     '#cc-cursor.is-link, #cc-cursor.is-card {',
@@ -49,8 +50,7 @@
   }
 
   window.addEventListener('mousemove', function (e) {
-    el.style.left = e.clientX + 'px';
-    el.style.top = e.clientY + 'px';
+    el.style.transform = 'translate3d(' + e.clientX + 'px,' + e.clientY + 'px,0)';
     if (!visible) { visible = true; el.classList.add('on'); }
     var s = stateFor(e.target);
     el.classList.toggle('is-link', s === 'link');
