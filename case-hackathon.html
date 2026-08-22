@@ -19,11 +19,13 @@
   .compare-2up .slot img { display: block; width: 100%; height: auto; }
   .flag-after-img { transform: scale(1.08); transform-origin: left center; }
   .comment-pair figure { margin: 0; }
-  .comment-pair figure:first-child img { display: block; height: 55px; width: auto; max-width: 100%; }
-  .comment-pair figure:last-child img { display: block; height: 67px; width: auto; max-width: 100%; }
+  .comment-pair figure img { display: block; width: auto; height: auto; max-height: 70px; }
   .comment-pair figure:first-child figcaption { margin-top: 10px; }
-  .comment-pair figure:last-child figcaption { margin-top: -2px; }
-  @media (max-width: 720px) { .compare-2up { grid-template-columns: 1fr; } }
+  .comment-pair figure:last-child figcaption { margin-top: 10px; }
+  @media (max-width: 720px) {
+    .compare-2up { grid-template-columns: 1fr; }
+    .comment-pair figure img { max-height: none; width: 100%; height: auto; }
+  }
 
   .blk .slot.framed { background: #ffffff; padding: 0; border-color: var(--line); }
   .blk .slot.framed > * { border-radius: 12px; box-shadow: none; }
@@ -434,7 +436,8 @@
 
   <!-- FINAL DESIGNS -->
   <section class="cs-section reveal-self" data-screen-label="Final designs">
-    <h3 class="img-heading">The system is prepopulated with different awards.</h3>
+    <h2 class="sec-title" style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 13px; color: var(--steel); margin-bottom: 8px;">What I Shipped</h2>
+    <h3 class="img-heading" style="margin-top: 0;">The system is prepopulated with different awards.</h3>
     <div class="blk blk-full">
       <div class="clean-frame">
         <img src="assets/award view - admin.png" alt="Awards overview — grid of award cards showing top-ranked projects and placement status" loading="lazy" />
