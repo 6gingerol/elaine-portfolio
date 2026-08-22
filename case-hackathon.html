@@ -25,7 +25,8 @@
   .comment-pair figure:last-child figcaption { margin-top: -2px; }
   @media (max-width: 720px) {
     .compare-2up { grid-template-columns: 1fr; }
-    .comment-pair figure img { height: auto; width: auto; max-width: 280px; }
+    .comment-pair { justify-items: start; }
+    .comment-pair figure img { height: auto !important; width: auto; max-width: 280px; }
   }
 
   .blk .slot.framed { background: #ffffff; padding: 0; border-color: var(--line); }
