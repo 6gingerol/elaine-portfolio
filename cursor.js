@@ -26,9 +26,14 @@
   var style = document.createElement('style');
   style.textContent = [
     'html.cc-on, html.cc-on * { cursor: ' + dotUrl + ' !important; }',
-    'html.cc-on a, html.cc-on button, html.cc-on [role="button"], html.cc-on label,',
+    'html.cc-on button, html.cc-on [role="button"],',
     'html.cc-on input, html.cc-on select, html.cc-on textarea, html.cc-on .menu-btn,',
-    'html.cc-on .proj, html.cc-on .p-media, html.cc-on .pg-card, html.cc-on image-slot {',
+    'html.cc-on .proj:not(.locked), html.cc-on .proj:not(.locked) .p-media,',
+    'html.cc-on .pg-card, html.cc-on image-slot {',
+    '  cursor: ' + ringUrl + ' !important;',
+    '}',
+    'html.cc-on .proj.locked, html.cc-on .proj.locked *,',
+    'html.cc-on a.locked, html.cc-on a.locked * {',
     '  cursor: ' + ringUrl + ' !important;',
     '}'
   ].join('\n');

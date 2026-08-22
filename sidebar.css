@@ -125,3 +125,18 @@ body { margin-left: var(--spine-w); }
   .spine, .topbar, .backdrop { display: none !important; }
   body { margin-left: 0 !important; }
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:       #0f0f10;
+    --paper:    #141415;
+    --surface:  #1c1c1e;
+    --ink:      #e8e8ea;
+    --graphite: #c8c8cc;
+    --steel:    #8e8e93;
+    --silver:   #636366;
+    --faint:    #3a3a3c;
+    --line:     #2c2c2e;
+    --line-2:   #38383a;
+  }
+}

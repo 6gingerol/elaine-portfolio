@@ -10,204 +10,262 @@
 <link rel="stylesheet" href="case-study.css" />
 <link rel="stylesheet" href="sidebar.css" />
 <style>
-  /* Intro meta: four items in a single full-width row under the title. */
   .cs-head .cs-meta { grid-template-columns: repeat(4, 1fr); }
   .cs-head .cs-meta .k { font-family: inherit; font-size: 14px; letter-spacing: 0; }
-  /* Before / after side-by-side comparison */
+
   .compare-2up { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .compare-2up figure { margin: 0; }
-  .compare-2up figcaption { margin-top: 10px; font-size: 13px; color: var(--silver); }
+  .compare-2up figcaption { margin-top: 10px; font-size: 14.5px; color: var(--steel); }
   .compare-2up .slot img { display: block; width: 100%; height: auto; }
-  /* Drop the grey gradient frame everywhere on this page */
-  .blk .slot.framed { background: var(--surface); padding: 0; }
-  .blk .slot.framed > * { border-radius: 12px; box-shadow: none; }
+  .flag-after-img { transform: scale(1.08); transform-origin: left center; }
+  .comment-pair figure { margin: 0; }
+  .comment-pair figure:first-child img { display: block; height: 55px; width: auto; max-width: 100%; }
+  .comment-pair figure:last-child img { display: block; height: 67px; width: auto; max-width: 100%; }
+  .comment-pair figure:first-child figcaption { margin-top: 10px; }
+  .comment-pair figure:last-child figcaption { margin-top: -2px; }
   @media (max-width: 720px) { .compare-2up { grid-template-columns: 1fr; } }
-  /* Review-actions: text left, sketch shrunk on the right */
-  .review-actions-row { display: grid; grid-template-columns: 1fr 220px; gap: 28px; align-items: start; }
-  .review-actions-sketch { background: transparent; border: none; }
-  .review-actions-sketch img { cursor: zoom-in; transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); transform-origin: top right; }
-  .review-actions-sketch:hover img { transform: scale(1.06); box-shadow: 0 10px 40px -18px rgba(11,11,12,0.35); }
-  .review-actions-sketch .zoom-hint { display: block; margin-top: 8px; font-size: 11.5px; color: var(--silver); }
-  /* two review sketches side by side, aligned */
-  .review-sketches { display: grid; grid-template-columns: 0.85fr 1fr; gap: 20px; align-items: center; margin-top: 22px; }
-  .review-sketches .review-sketch { background: transparent; border: none; }
-  .review-sketches img { display: block; width: 100%; height: auto; cursor: zoom-in;
-    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
-  .review-sketches img:hover { box-shadow: 0 10px 40px -18px rgba(11,11,12,0.35); }
-  /* click-to-zoom lightbox */
-  .sketch-lightbox { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center;
-    background: rgba(11,11,12,0.82); padding: 4vw; cursor: zoom-out; }
-  .sketch-lightbox.open { display: flex; }
-  .sketch-lightbox img { max-width: 96vw; max-height: 92vh; width: auto; height: auto; border-radius: 6px; background: #fff; }
-  @media (max-width: 720px) { .review-actions-row { grid-template-columns: 1fr; } .review-sketches { grid-template-columns: 1fr; } }
-  /* team photo — crop to center the people */
-  .team-photo { aspect-ratio: 3 / 2; overflow: hidden; }
-  .team-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 62%; }
-  /* Drop the grey gradient frame from the hero screen too */
+
+  .blk .slot.framed { background: #ffffff; padding: 0; border-color: var(--line); }
+  .blk .slot.framed > * { border-radius: 12px; box-shadow: none; }
+
   .cs-hero .screen { background: transparent; border: none; padding: 0; }
   .cs-hero .media { box-shadow: none; }
+
+  /* === CONSISTENT SPACING SYSTEM === */
+  /* paragraph after anything */
+  .cs-section > p { max-width: 720px; margin: 20px 0 0; }
+  /* section title */
+  .cs-section h2.sec-title { font-weight: 500; font-size: clamp(20px, 2.2vw, 27px); line-height: 1.3; color: var(--ink); max-width: 720px; margin: 0 0 12px; }
+  /* image headings */
+  .img-heading { font-family: var(--font-display); font-weight: 500; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.35; letter-spacing: -0.02em; color: var(--ink); margin: 36px 0 0; max-width: 720px; }
+  /* heading → image */
+  .img-heading + .blk, .img-heading + .blk-full, .img-heading + .legend-bar { margin-top: 16px !important; }
+  /* image blocks */
+  .cs-section .blk, .cs-section .blk-full { margin-top: 24px; }
+  /* image → paragraph */
+  .cs-section .blk + p, .cs-section .blk-full + p { margin-top: 24px; }
+  /* image → heading */
+  .cs-section .blk + .img-heading, .cs-section .blk-full + .img-heading { margin-top: 36px; }
+  /* image → image (back to back) */
+  .cs-section .blk + .blk, .cs-section .blk-full + .blk-full, .cs-section .blk + .blk-full, .cs-section .blk-full + .blk { margin-top: 24px; }
+  /* captions */
+  .blk .cap, .compare-2up figcaption, .old-workflow-toggle .old-workflow-body figcaption { font-size: 14.5px; color: var(--steel); margin-top: 10px; line-height: 1.5; }
+
+  /* Center all images */
+  .blk, .blk-full { margin-left: auto; margin-right: auto; }
+  .legend-bar { display: flex; justify-content: center; }
+  .clean-frame { margin-left: auto; margin-right: auto; }
   @media (max-width: 920px) { .cs-head .cs-meta { grid-template-columns: repeat(2, 1fr); } }
-  /* Highlighted "How might we" problem statement */
+
   .statement.hmw {
-    max-width: none;
+    max-width: 720px;
     margin: 32px 0 22px;
-    font-weight: 600;
-    font-size: clamp(20px, 2.1vw, 27px);
-    line-height: 1.32;
+    font-weight: 500;
+    font-size: clamp(20px, 2.2vw, 27px);
+    line-height: 1.3;
     color: var(--ink);
+    letter-spacing: -0.025em;
   }
   .statement.hmw .hmw-lead {
     display: block;
     font-family: var(--font-body);
-    font-weight: 400;
-    font-size: 15.5px;
-    letter-spacing: -0.006em;
-    color: var(--steel);
-    margin-bottom: 12px;
-  }
-  /* paragraph that follows a media block needs the same breathing room
-     above it as a media block gets, so it isn't glued to the image */
-  .cs-section .blk + p { margin-top: clamp(26px, 4vh, 40px); }
-  /* scoped-down question in the scope section — quieter than the big HMW */
-  .scope-q {
-    max-width: none;
-    margin: 24px 0 4px;
-    padding-left: clamp(20px, 2.2vw, 28px);
-    border-left: 3px solid var(--silver);
-    font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(17px, 1.5vw, 21px);
-    line-height: 1.4;
-    color: var(--graphite);
-  }
-  .scope-q .hmw-lead {
-    display: block;
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-size: 15.5px;
-    letter-spacing: -0.006em;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--steel);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
-  .sheet-grid {
-    display: grid;
-    grid-template-columns: 1.38fr 1fr;
-    gap: 14px;
-  }
-  .sheet-card {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .sheet-card--wide { grid-column: 1 / -1; }
-  .sheet-img {
-    position: relative;
-    overflow: hidden;
-  }
-  .sheet-card img {
-    display: block;
-    width: 100%;
-    height: 190px;
-    object-fit: cover;
-    object-position: top left;
-    background: #fff;
-    filter: grayscale(0.85) contrast(0.9) brightness(1.04) blur(3px);
-    opacity: 0.82;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, rgba(0,0,0,0.35) 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 62%, rgba(0,0,0,0.35) 100%);
-  }
-  .sheet-card--wide img { height: 130px; }
-  .sheet-card figcaption {
-    font-size: 12.5px;
-    line-height: 1.4;
-    color: var(--steel);
-    padding: 11px 14px;
+
+  .cs-section .blk + p { margin-top: clamp(16px, 2.4vh, 24px); }
+
+  /* Old workflow disclosure — clean, no box */
+  .old-workflow-toggle {
+    margin-top: 22px;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
     background: transparent;
   }
-  .sheet-card figcaption code {
-    font-family: "PPNeueBit", ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 13px;
+  .old-workflow-toggle summary {
+    padding: 10px 0;
+    font-size: 15.5px;
+    font-weight: 500;
     color: var(--graphite);
-    background: var(--surface);
-    padding: 1px 5px;
-    border-radius: 4px;
-  }
-  @media (max-width: 720px) {
-    .sheet-grid { grid-template-columns: 1fr; }
-  }
-  .board-fig {
-    margin: 0;
+    cursor: pointer;
+    list-style: none;
     display: flex;
-    flex-direction: column;
-    background: #fff;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s var(--ease);
+  }
+  .old-workflow-toggle summary::-webkit-details-marker { display: none; }
+  .old-workflow-toggle summary::before {
+    content: ""; display: inline-block; width: 6px; height: 6px;
+    border-right: 1.5px solid var(--silver); border-bottom: 1.5px solid var(--silver);
+    transform: rotate(-45deg); transition: transform 0.25s var(--ease);
+    flex-shrink: 0;
+  }
+  .old-workflow-toggle[open] summary::before { transform: rotate(45deg); }
+  .old-workflow-toggle summary:hover { color: var(--ink); }
+  .old-workflow-toggle .old-workflow-body {
+    padding: 16px 0 0;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .old-workflow-toggle .old-workflow-body figure { margin: 0; }
+  .old-workflow-toggle .old-workflow-body img {
+    display: block; width: 100%; height: auto; border-radius: 8px;
+    border: 1px solid var(--line);
+    filter: grayscale(0.7) contrast(0.92) brightness(1.02);
+    opacity: 0.88;
+  }
+  .old-workflow-toggle .old-workflow-body figcaption {
+    font-size: 14.5px; color: var(--steel); margin-top: 8px; line-height: 1.5;
+  }
+
+  /* Review sketches side by side — equal height */
+  .review-sketches { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; margin-top: 22px; }
+  .review-sketches .review-sketch { background: #ffffff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .review-sketches img { display: block; width: 100%; height: 100%; object-fit: contain; cursor: zoom-in;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+  .review-sketches img:hover { box-shadow: 0 10px 40px -18px rgba(11,11,12,0.35); }
+  @media (max-width: 720px) { .review-sketches { grid-template-columns: 1fr; } }
+
+  /* Click-to-zoom lightbox */
+  .sketch-lightbox { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center;
+    background: rgba(11,11,12,0.82); padding: 4vw; cursor: zoom-out; }
+  .sketch-lightbox.open { display: flex; }
+  .sketch-lightbox img { max-width: 96vw; max-height: 92vh; width: auto; height: auto; border-radius: 6px; background: var(--bg); }
+
+  /* Team photo */
+  .team-photo { aspect-ratio: 3 / 2; overflow: hidden; }
+  .team-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 62%; }
+
+  /* Figma board */
+  .board-fig {
+    margin: 0; display: flex; flex-direction: column;
+    background: #ffffff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  }
+  .board-fig .board-stage {
+    background: var(--frame-grad); padding: 0; flex: 1;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .board-fig img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover; object-position: top center; border-radius: 0; background: transparent;
+  }
+  .scope-figs { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: stretch; }
+  .scope-figs .board-stage { max-height: 420px; }
+
+  /* Impact line */
+  .cs-impact {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(20px, 2.2vw, 27px);
+    color: var(--ink);
+    margin-top: 28px;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+    max-width: 720px;
+  }
+
+  /* Findings grid */
+  .findings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (max-width: 720px) { .findings-grid { grid-template-columns: 1fr; } }
+  .finding-item {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  .finding-item h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 10px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .finding-item p {
+    font-size: 14.5px;
+    color: var(--graphite);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* Legend bar */
+  .legend-bar {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+  }
+  .legend-bar img {
+    display: block;
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+  }
+
+  /* Paired small images — equal height, centered */
+  .paired-imgs {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .paired-imgs img {
+    height: auto;
+    max-width: 280px;
+    border-radius: 8px;
+  }
+
+  /* Full-width framed image with clean border */
+  .clean-frame {
     border: 1px solid var(--line);
     border-radius: 12px;
     overflow: hidden;
+    background: #ffffff;
   }
-  .board-fig .board-stage {
-    background: var(--frame-grad);
-    padding: 0;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .board-fig img {
+  .clean-frame img, .clean-frame video {
     display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    border-radius: 0;
-    background: transparent;
+    height: auto;
   }
-  .board-fig figcaption {
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--steel);
-    padding: 13px 16px;
-    background: var(--paper);
-  }
-  .board-fig figcaption strong { color: var(--graphite); font-weight: 600; }
-  .scope-figs { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: stretch; }
-  .scope-figs .board-stage { max-height: 420px; }
-  @media (max-width: 720px) { .scope-figs { grid-template-columns: 1fr; } }
 </style>
 <body>
 
-<!-- mobile topbar (sidebar is always visible on desktop) -->
+<!-- mobile topbar -->
 <div class="topbar">
   <a href="index.html" class="brand">Elaine Chen</a>
   <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span></button>
 </div>
 <div class="backdrop" id="backdrop"></div>
 
-<!-- persistent sidebar / table of contents -->
+<!-- sidebar -->
 <aside class="spine" id="spine">
   <div class="spine-id">
     <a href="index.html" class="brand" style="font-weight: 400; font-size: 21px">Elaine&nbsp;Chen</a>
     <span class="descriptor" style="font-size: 13px">Product Designer</span>
   </div>
-
   <nav class="toc">
     <a href="index.html#work" class="toc-item"><span>Home</span></a>
     <a href="index.html#about" class="toc-item"><span>About</span></a>
     <a href="playground.html" class="toc-item"><span>Playground</span></a>
     <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="toc-item toc-proj"><span>nwPlus</span></a>
     <a href="case-hackathon.html" class="toc-item toc-proj active"><span>Hackathon Judging Portal</span></a>
-    <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
-    <a href="case-hatchloom.html" class="toc-item toc-proj"><span>Hatchloom</span></a>
+    <a href="case-jellybreak.html" class="toc-item toc-proj locked"><span>JellyBreak</span></a>
+    <a href="case-hatchloom.html" class="toc-item toc-proj locked"><span>Hatchloom</span></a>
   </nav>
-
   <div class="spine-foot">
     <div class="spine-links">
-      <a href="/cdn-cgi/l/email-protection#e3868f828a8a8d86808b868da3848e828a8fcd808c8e">Email <span class="ar">↗</span></a>
+      <a href="mailto:elaiinechen@gmail.com">Email <span class="ar">↗</span></a>
       <a href="https://www.linkedin.com/in/elaine-c-3ab8a2231" target="_blank" rel="noopener">LinkedIn <span class="ar">↗</span></a>
       <a href="https://drive.google.com/file/d/1vxYn7xOy-5q4O5IvfGfGOulfoWx7YWI0/view?usp=sharing" target="_blank" rel="noopener">Resume <span class="ar">↗</span></a>
     </div>
@@ -219,7 +277,7 @@
     <a class="back" href="index.html#work">&larr; Back</a>
   </div>
 
-  <!-- HERO — featured product loop -->
+  <!-- HERO -->
   <div class="cs-hero reveal-self" data-screen-label="Hackathon Judging Portal hero">
     <div class="screen">
       <div class="media"><video src="assets/award-admin.mp4" autoplay muted loop playsinline preload="auto" aria-label="Judging portal — admin view of a specific award in motion"></video></div>
@@ -238,143 +296,182 @@
     </div>
   </header>
 
-  <!-- 01 — The problem -->
+  <p class="cs-impact reveal-self">Designed a centralized project-review and winner-selection workflow for nwPlus's 54-person organizing team, supporting three annual hackathons with 1,000+ attendees.</p>
+
+  <!-- THE PROBLEM -->
   <section class="cs-section reveal-self" data-screen-label="Problem">
     <h2 class="sec-title">The problem</h2>
     <p>nwPlus is a student-run organization that runs Western Canada's largest hackathons. With hundreds of participants and projects, judges had to grade hundreds of individual submissions in Google Sheets while organizers managed the whole process by hand. It was inefficient, confusing, and largely repetitive.</p>
-    <div class="blk blk-full">
-      <div class="sheet-grid">
-        <figure class="sheet-card">
-          <div class="sheet-img"><img src="assets/old-sheet-1.png" alt="Old judging spreadsheet — per-criteria scores with free-text feedback notes crammed into one column" loading="lazy" /></div>
-          <figcaption>Every judge scored projects by hand across five criteria, with feedback typed into the same crowded sheet.</figcaption>
+
+    <details class="old-workflow-toggle">
+      <summary>The old workflow</summary>
+      <div class="old-workflow-body">
+        <figure>
+          <img src="assets/sheets feedback.png" alt="Old judging spreadsheet — per-criteria scores with free-text feedback" loading="lazy" />
+          <figcaption>Previously, all judges scored projects and gave feedback typed in crowded Google Sheets.</figcaption>
         </figure>
-        <figure class="sheet-card">
-          <div class="sheet-img"><img src="assets/old-sheet-2.png" alt="Separate spreadsheet ranking projects by weighted average and z-score with manual RETRO notes" loading="lazy" /></div>
-          <figcaption>Organizers rebuilt rankings in a separate sheet, reconciling weighted averages and z-scores by hand.</figcaption>
+        <figure>
+          <img src="assets/sheets zscore.png" alt="Separate spreadsheet ranking projects by weighted average and z-score" loading="lazy" />
+          <figcaption>In another sheet, organizers ranked projects by compiling together the weighted averages and z-scores.</figcaption>
         </figure>
-        <figure class="sheet-card sheet-card--wide">
-          <div class="sheet-img"><img src="assets/old-sheet-3.png" alt="Per-judge score columns with #N/A errors across the row" loading="lazy" /></div>
-          <figcaption>Each judge scored in their own set of columns, making it hard to see any one project's results in a single place.</figcaption>
+        <figure>
+          <img src="assets/sheets vibecheck.png" alt="Vibe check sheet with eligibility and compliance checkboxes" loading="lazy" />
+          <figcaption>Before selecting winners, organizers checked top-ranked projects for eligibility and compliance in another sheet.</figcaption>
         </figure>
       </div>
-    </div>
+    </details>
   </section>
 
-  <!-- 02 — How might we -->
-  <section class="cs-section reveal-self" data-screen-label="How might we">
-    <p class="statement hmw"><span class="hmw-lead">So we asked:</span>How can we help hackathon organizers and judges turn messy project data into decisions they can trust and act on quickly?</p>
-    <p>To answer that, we started with pain points and requirements. We sat down with the developers, the logistics team, and our main stakeholders and users, to figure out what the system actually had to do and the constraints it needed to work within. Those conversations turned into the baseline flow below.</p>
-    <p>From our user discovery sessions with organizers and judges, the same pain points surfaced:</p>
-    <ul class="points">
-      <li><strong>Clarity:</strong> data was scattered across tabs with minimal labelling; only a few people actually understood what was going on.</li>
-      <li><strong>Efficiency:</strong> judges manually entered scores into formulas across multiple sheets; organizers then had to corroborate all of them together.</li>
-      <li><strong>Collaboration:</strong> only assigned organizers knew what was going on and what results meant; it was hard to loop anyone else in to help.</li>
-    </ul>
-    <p style="margin-top: 18px;">This created stress during the most time-sensitive moment of the event, and made it hard to explain why certain projects won.</p>
+  <!-- RESEARCH -->
+  <section class="cs-section reveal-self" data-screen-label="Research">
+    <h2 class="sec-title">My team and I conducted focus group sessions and interviews with 8 participants including previous judges and organizers to validate and further understand the problems of the existing system.</h2>
+    <p>Those discussions turned into these core findings.</p>
+
+    <div class="findings-grid">
+      <div class="finding-item">
+        <h3>Efficiency</h3>
+        <p>Judges entered scores across multiple sheets, while organizers manually compiled and verified results. Frequent onboarding, incorrect entries, and broken formulas slowed the process.</p>
+      </div>
+      <div class="finding-item">
+        <h3>Centralization</h3>
+        <p>Judging and organizer processes happened in separate sheets. The entire judging process was scattered across different modes, making information hard to find and understand.</p>
+      </div>
+      <div class="finding-item">
+        <h3>Clarity & collaboration</h3>
+        <p>Only certain organizers understood the status of judging and what the results meant. Eligibility and compliance checks with confusing and little documentation also made it difficult to involve others and explain winner decisions.</p>
+      </div>
+    </div>
+
+    <p>This created stress during the most time-sensitive moment of the event, and made it hard to explain why certain projects were considered for winning.</p>
+
+    <p class="statement hmw"><span class="hmw-lead">So we asked:</span>How might we bring judging and award decisions into one clear workflow, so judges can submit and update scores easily while organizers can quickly and fairly select winners?</p>
+  </section>
+
+  <!-- IDEATION -->
+  <section class="cs-section reveal-self" data-screen-label="Ideation">
+    <h2 class="sec-title">Ideation</h2>
+    <p>We started to answer this by using our research insights to create a user flow that represents the overarching judging process: from judges grading each individual project all the way to organizers selecting winners.</p>
     <div class="blk blk-full">
       <div class="slot framed flow-figure">
-        <img src="assets/judging user flow.png" alt="End-to-end judging portal flow — from selecting an event and defining the rubric through task assignment, judging, statistics, and award decisions" style="display:block; width:100%; height:auto; background:#fff;" />
+        <img src="assets/judging user flow.png" alt="End-to-end judging portal flow — from selecting an event through task assignment, judging, statistics, and award decisions" style="display:block; width:100%; height:auto; background:var(--bg);" />
       </div>
       <p class="cap">The end-to-end judging workflow.</p>
     </div>
   </section>
 
-  <!-- 03 — My scope -->
+  <!-- MY SCOPE -->
   <section class="cs-section reveal-self" data-screen-label="Scope">
-    <h2 class="sec-title">My scope</h2>
-    <p>The team designed the full end-to-end flow together: from event setup and rubric creation to assigning judges, scoring, and awards. Within that system, my focus was the Statistics Viewer.</p>
-    <p>This is where organizers go once judging is underway to:</p>
-    <ul class="points">
-      <li>Create or edit awards with criteria scores</li>
-      <li>See project rankings and data for a specific award</li>
-      <li>review and look for red flags in a project</li>
-    </ul>
-    <p style="margin-top: 18px;">My goal was to make reviewing projects and locking in winners feel clear and trustworthy, even when the underlying data is still incomplete or changing.</p>
+    <p>Due to the project's large scope, each designer owned a different part of the system. I focused on making project review and winner selection efficient, clear and trustworthy.</p>
+    <p class="statement hmw"><span class="hmw-lead">My design challenge:</span>How can I help hackathon organizers turn messy project data into decisions they can trust and act on quickly?</p>
+    <p>From then on I began creating low and mid-fidelity prototypes for this workflow. Throughout the process we held weekly design critiques and discussions with the developers and the PM to refine the scope.</p>
     <div class="blk blk-full">
       <div class="scope-figs">
         <figure class="board-fig">
-          <div class="board-stage"><img src="assets/design-scope-board.png" alt="Full Figma design board for the judging portal — four columns of screens: Statistics Viewer, Live-Progress Report, Pre-Judging, and Judging View" loading="lazy" /></div>
+          <div class="board-stage"><img src="assets/lofimidfi.png" alt="Low and mid-fidelity Figma board — User Flow, Statistics Viewer, Components, Tables, Pre-Judging, Judging View" loading="lazy" /></div>
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- 04 — Design insights -->
+  <!-- DESIGN INSIGHTS -->
   <section class="cs-section reveal-self" data-screen-label="Design insights">
-    <h2 class="sec-title">Design insights</h2>
-    <p>During early stage design, I conducted group walkthroughs with 4 target users to validate task flows. I needed to see if the an organizer's mental model of reviewing projects for an award matched with the statistics workflow I had designed.</p>
-    <p>Originally we had a simple flagging and winner choosing system, where organizers could flag a project and lock a winner in. However after these walkthroughs we figured organizers would need more trust and information to make decisions like this, thus the multi-step review system was born.</p>
+    <h2 class="sec-title">During the mid-design stage, I conducted group walkthroughs with 5 organizers to see if their mental model of reviewing projects matched with the workflow I had designed.</h2>
+    <p>Originally we had a simple flagging and winner choosing system, where organizers could select winners by locking in a project, or mark a project as suspicious by flagging it.</p>
     <div class="blk blk-full">
-      <div class="review-actions-text">
-        <p>The multi-step review system gives organizers four actions on any project: viewing it, approving it, flagging it, or starring it. They can also leave comments directly on a project.</p>
+      <div class="clean-frame">
+        <img src="assets/award view - specific award admin OLD.png" alt="Before — the simple flagging system with basic flag and lock actions" loading="lazy" />
       </div>
+      <p class="cap">Before</p>
+    </div>
+
+    <p>However we figured a traceable review system made award decisions easier to explain, thus the multi-step review system was born.</p>
+
+    <div class="blk blk-full">
       <div class="review-sketches">
-        <div class="slot review-sketch"><img src="assets/review-sketch-1.png" alt="Sketch of the review interaction flow — starting a review, deciding to approve, and adding a comment on a project row" loading="lazy" data-zoomable="assets/review-sketch-1.png" /></div>
-        <div class="slot review-sketch"><img src="assets/review-sketch-2.png" alt="Sketch of what a project row looks like after many edits — with flags, reviews, comments, actions, and a disqualified state" loading="lazy" data-zoomable="assets/review-sketch-2.png" /></div>
+        <div class="slot review-sketch"><img src="assets/multi system p1.png" alt="Sketch of the review interaction flow" loading="lazy" data-zoomable="assets/multi system p1.png" /></div>
+        <div class="slot review-sketch"><img src="assets/multisystem p2.png" alt="Sketch of what a project row looks like after many edits" loading="lazy" data-zoomable="assets/multisystem p2.png" /></div>
       </div>
     </div>
-    <div class="blk blk-full">
-      <div class="compare-2up">
-        <figure>
-          <div class="slot"><img src="assets/insights-before-simple.png" alt="Before — the simple orange flagging system, showing a ranked awards table with basic flag and lock actions" loading="lazy" /></div>
-          <figcaption>Before</figcaption>
-        </figure>
-        <figure>
-          <div class="slot"><img src="assets/insights-after-multistep.png" alt="After — the multi-step review system, adding reviews, comments, vibe check, and awarding columns" loading="lazy" /></div>
-          <figcaption>After</figcaption>
-        </figure>
-      </div>
-    </div>
-    <div class="sketch-lightbox" id="sketchLightbox"><img src="" alt="Enlarged review-system sketch" /></div>
-  </section>
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    (function () {
-      var box = document.getElementById('sketchLightbox');
-      var boxImg = box ? box.querySelector('img') : null;
-      document.querySelectorAll('[data-zoomable]').forEach(function (el) {
-        el.addEventListener('click', function () {
-          if (!box || !boxImg) return;
-          boxImg.src = el.getAttribute('data-zoomable') || el.src;
-          box.classList.add('open');
-        });
-      });
-      if (box) {
-        box.addEventListener('click', function () { box.classList.remove('open'); });
-        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') box.classList.remove('open'); });
-      }
-    })();
-  </script>
 
-  <!-- 05 — Refining details -->
+    <div class="blk blk-full">
+      <div class="clean-frame">
+        <img src="assets/award-detail.png" alt="After — full Awards table with review system, flagged rows, and awarding columns" loading="lazy" />
+      </div>
+      <p class="cap">After</p>
+    </div>
+
+    <p>The revised system gives organizers four actions on any project: viewing it, approving it, flagging it, or starring it. They can also leave comments directly on a project.</p>
+    <div class="blk blk-full compare-2up comment-pair">
+      <figure>
+        <img src="assets/comment mo pfp.png" alt="Comment bubble without profile picture" loading="lazy" />
+        <figcaption>Before</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/comment w pfp.png" alt="Comment bubble with profile picture" loading="lazy" />
+        <figcaption>After</figcaption>
+      </figure>
+    </div>
+    <p>I also added markers for whoever completed each action, so that organizers can see the decision history for internal transparency.</p>
+  </section>
+
+  <!-- REFINING DETAILS -->
   <section class="cs-section reveal-self" data-screen-label="Refining details">
-    <h2 class="sec-title">Refining the details</h2>
-    <p>On the visual side, the signifiers for flagged projects and winners weren't working as intended. Users said it was easy to miss when a project was flagged because the icon didn't stand out enough. To fix this, I added a stronger visual state: a red highlight around flagged rows plus a clearer flag icon.</p>
-    <p>The reason behind a flag mattered too, so I added flag notes. Now organizers can quickly spot flagged projects in the table, see which judge raised the flag, and read their reasoning before making a final decision. (See before and after figures above.)</p>
-  </section>
-
-  <!-- 06 — Final designs -->
-  <section class="cs-section reveal-self" data-screen-label="Final designs">
-    <h2 class="sec-title">The completed portal</h2>
-    <p>The result is a Statistics Viewer that lets organizers move through awards one by one, see ranked projects with their scores, catch anything that needs a second look, and finalize decisions in the same place.</p>
-    <p>After months of hard work, the design has been passed down for development. Building is still in progress: stay tuned for the live portal to be used during nwHacks 2027!</p>
+    <h2 class="sec-title">On the visual side, the signifiers for flagged projects and winners weren't working as intended.</h2>
+    <p>Users said it was easy to miss when a project was flagged because the current flag icon didn't stand out enough. To fix this, I added a stronger visual state: a red highlight around flagged rows plus a clearer flag icon.</p>
     <div class="blk blk-full">
-      <div class="slot framed"><video src="assets/award-admin.mp4" muted loop playsinline preload="metadata" data-play-on-visible aria-label="Admin view of managing a specific award"></video></div>
+      <div class="clean-frame">
+        <img src="assets/flagged before.png" alt="Before — simple table rows without flagged visual state" loading="lazy" />
+      </div>
+      <p class="cap">Before</p>
+    </div>
+    <div class="blk blk-full">
+      <div class="clean-frame">
+        <img class="flag-after-img" src="assets/flag-rows-after.png" alt="After — flagged rows highlighted in red with clearer flag icons" loading="lazy" />
+      </div>
+      <p class="cap">After</p>
     </div>
   </section>
 
-  <!-- 07 — Reflection -->
+  <!-- FINAL DESIGNS -->
+  <section class="cs-section reveal-self" data-screen-label="Final designs">
+    <h3 class="img-heading">The system is prepopulated with different awards.</h3>
+    <div class="blk blk-full">
+      <div class="clean-frame">
+        <img src="assets/award view - admin.png" alt="Awards overview — grid of award cards showing top-ranked projects and placement status" loading="lazy" />
+      </div>
+    </div>
+
+    <h3 class="img-heading">Organizers can view each award individually to see the projects ranked based on its criteria and other related project data.</h3>
+    <div class="blk blk-full">
+      <div class="clean-frame">
+        <img src="assets/award view - specific award admin.png" alt="Award detail view — ranked projects with review status, comments, vibe check, and awarding columns" loading="lazy" />
+      </div>
+    </div>
+
+    <h3 class="img-heading">They can flag projects as suspicious, view and approve a project, as well as make comments.</h3>
+    <div class="legend-bar">
+      <img src="assets/legend of actions.png" alt="Review actions legend — Flagged, Viewed, Approved, Comment, Noteworthy" loading="lazy" />
+    </div>
+
+    <h3 class="img-heading">To select winners, organizers can star a project as a potential winner, or lock one in as different placements.</h3>
+    <div class="blk blk-full paired-imgs">
+      <img src="assets/before awarding.png" alt="Awarding dropdown expanded — trophy with 1st, 2nd, 3rd placement badges" loading="lazy" />
+      <img src="assets/after awarding.png" alt="Awarding dropdown — star and trophy icons for winner selection" loading="lazy" />
+    </div>
+
+    <p>This mattered because winners used to be selected ambiguously through a few organizers, and the news was then delivered to the entire team verbally, which lacked transparency and at times caused disagreements.</p>
+
+  </section>
+
+  <!-- REFLECTION -->
   <section class="cs-section reveal-self" data-screen-label="Reflection">
     <h2 class="sec-title">Reflection</h2>
-    <p>Perhaps the project I've learnt the most from, design wise and also people-wise. Some nifty things I've learned below.</p>
-    <ul class="points">
-      <li>Be ready to reinvent workflows. Even if it's painful, don't be afraid to redesign your own work when you find a better way!</li>
-      <li>Some components (eg; tables!) can be difficult to work with, but sticking with them and you'll discover some new shortcuts and tools.</li>
-      <li>Time your discussions and interviews. Step in when conversations go off on tangents so you can protect everyone's energy and keep things moving.</li>
-    </ul>
-    <div class="blk blk-full">
-      <div class="slot team-photo"><img src="assets/design-team.png" alt="The nwDesign team — four designers together at a team dinner" loading="lazy" /></div>
-      <p class="cap">the nwDesign team!</p>
-    </div>
+
+    <h3 class="img-heading">Be ready to reinvent your workflows.</h3>
+    <p>The project required many rounds of heavy discussion with multiple user groups, thus data collected led to different directions. Being able to let things go despite the time sunk into building already helped me realize the benefits of iteration: it creates a better product.</p>
+
+    <h3 class="img-heading">Have a firm grasp when conducting user research.</h3>
+    <p>Time your discussions and interviews. Step in when conversations go off on tangents so you can protect everyone's energy and keep things moving.</p>
   </section>
 </main>
 
@@ -386,18 +483,29 @@
   </div>
 </footer>
 
+<div class="sketch-lightbox" id="sketchLightbox"><img src="" alt="Enlarged sketch" /></div>
+
 <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js" defer></script>
 <script src="pixel-grid.js" defer></script>
 <script src="sidebar-icons.js" defer></script>
 <script src="cursor.js" defer></script>
 <script src="case-study.js" defer></script>
+<script>
+  (function () {
+    var box = document.getElementById('sketchLightbox');
+    var boxImg = box ? box.querySelector('img') : null;
+    document.querySelectorAll('[data-zoomable]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        if (!box || !boxImg) return;
+        boxImg.src = el.getAttribute('data-zoomable') || el.src;
+        box.classList.add('open');
+      });
+    });
+    if (box) {
+      box.addEventListener('click', function () { box.classList.remove('open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') box.classList.remove('open'); });
+    }
+  })();
+</script>
 </body>
 </html>
-
-<style id="__om-edit-overrides">
-:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-size: 22px !important }
-:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-size: 16px !important }
-:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-weight: 300 !important }
-:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-weight: 600 !important }
-:is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,figcaption,label,span,a,em,strong,small,td,th,caption) >div:nth-child(2) { font-weight: 500 !important }
-</style>
