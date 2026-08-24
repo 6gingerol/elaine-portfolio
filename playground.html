@@ -155,14 +155,22 @@
   </div>
 </main>
 
+<footer class="home-foot" data-screen-label="Footer">
+  <div class="rain-scene footer-pixel-grid" aria-hidden="true"></div>
+  <div class="home-foot-inner">
+    <p class="ff-made">Made by Elaine</p>
+    <p class="ff-love">with a cup of green tea and lots of love ♥</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js" defer></script>
+<script src="pixel-grid.js" defer></script>
 <script>
   // mobile drawer
   const body = document.body;
   document.getElementById('menuBtn').addEventListener('click', () => body.classList.toggle('nav-open'));
   document.getElementById('backdrop').addEventListener('click', () => body.classList.remove('nav-open'));
 </script>
-<!-- cursor engine (circle default — matches the rest of the site). Old cloud/star cursors kept for revert:
-     pixel-cursor.js · cloud-cursor.js -->
 <script src="cursor.js" defer></script>
 <script src="sidebar-icons.js" defer></script>
 </body>

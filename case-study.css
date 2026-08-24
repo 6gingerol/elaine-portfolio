@@ -5,6 +5,21 @@
    compare, sticky-scroll, gallery, stats, quote, before/after,
    process snapshots, prev/next nav.
    ============================================================ */
+@font-face {
+  font-family: 'PP Mondwest';
+  src: url('assets/fonts/PPMondwest-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Mondwest';
+  src: url('assets/fonts/PPMondwest-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Cross-document view transitions (MPA navigation cross-fade) */
 @view-transition { navigation: auto; }
 ::view-transition-old(root),
@@ -377,28 +392,27 @@ html.locked .cs-gate {
    ============================================================ */
 .home-foot {
   position: relative;
-  margin-top: 0;
+  margin-top: clamp(80px, 14vh, 170px);
   min-height: clamp(210px, 30vh, 300px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   padding-bottom: clamp(40px, 7vh, 76px);
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
-  border-top: 1px solid var(--line);
+  border-top: none;
   background: var(--bg);
-  /* slide-up reveal: starts low + clipped, rises as it enters view */
   opacity: 0;
   transform: translateY(48px);
   transition: opacity 0.9s var(--ease), transform 1.05s var(--ease);
 }
 .home-foot.in-view { opacity: 1; transform: none; }
 .home-foot .rain-scene {
-  position: absolute; inset: 0; z-index: 1;
+  position: absolute; inset: -40px 0 0 0; z-index: 1;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);
-          mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 54%, transparent 94%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 54%, transparent 94%);
 }
 .home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; }
 .home-foot-inner {
@@ -409,7 +423,7 @@ html.locked .cs-gate {
 }
 .home-foot .ff-made {
   margin: 0;
-  font-family: var(--font-pixel);
+  font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
   font-weight: 400; letter-spacing: 0.01em;
   font-size: clamp(22px, 2.2vw, 30px); line-height: 1.05;
   color: var(--ink); white-space: nowrap;
@@ -417,12 +431,12 @@ html.locked .cs-gate {
 .home-foot .ff-place {
   margin: 0;
   font-family: var(--font-mono); font-size: 11px; font-weight: 600;
-  letter-spacing: 0.16em; text-transform: none;
+  letter-spacing: 0.03em; text-transform: none;
   color: var(--steel); white-space: nowrap;
 }
 .home-foot .ff-love {
   margin: 1px 0 0;
-  font-family: var(--font-pixel);
+  font-family: 'PP Mondwest', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
   font-weight: 400; font-size: clamp(12px, 1.1vw, 15px); letter-spacing: 0.02em;
   color: var(--silver); white-space: nowrap;
 }
@@ -430,7 +444,7 @@ html.locked .cs-gate {
   .home-foot { opacity: 1; transform: none; transition: none; }
 }
 @media (max-width: 760px) {
-  .home-foot { min-height: clamp(190px, 28vh, 240px); }
+  .home-foot { margin-top: clamp(60px, 11vh, 110px); min-height: clamp(190px, 28vh, 240px); }
 }
 
 /* ============================================================

@@ -86,7 +86,7 @@
 
       <article class="c-6 proj reveal-self" id="palette" data-screen-label="Project Hackathon Judging Portal">
         <a href="case-hackathon.html" class="p-media" aria-label="Open Hackathon Judging Portal case study">
-          <span class="frame"><video src="assets/award-admin.mp4" class="full" autoplay muted loop playsinline preload="auto" aria-label="Hackathon judging portal — admin award view, looping demo"></video></span>
+          <span class="frame"><video src="assets/award-admin.mp4" class="full" autoplay muted loop playsinline preload="metadata" aria-label="Hackathon judging portal — admin award view, looping demo"></video></span>
         </a>
         <div class="p-body">
           <div class="p-tags"><span class="tag">Product Design</span><span class="tag">Systems</span></div>
@@ -184,7 +184,7 @@
       <div class="rain-scene footer-pixel-grid" aria-hidden="true"></div>
       <div class="home-foot-inner">
         <p class="ff-made">Made by Elaine</p>
-        <p class="ff-love">with a cup of green tea and lots of love</p>
+        <p class="ff-love">with a cup of green tea and lots of love ♥</p>
       </div>
     </footer>
   </section>
@@ -238,6 +238,7 @@
   function showView(id, scrollTargetId) {
     views.forEach((s) => s.classList.toggle('view-active', s.id === id));
     navItems.forEach((a) => a.classList.toggle('active', a.dataset.spy === id));
+    if (window.__pgNudge) window.__pgNudge();
     if (scrollTargetId) {
       const t = document.getElementById(scrollTargetId);
       if (t) {

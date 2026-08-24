@@ -6,6 +6,7 @@
 <title>Hackathon Judging Portal — Elaine Chen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" href="assets/fonts/PPMondwest-Regular.otf" as="font" type="font/otf" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="case-study.css" />
 <link rel="stylesheet" href="sidebar.css" />
@@ -70,7 +71,8 @@
     color: var(--ink);
     letter-spacing: -0.025em;
   }
-  .statement.hmw .hmw-lead {
+  .statement.hmw .hmw-lead,
+  .cs-section > .hmw-lead {
     display: block;
     font-family: var(--font-body);
     font-weight: 500;
@@ -80,6 +82,7 @@
     color: var(--steel);
     margin-bottom: 10px;
   }
+  .cs-section > .hmw-lead + .img-heading { margin-top: 0; }
 
 
   .cs-section .blk + p { margin-top: clamp(16px, 2.4vh, 24px); }
@@ -284,7 +287,7 @@
   <!-- HERO -->
   <div class="cs-hero reveal-self" data-screen-label="Hackathon Judging Portal hero">
     <div class="screen">
-      <div class="media"><video src="assets/award-admin.mp4" autoplay muted loop playsinline preload="auto" aria-label="Judging portal — admin view of a specific award in motion"></video></div>
+      <div class="media"><video src="assets/award-admin.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Judging portal — admin view of a specific award in motion"></video></div>
     </div>
   </div>
 
@@ -357,7 +360,7 @@
     <p>We started to answer this by using our research insights to create a user flow that represents the overarching judging process: from judges grading each individual project all the way to organizers selecting winners.</p>
     <div class="blk blk-full">
       <div class="slot framed flow-figure">
-        <img src="assets/judging user flow.png" alt="End-to-end judging portal flow — from selecting an event through task assignment, judging, statistics, and award decisions" style="display:block; width:100%; height:auto; background:var(--bg);" />
+        <img src="assets/judging user flow.png" alt="End-to-end judging portal flow — from selecting an event through task assignment, judging, statistics, and award decisions" style="display:block; width:100%; height:auto; background:var(--bg);" loading="lazy" />
       </div>
       <p class="cap">The end-to-end judging workflow.</p>
     </div>
