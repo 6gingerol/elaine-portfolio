@@ -399,7 +399,7 @@ html.locked .cs-gate {
   align-items: center;
   justify-content: flex-end;
   padding-bottom: clamp(40px, 7vh, 76px);
-  overflow: visible;
+  overflow: hidden;
   isolation: isolate;
   border-top: none;
   background: var(--bg);
@@ -409,10 +409,11 @@ html.locked .cs-gate {
 }
 .home-foot.in-view { opacity: 1; transform: none; }
 .home-foot .rain-scene {
-  position: absolute; inset: -40px 0 0 0; z-index: 1;
+  position: absolute; inset: 0; z-index: 1;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 54%, transparent 94%);
-          mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 54%, transparent 94%);
+  contain: strict;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.18) 26%, rgba(0,0,0,0.6) 64%, rgba(0,0,0,0.85) 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.18) 26%, rgba(0,0,0,0.6) 64%, rgba(0,0,0,0.85) 100%);
 }
 .home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; }
 .home-foot-inner {
