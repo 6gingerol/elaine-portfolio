@@ -24,10 +24,15 @@ body { margin-left: var(--spine-w); }
   background: var(--bg);
   z-index: 40;
   overflow-y: auto;
+  line-height: 1.62;
 }
 .spine::-webkit-scrollbar { width: 0; }
+.js .spine .toc,
+.js .spine .spine-links { opacity: 0; transition: opacity 0.15s ease; }
+.js .spine.icons-ready .toc,
+.js .spine.icons-ready .spine-links { opacity: 1; }
 
-.spine-id { margin-bottom: 28px; }
+.spine-id { margin-bottom: 28px; padding-left: 10px; }
 .spine-id .brand {
   font-family: var(--font-display);
   font-weight: 600; font-size: 21px;
@@ -40,7 +45,7 @@ body { margin-left: var(--spine-w); }
   display: flex; align-items: center;
   gap: 10px;
   padding: 8px 10px; border-radius: 8px;
-  font-size: 14px; font-weight: 500; color: var(--steel);
+  font-size: 14px; font-weight: 500; line-height: 22.68px; color: var(--steel);
   transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 .toc a.toc-item .nav-ic-wrap {
@@ -57,11 +62,11 @@ body { margin-left: var(--spine-w); }
 .toc a.toc-item:hover { background: var(--surface); color: var(--ink); }
 .toc a.toc-item.active { background: var(--surface); color: var(--ink); }
 .toc-group-label {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: 10px; line-height: 16.2px; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--steel); padding: 14px 10px 4px; margin-top: 4px;
 }
 .toc a.toc-proj {
-  color: var(--steel); padding-left: 22px;
+  color: var(--steel);
 }
 .toc a.toc-proj:hover { color: var(--ink); }
 .toc a.toc-proj.active { color: var(--ink); }
@@ -70,7 +75,7 @@ body { margin-left: var(--spine-w); }
 .spine-links { display: flex; flex-direction: column; gap: 2px; }
 .spine-links a {
   display: flex; align-items: center; justify-content: flex-start; gap: 10px;
-  font-size: 14px; font-weight: 500; color: var(--graphite);
+  font-size: 14px; font-weight: 500; line-height: 22.68px; color: var(--graphite);
   padding: 8px 10px; border-radius: 8px;
   transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }

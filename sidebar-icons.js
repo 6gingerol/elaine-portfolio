@@ -83,4 +83,7 @@
     iconWrap.innerHTML = svg(icons[iconName] || icons.file);
     link.insertBefore(iconWrap, link.firstChild);
   });
+
+  // reveal spine now that icons are injected (prevents FOUC)
+  document.querySelectorAll('.spine').forEach(s => s.classList.add('icons-ready'));
 })();

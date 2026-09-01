@@ -47,7 +47,7 @@
   --frame-grad: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%);
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-y: scroll; }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
   font-family: var(--font-body); font-size: 16px; line-height: 1.65;
@@ -412,10 +412,10 @@ html.locked .cs-gate {
   position: absolute; inset: 0; z-index: 1;
   pointer-events: none;
   contain: strict;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.18) 26%, rgba(0,0,0,0.6) 64%, rgba(0,0,0,0.85) 100%);
-          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.18) 26%, rgba(0,0,0,0.6) 64%, rgba(0,0,0,0.85) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,1) 70%);
+          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,1) 70%);
 }
-.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; }
+.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; opacity: 1; filter: contrast(1.8); }
 .home-foot-inner {
   position: relative; z-index: 3;
   display: flex; flex-direction: column; align-items: center; gap: 5px;
@@ -469,5 +469,5 @@ html.locked .cs-gate {
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.75) 48%, rgba(0,0,0,1) 100%);
             mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.75) 48%, rgba(0,0,0,1) 100%);
   }
-  .home-foot .rain-scene canvas { opacity: 0.6; filter: brightness(1.8); }
+  .home-foot .rain-scene canvas { opacity: 1; filter: brightness(2.5) contrast(1.2); }
 }

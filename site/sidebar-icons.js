@@ -13,7 +13,10 @@
     /* jellybreak — ghost/jellyfish shape */
     jellyfish: '<path d="M9 10H9.01M15 10H15.01M12 2C9.87827 2 7.84344 2.84285 6.34315 4.34315C4.84285 5.84344 4 7.87827 4 10V22L7 19L9.5 21.5L12 19L14.5 21.5L17 19L20 22V10C20 7.87827 19.1571 5.84344 17.6569 4.34315C16.1566 2.84285 14.1217 2 12 2Z"></path>',
     user: '<path d="M20 21a8 8 0 1 0-16 0"></path><circle cx="12" cy="7" r="4"></circle>',
-    sparkles: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path><path d="M5 21l.9-2.6L8.5 17l-2.6-.9L5 13.5l-.9 2.6L1.5 17l2.6.9z"></path>'
+    sparkles: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path><path d="M5 21l.9-2.6L8.5 17l-2.6-.9L5 13.5l-.9 2.6L1.5 17l2.6.9z"></path>',
+    mail: '<rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>',
+    linkedin: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>',
+    download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line>'
   };
 
   const labelToIcon = [
@@ -51,4 +54,36 @@
     iconWrap.innerHTML = svg(icons[iconName] || icons.projects);
     link.insertBefore(iconWrap, link.firstChild);
   });
+
+  // group the project tabs under a "Projects" label
+  const projs = document.querySelectorAll('.toc a.toc-proj');
+  if (projs.length && !document.querySelector('.toc-group-label')) {
+    const label = document.createElement('span');
+    label.className = 'toc-group-label';
+    label.textContent = 'projects';
+    projs[0].parentNode.insertBefore(label, projs[0]);
+  }
+
+  // footer links (Email / LinkedIn / Resume) — leading icons to match nav
+  const footIcon = [
+    [/email|^mailto:/i, 'mail'],
+    [/linkedin/i, 'linkedin'],
+    [/resume|drive\.google/i, 'download']
+  ];
+  document.querySelectorAll('.spine-links a').forEach((link) => {
+    if (link.querySelector('.nav-ic')) return;
+    const text = (link.textContent || '').trim();
+    const href = link.getAttribute('href') || '';
+    let iconName = 'file';
+    for (const [pattern, name] of footIcon) {
+      if (pattern.test(text) || pattern.test(href)) { iconName = name; break; }
+    }
+    const iconWrap = document.createElement('span');
+    iconWrap.className = 'nav-ic-wrap';
+    iconWrap.innerHTML = svg(icons[iconName] || icons.file);
+    link.insertBefore(iconWrap, link.firstChild);
+  });
+
+  // reveal spine now that icons are injected (prevents FOUC)
+  document.querySelectorAll('.spine').forEach(s => s.classList.add('icons-ready'));
 })();

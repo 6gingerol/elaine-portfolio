@@ -32,7 +32,7 @@
   --frame-grad: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%);
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-y: scroll; }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
   font-family: var(--font-body); font-size: 16px; line-height: 1.65;
@@ -397,10 +397,10 @@ html.locked .cs-gate {
 .home-foot .rain-scene {
   position: absolute; inset: 0; z-index: 1;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);
-          mask-image: linear-gradient(to bottom, #000 0%, #000 54%, transparent 94%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,1) 70%);
+          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,1) 70%);
 }
-.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; }
+.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; opacity: 1; filter: contrast(1.8); }
 .home-foot-inner {
   position: relative; z-index: 3;
   display: flex; flex-direction: column; align-items: center; gap: 5px;
