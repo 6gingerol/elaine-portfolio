@@ -153,10 +153,10 @@ a { color: inherit; text-decoration: none; }
 /* project tabs — same quiet rows, same alignment + size */
 .toc-group-label {
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--faint); padding: 14px 10px 4px; margin-top: 4px;
+  color: var(--steel); padding: 14px 10px 4px; margin-top: 4px;
 }
 .toc a.toc-proj {
-  color: var(--silver); padding-left: 22px;
+  color: var(--steel); padding-left: 22px;
 }
 .toc a.toc-proj:hover { color: var(--ink); }
 
@@ -379,10 +379,10 @@ html.js .stage > .section.view-active { display: block; }
   position: absolute; inset: 0; z-index: 1;
   pointer-events: none;
   contain: strict;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.18) 26%, rgba(0,0,0,0.6) 64%, rgba(0,0,0,0.85) 100%);
-          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.18) 26%, rgba(0,0,0,0.6) 64%, rgba(0,0,0,0.85) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,1) 70%);
+          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,1) 70%);
 }
-.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; }
+.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; opacity: 1; filter: contrast(1.8); }
 .home-foot-inner {
   position: relative; z-index: 3;
   display: flex; flex-direction: column; align-items: center; gap: 5px;
@@ -592,4 +592,9 @@ footer.foot a:hover { color: var(--ink); }
   .proj .p-media .frame img, .proj .p-media .frame video {
     background: linear-gradient(150deg, #1c1c1e 0%, #232326 52%, #28282c 100%);
   }
+  .home-foot .rain-scene {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.75) 48%, rgba(0,0,0,1) 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.75) 48%, rgba(0,0,0,1) 100%);
+  }
+  .home-foot .rain-scene canvas { opacity: 1; filter: brightness(2.5) contrast(1.2); }
 }

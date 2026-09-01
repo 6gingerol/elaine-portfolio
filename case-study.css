@@ -465,4 +465,9 @@ html.locked .cs-gate {
     --line-2:   #38383a;
     --frame-grad: linear-gradient(150deg, #1c1c1e 0%, #232326 52%, #28282c 100%);
   }
+  .home-foot .rain-scene {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.75) 48%, rgba(0,0,0,1) 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.75) 48%, rgba(0,0,0,1) 100%);
+  }
+  .home-foot .rain-scene canvas { opacity: 0.6; filter: brightness(1.8); }
 }
