@@ -13,6 +13,8 @@
 (function () {
   var reduced = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isDark = window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   function makeSketch(host) {
     return function (p) {
@@ -62,7 +64,7 @@
         for (var gy = 0; gy < rows; gy++) {
           var cy = (gy + 0.5) * pitch;
           var vy = 1 - cy / h;
-          vy = ss(vy * 1.12);
+          vy = isDark ? ss(vy * 0.7) + 0.15 : ss(vy * 1.12);
           if (vy <= 0.001) continue;
           for (var gx = 0; gx < cols; gx++) {
             var cx = (gx + 0.5) * pitch;
@@ -74,8 +76,8 @@
 
             var sv = ss(v);
             var s = pitch * (0.16 + 0.32 * sv);
-            var gray = 150 - 70 * sv;
-            var a = (0.04 + 0.24 * sv) * 255;
+            var gray = isDark ? 200 + 50 * sv : 150 - 70 * sv;
+            var a = (isDark ? 0.18 + 0.55 * sv : 0.04 + 0.24 * sv) * 255;
             p.fill(gray, gray, gray + 1, a);
             diamond(cx, cy, s);
           }

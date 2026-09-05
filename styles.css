@@ -50,7 +50,7 @@
 
   --spine-w: 248px;
   --gap: clamp(16px, 1.6vw, 26px);
-  --pad: clamp(24px, 3.6vw, 64px);
+  --pad: clamp(24px, 4.2vw, 80px);
   --radius: 12px;
 }
 
