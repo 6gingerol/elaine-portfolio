@@ -15,6 +15,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to content</a>
+
 <template id="__bundler_thumbnail" data-bg-color="#ffffff">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
     <rect width="1200" height="800" fill="#ffffff"/>
@@ -32,7 +34,7 @@
 <!-- mobile topbar (sidebar is always visible on desktop) -->
 <div class="topbar">
   <a href="#work" class="brand">Elaine Chen</a>
-  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span></button>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-controls="spine" aria-expanded="false"><span class="bars"><span></span><span></span><span></span></span></button>
 </div>
 <div class="backdrop" id="backdrop"></div>
 
@@ -43,7 +45,7 @@
     <span class="descriptor" style="font-size: 13px">Product Designer</span>
   </div>
 
-  <nav class="toc" id="toc">
+  <nav class="toc" id="toc" aria-label="Primary">
     <a href="#work" class="toc-item" data-spy="work"><span>Home</span></a>
     <a href="#about" class="toc-item" data-spy="about"><span>About</span></a>
     <a href="playground.html" class="toc-item"><span>Playground</span></a>
@@ -62,12 +64,12 @@
   </div>
 </aside>
 
-<main class="stage" style="padding: 0px 42px; margin: 0px 0px 0px var(--spine-w)">
+<main class="stage" id="main-content">
 
   <!-- OPENING — intro + work together -->
-  <section class="section opening" id="work" data-screen-label="Opening" style="padding: 51px 0px 50px">
+  <section class="section opening view-active" id="work" data-screen-label="Opening">
     <header class="opening-head reveal-self">
-      <h1 style="font-size: 40px; padding: 100px 0px 0px; font-weight: 300">Elaine is a product designer who thinks in <span style="white-space:nowrap">systems ∆</span> and crafts thoughtful digital experiences ✨.</h1>
+      <h1>Elaine is a product designer who thinks in <span style="white-space:nowrap">systems ∆</span> and crafts thoughtful digital experiences ✨.</h1>
       <div class="locale" aria-label="Location and local time">
         <span class="loc">Vancouver, BC</span>
         <span class="clock" id="localClock" aria-live="off">--:--:--</span>
@@ -81,7 +83,7 @@
         </a>
         <div class="p-body">
           <div class="p-tags"><span class="tag">UX/UI</span><span class="tag">Branding</span><span class="tag">Design Systems</span></div>
-          <h3 style="font-weight: 500">Driving design for Western Canada's largest hackathons.</h3>
+          <h3>Driving design for Western Canada's largest hackathons.</h3>
         </div>
       </article>
 
@@ -91,7 +93,7 @@
         </a>
         <div class="p-body">
           <div class="p-tags"><span class="tag">Product Design</span><span class="tag">Systems</span></div>
-          <h3 style="font-weight: 500">Optimizing the end-to-end judging workflow for nwPlus' hackathons.</h3>
+          <h3>Optimizing the end-to-end judging workflow for nwPlus' hackathons.</h3>
         </div>
       </article>
 
@@ -104,7 +106,7 @@
         </span>
         <div class="p-body">
           <div class="p-tags"><span class="tag">Designathon</span><span class="tag">Mobile</span></div>
-          <h3 style="font-weight: 500">A playful mobile experience designed in 24 hours.</h3>
+          <h3>Designed an app to encourage intentional, guilt-free breaks.</h3>
         </div>
       </article>
 
@@ -123,7 +125,7 @@
         </span>
         <div class="p-body">
           <div class="p-tags"><span class="tag">Startup</span><span class="tag">Prototyping</span></div>
-          <h3 style="font-weight: 500">Prototyping early-stage ideas for a startup.</h3>
+          <h3>Prototyping early-stage ideas for a startup.</h3>
         </div>
       </article>
     </div>
@@ -141,11 +143,12 @@
 
   <!-- ABOUT -->
   <section class="section" id="about" data-screen-label="About">
+    <h2 class="sr-only">About Elaine</h2>
     <div class="about-grid">
       <div class="about-body reveal-self">
         <p class="about-lead">Hi, I'm Elaine!</p>
         <p>I’m a designer at heart — shaped by years of curiosity and hands-on experimentation with both digital and analog tools. I started by creating logos and profile pictures for Instagram influencers, then expanded into customizing shoes, making posters, and digital illustration.</p>
-        <p style="padding: 0px">I used to think that design was just about making things beautiful, but now I get to solve problems too! I love the process because I get to work at the intersection of research, human-centered thinking and creativity.</p>
+        <p>I used to think that design was just about making things beautiful, but now I get to solve problems too! I love the process because I get to work at the intersection of research, human-centered thinking and creativity.</p>
         <p>Outside of design, I’m usually exploring vintage markets, gaming, practicing yoga, or catching a DJ set &#10022;.</p>
       </div>
       <div class="portrait reveal-self"><img src="assets/elaine-portrait.webp" alt="Elaine Chen" class="portrait-img" loading="lazy" /></div>
@@ -226,8 +229,14 @@
   const body = document.body;
   const menuBtn = document.getElementById('menuBtn');
   const backdrop = document.getElementById('backdrop');
-  function closeNav() { body.classList.remove('nav-open'); }
-  menuBtn.addEventListener('click', () => body.classList.toggle('nav-open'));
+  function closeNav() {
+    body.classList.remove('nav-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+  menuBtn.addEventListener('click', () => {
+    const open = body.classList.toggle('nav-open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+  });
   backdrop.addEventListener('click', closeNav);
 
   // ---- section views: work / about shown one at a time ----
@@ -237,6 +246,7 @@
   const subOf = { cadence: 'work', palette: 'work', saved: 'work', loop: 'work' };
 
   function showView(id, scrollTargetId) {
+    document.documentElement.classList.add('single-view');
     views.forEach((s) => s.classList.toggle('view-active', s.id === id));
     navItems.forEach((a) => a.classList.toggle('active', a.dataset.spy === id));
     if (window.__pgNudge) window.__pgNudge();

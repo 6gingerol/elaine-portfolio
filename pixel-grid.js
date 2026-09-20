@@ -1,9 +1,8 @@
 /* ============================================================
-   pixel-grid.js — site footer: interactive pixel gradient
-   A halftone field of small diamonds (rotated squares) that is
-   dense + dark toward the top and dissolves into sparse, faint
-   specks toward the bottom — leaving the centered sign-off
-   ("Made by Elaine") clean and legible. Grayscale only.
+   pixel-grid.js — site footer: quiet halftone field
+   A restrained field of small diamonds that is denser toward the top
+   and dissolves toward the bottom, echoing the original footer field
+   behind the sign-off. Grayscale only.
 
    Drives EVERY .footer-pixel-grid on the page (the homepage has
    one per section-view; case pages have one each). Also handles
@@ -45,8 +44,8 @@
         if (reduced) { p.redraw(); p.noLoop(); }
       };
 
-      function diamond(cx, cy, s) {
-        p.quad(cx, cy - s, cx + s, cy, cx, cy + s, cx - s, cy);
+      function diamond(cx, cy, size) {
+        p.quad(cx, cy - size, cx + size, cy, cx, cy + size, cx - size, cy);
       }
 
       p.draw = function () {
@@ -64,7 +63,7 @@
         for (var gy = 0; gy < rows; gy++) {
           var cy = (gy + 0.5) * pitch;
           var vy = 1 - cy / h;
-          vy = isDark ? ss(vy * 0.7) + 0.15 : ss(vy * 1.12);
+          vy = isDark ? ss(vy * 0.62) + 0.10 : ss(vy * 1.02);
           if (vy <= 0.001) continue;
           for (var gx = 0; gx < cols; gx++) {
             var cx = (gx + 0.5) * pitch;
@@ -75,11 +74,11 @@
             if (v > 1) v = 1;
 
             var sv = ss(v);
-            var s = pitch * (0.16 + 0.32 * sv);
+            var size = pitch * (0.16 + 0.32 * sv);
             var gray = isDark ? 200 + 50 * sv : 150 - 70 * sv;
-            var a = (isDark ? 0.18 + 0.55 * sv : 0.04 + 0.24 * sv) * 255;
-            p.fill(gray, gray, gray + 1, a);
-            diamond(cx, cy, s);
+            var a = (isDark ? 0.12 + 0.36 * sv : 0.025 + 0.16 * sv) * 255;
+            p.fill(gray, gray, gray, a);
+            diamond(cx, cy, size);
           }
         }
       };

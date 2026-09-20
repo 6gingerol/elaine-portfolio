@@ -33,10 +33,10 @@
   --ink: #0b0b0c;
   --graphite: #2b2b2d;
   --steel: #6c6c70;
-  --silver: #9a9a9e;
-  --faint: #c0c0c4;
+  --silver: #62636a;
+  --faint: #74757a;
   --line: #e7e7e8;
-  --line-2: #d8d8da;
+  --line-2: #929398;
   --surface: #f2f2f2;
   --paper: #fafafa;
   --bg: #ffffff;
@@ -173,7 +173,7 @@ html.locked .cs-gate {
 /* ============================================================
    INTRO — title, one-liner, meta row
    ============================================================ */
-.cs-head { margin-top: clamp(40px, 6vh, 64px); }
+.cs-head { margin-top: clamp(56px, 8vh, 88px); }
 .cs-head h1 {
   font-family: var(--font-display); font-weight: 600;
   font-size: clamp(34px, 4.2vw, 52px); line-height: 1.08; margin: 0;
@@ -392,42 +392,54 @@ html.locked .cs-gate {
    ============================================================ */
 .home-foot {
   position: relative;
-  margin-top: clamp(80px, 14vh, 170px);
-  min-height: clamp(210px, 30vh, 300px);
+  margin-top: clamp(88px, 12vh, 136px);
+  min-height: clamp(110px, 15vh, 160px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  padding-bottom: clamp(40px, 7vh, 76px);
+  justify-content: center;
+  padding-top: clamp(12px, 2vh, 18px);
+  padding-bottom: clamp(10px, 1.8vh, 16px);
   overflow: hidden;
   isolation: isolate;
   border-top: none;
   background: var(--bg);
-  opacity: 0;
-  transform: translateY(48px);
+  opacity: 1;
+  transform: none;
   transition: opacity 0.9s var(--ease), transform 1.05s var(--ease);
 }
+.js .home-foot { opacity: 0; transform: translateY(48px); }
 .home-foot.in-view { opacity: 1; transform: none; }
 .home-foot .rain-scene {
   position: absolute; inset: 0; z-index: 1;
   pointer-events: none;
   contain: strict;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,1) 70%);
-          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,1) 70%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
 }
-.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; opacity: 1; filter: contrast(1.8); }
+.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; opacity: 0.32; filter: contrast(1.16); }
 .home-foot-inner {
-  position: relative; z-index: 3;
+  position: relative; z-index: 3; isolation: isolate;
   display: flex; flex-direction: column; align-items: center; gap: 5px;
   text-align: center;
   pointer-events: none;
+  padding: 10px 56px 8px;
+}
+.home-foot-inner::before {
+  content: "";
+  position: absolute; inset: -24px -64px;
+  z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse at center,
+    color-mix(in srgb, var(--bg) 94%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 68%, transparent) 50%,
+    transparent 82%);
 }
 .home-foot .ff-made {
   margin: 0;
   font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
-  font-weight: 400; letter-spacing: 0.01em;
-  font-size: clamp(22px, 2.2vw, 30px); line-height: 1.05;
-  color: var(--ink); white-space: nowrap;
+  font-weight: 400; letter-spacing: 0.03em;
+  font-size: clamp(16px, 1.5vw, 20px); line-height: 1.05;
+  color: var(--ink); opacity: 0.92; white-space: nowrap;
 }
 .home-foot .ff-place {
   margin: 0;
@@ -438,14 +450,15 @@ html.locked .cs-gate {
 .home-foot .ff-love {
   margin: 1px 0 0;
   font-family: 'PP Mondwest', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
-  font-weight: 400; font-size: clamp(12px, 1.1vw, 15px); letter-spacing: 0.02em;
-  color: var(--silver); white-space: nowrap;
+  font-weight: 400; font-size: clamp(11px, 1vw, 13px); letter-spacing: 0.04em;
+  color: var(--graphite); opacity: 0.78; white-space: nowrap;
 }
 @media (prefers-reduced-motion: reduce) {
   .home-foot { opacity: 1; transform: none; transition: none; }
 }
 @media (max-width: 760px) {
-  .home-foot { margin-top: clamp(60px, 11vh, 110px); min-height: clamp(190px, 28vh, 240px); }
+  .home-foot { margin-top: clamp(72px, 10vh, 104px); min-height: clamp(100px, 15.5vh, 140px); }
+  .home-foot-inner { padding-inline: 28px; }
 }
 
 /* ============================================================
@@ -458,16 +471,16 @@ html.locked .cs-gate {
     --surface:  #1c1c1e;
     --ink:      #e8e8ea;
     --graphite: #c8c8cc;
-    --steel:    #8e8e93;
-    --silver:   #636366;
-    --faint:    #3a3a3c;
+    --steel:    #9a9aa0;
+    --silver:   #a5a5aa;
+    --faint:    #85868c;
     --line:     #2c2c2e;
-    --line-2:   #38383a;
+    --line-2:   #66676e;
     --frame-grad: linear-gradient(150deg, #1c1c1e 0%, #232326 52%, #28282c 100%);
   }
   .home-foot .rain-scene {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.75) 48%, rgba(0,0,0,1) 100%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 18%, rgba(0,0,0,0.75) 48%, rgba(0,0,0,1) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
   }
-  .home-foot .rain-scene canvas { opacity: 1; filter: brightness(2.5) contrast(1.2); }
+  .home-foot .rain-scene canvas { opacity: 0.54; filter: brightness(1.8) contrast(1.08); }
 }

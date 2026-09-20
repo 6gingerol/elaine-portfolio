@@ -35,10 +35,24 @@
   --ink:      #0b0b0c;
   --graphite: #2b2b2d;
   --steel:    #6c6c70;
-  --silver:   #9a9a9e;
-  --faint:    #c0c0c4;
+  --silver:   #62636a;
+  --faint:    #74757a;
   --line:     #e7e7e8;
-  --line-2:   #d8d8da;
+  --line-2:   #929398;
+
+  /* 4px base scale: compact details can use half-steps, while
+     page-level spacing stays on the larger 8px rhythm. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 80px;
+  --focus: #005fcc;
 
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-sans:    "Schibsted Grotesk", system-ui, sans-serif;
@@ -55,7 +69,7 @@
 }
 
 * , *::before, *::after { box-sizing: border-box; }
-html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; overflow-y: scroll; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; scroll-padding-top: 88px; overflow-y: scroll; }
 body {
   margin: 0;
   background: var(--bg);
@@ -68,6 +82,38 @@ body {
 }
 ::selection { background: var(--ink); color: var(--bg); }
 a { color: inherit; text-decoration: none; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:where(a, button, summary, input, select, textarea, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  padding: var(--space-2) var(--space-3);
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  line-height: 1.4;
+  transform: translateY(-180%);
+  transition: transform 0.2s var(--ease);
+}
+.skip-link:focus-visible { transform: translateY(0); }
 
 .mono {
   font-family: var(--font-mono);
@@ -210,7 +256,7 @@ a { color: inherit; text-decoration: none; }
    STAGE
    ============================================================ */
 .stage { position: relative; z-index: 1; margin-left: var(--spine-w); padding: 0 var(--pad); }
-.section { padding-block: clamp(40px, 7vh, 96px); scroll-margin-top: 24px; }
+.section { padding-block: clamp(40px, 7vh, 96px); scroll-margin-top: 88px; }
 
 .sec-label { display: flex; align-items: center; gap: 14px; margin-bottom: clamp(20px, 3vh, 34px); }
 .sec-label .ix { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink); }
@@ -221,8 +267,8 @@ a { color: inherit; text-decoration: none; }
 /* ============================================================
    OPENING — full-width masthead, then work grid below
    ============================================================ */
-.opening { padding-top: clamp(64px, 10vh, 108px); }
-.opening-head { margin-bottom: clamp(40px, 6vh, 64px); }
+.opening { padding-top: clamp(120px, 15vh, 156px); }
+.opening-head { margin-bottom: clamp(56px, 8vh, 88px); }
 
 /* top row — location/time, right-aligned */
 .opening-top {
@@ -240,8 +286,10 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .opening-head h1 .h1-caret { animation: none; } }
 
 /* location / local time — quiet interface metadata under the headline */
-html.js .stage > .section { display: none; }
-html.js .stage > .section.view-active { display: block; }
+/* JS can switch between views, but all content remains available when
+   scripting is unavailable. */
+html.js .stage > .section { display: block; }
+html.js.single-view .stage > .section:not(.view-active) { display: none; }
 .locale {
   display: flex; align-items: baseline; gap: 12px;
   margin-top: clamp(16px, 2.4vh, 26px);
@@ -254,10 +302,11 @@ html.js .stage > .section.view-active { display: block; }
 
 .opening-head h1 {
   font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
-  font-weight: 400;
-  font-size: clamp(32px, 4.4vw, 64px); line-height: 1.12;
+  font-weight: 300;
+  font-size: 40px; line-height: 1.12;
   letter-spacing: 0; margin: 0; color: var(--ink);
   max-width: 56ch; text-wrap: balance;
+  padding-top: 0;
 }
 .opening-sub {
   margin-top: clamp(20px, 2.6vh, 30px);
@@ -346,63 +395,64 @@ html.js .stage > .section.view-active { display: block; }
 }
 
 /* ============================================================
-   HOMEPAGE FOOTER — a distinct, poetic ending
-   Centered personal sign-off over an ASCII water surface. The section
-   is set apart by generous space and a soft basin lift (a faint radial
-   wash that pools toward the bottom) — no divider rule. The p5 canvas
-   is pointer-events:none so nothing it overlays becomes unclickable.
-   ============================================================ */
-/* ============================================================
-   HOMEPAGE FOOTER — minimal ASCII rain
-   A quiet sign-off on the white page over a faint field of monospace
-   rain characters (ascii-rain.js canvas). Full-bleed: cancels the
-   stage's horizontal padding so the field spans the whole content
-   column. Canvas is pointer-events:none.
+   HOMEPAGE FOOTER — quiet halftone sign-off
+   A soft, full-bleed field of round dots lets the footer echo the
+   site's pixel language without introducing a second visual system.
+   The canvas is pointer-events:none so nothing it overlays becomes
+   unclickable.
    ============================================================ */
 .home-foot {
   position: relative;
-  margin-top: clamp(80px, 14vh, 170px);
+  margin-top: clamp(88px, 12vh, 136px);
   /* full-bleed across the stage content box (cancel --pad) */
   margin-inline: calc(var(--pad) * -1);
-  min-height: clamp(210px, 30vh, 300px);
+  min-height: clamp(96px, 13vh, 136px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: clamp(32px, 5vh, 60px);
-  padding-bottom: clamp(24px, 4vh, 40px);
+  justify-content: center;
+  padding-top: clamp(12px, 2vh, 18px);
+  padding-bottom: clamp(10px, 1.8vh, 16px);
   overflow: hidden;
   isolation: isolate;
   border-top: none;
   background: var(--bg);
-  opacity: 0;
-  transform: translateY(48px);
+  opacity: 1;
+  transform: none;
   transition: opacity 0.9s var(--ease), transform 1.05s var(--ease);
 }
+.js .home-foot { opacity: 0; transform: translateY(48px); }
 .home-foot.in-view { opacity: 1; transform: none; }
 .home-foot .rain-scene {
   position: absolute; inset: 0; z-index: 1;
   pointer-events: none;
   contain: strict;
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,1) 100%);
-          mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,1) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
 }
-.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; opacity: 0.55; filter: contrast(1.8); }
+.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; opacity: 0.32; filter: contrast(1.16); }
 .home-foot-inner {
-  position: relative; z-index: 3;
+  position: relative; z-index: 3; isolation: isolate;
   display: flex; flex-direction: column; align-items: center; gap: 5px;
   text-align: center;
   pointer-events: none;
-  padding: 32px 80px 26px;
+  padding: 10px 56px 8px;
+}
+.home-foot-inner::before {
+  content: "";
+  position: absolute; inset: -24px -64px;
+  z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse at center,
+    color-mix(in srgb, var(--bg) 94%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 68%, transparent) 50%,
+    transparent 82%);
 }
 .home-foot .ff-made {
   margin: 0;
-  /* pixelated display face — matches the headline / project titles */
   font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
-  font-weight: 400; letter-spacing: 0.01em;
-  font-size: clamp(22px, 2.2vw, 30px); line-height: 1.05;
-  color: var(--ink); white-space: nowrap;
-  text-shadow: 0 0 12px var(--bg), 0 0 24px var(--bg), 0 0 40px var(--bg);
+  font-weight: 400; letter-spacing: 0.03em;
+  font-size: clamp(16px, 1.5vw, 20px); line-height: 1.05;
+  color: var(--ink); opacity: 0.92; white-space: nowrap;
 }
 .home-foot .ff-place {
   margin: 0;
@@ -413,15 +463,16 @@ html.js .stage > .section.view-active { display: block; }
 .home-foot .ff-love {
   margin: 1px 0 0;
   font-family: 'PP Mondwest', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
-  font-weight: 400; font-size: clamp(15px, 1.5vw, 18px); letter-spacing: 0.02em;
-  color: var(--graphite); white-space: nowrap;
-  text-shadow: 0 0 12px var(--bg), 0 0 24px var(--bg), 0 0 40px var(--bg), 0 0 60px var(--bg);
+  font-weight: 400; font-size: clamp(11px, 1vw, 13px); letter-spacing: 0.04em;
+  color: var(--graphite); opacity: 0.78; white-space: nowrap;
 }
 @media (prefers-reduced-motion: reduce) {
   .home-foot { opacity: 1; transform: none; transition: none; }
 }
 @media (max-width: 760px) {
-  .home-foot { margin-top: clamp(60px, 11vh, 110px); min-height: clamp(190px, 28vh, 240px); }
+  .home-foot { margin-top: clamp(72px, 10vh, 104px); min-height: clamp(88px, 15vh, 126px); }
+  .opening-head h1 { font-size: clamp(28px, 8vw, 40px); padding-top: 0; }
+  .home-foot-inner { padding-inline: 28px; }
 }
 
 /* ============================================================
@@ -442,12 +493,12 @@ html.js .stage > .section.view-active { display: block; }
 .about-body p.about-lead, .about-lead {
   font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
   font-weight: 300; letter-spacing: 0;
-  font-size: 40px; line-height: 1.12; margin: 0 0 22px; max-width: 19ch;
+  font-size: clamp(32px, 4vw, 40px); line-height: 1.12; margin: 0 0 24px; max-width: 19ch;
 }
 /* About lead sits at the same Y as the homepage headliner:
    home = 51px section padding + 100px headline padding */
-#about { padding-top: 151px; }
-.about-body p { font-size: 15.5px; color: var(--graphite); margin: 0 0 16px; max-width: 56ch; }
+#about { padding-top: clamp(96px, 10vw, 144px); }
+.about-body p { font-size: 16px; color: var(--graphite); margin: 0 0 16px; max-width: 56ch; }
 .portrait { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 .portrait image-slot { width: 100%; height: 100%; display: block; aspect-ratio: 5/7; }
 .portrait-img { width: 100%; height: 100%; display: block; aspect-ratio: 4/5; object-fit: cover; object-position: 43% 30%; }
@@ -538,7 +589,8 @@ footer.foot a:hover { color: var(--ink); }
 /* ============================================================
    REVEAL — quiet
    ============================================================ */
-.reveal-self { opacity: 0; transform: translateY(16px); }
+.reveal-self { opacity: 1; transform: none; }
+.js .reveal-self { opacity: 0; transform: translateY(16px); }
 .reveal-self.in-view { opacity: 1; transform: none; transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
 
 /* ============================================================
@@ -561,6 +613,7 @@ footer.foot a:hover { color: var(--ink); }
   body.nav-open .menu-btn .bars span:nth-child(2) { opacity: 0; }
   body.nav-open .menu-btn .bars span:nth-child(3) { transform: translateY(-4.5px) rotate(-45deg); }
   .stage { margin-left: 0; padding-top: 66px; }
+  .opening { padding-top: clamp(36px, 6vh, 64px); }
 }
 @media (max-width: 940px) {
   .work-grid .c-4 { grid-column: span 6; }
@@ -570,7 +623,7 @@ footer.foot a:hover { color: var(--ink); }
   .intro { height: auto; padding-right: 0; }
   .intro-meta { padding-top: 24px; }
   .intro h1 { font-size: clamp(28px, 8vw, 44px); }
-  .opening-head h1 { font-size: clamp(28px, 8vw, 44px); }
+  .opening-head h1 { font-size: clamp(28px, 8vw, 40px); }
   .opening-sub { gap: 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -593,18 +646,18 @@ footer.foot a:hover { color: var(--ink); }
     --surface:  #1c1c1e;
     --ink:      #e8e8ea;
     --graphite: #c8c8cc;
-    --steel:    #8e8e93;
-    --silver:   #636366;
-    --faint:    #3a3a3c;
+    --steel:    #9a9aa0;
+    --silver:   #a5a5aa;
+    --faint:    #85868c;
     --line:     #2c2c2e;
-    --line-2:   #38383a;
+    --line-2:   #66676e;
   }
   .proj .p-media .frame img, .proj .p-media .frame video {
     background: linear-gradient(150deg, #1c1c1e 0%, #232326 52%, #28282c 100%);
   }
   .home-foot .rain-scene {
-    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,1) 100%);
-            mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(0,0,0,0.08) 35%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,1) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
   }
-  .home-foot .rain-scene canvas { opacity: 1; filter: brightness(2.5) contrast(1.2); }
+  .home-foot .rain-scene canvas { opacity: 0.54; filter: brightness(1.8) contrast(1.08); }
 }
