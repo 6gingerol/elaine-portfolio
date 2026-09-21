@@ -98,7 +98,7 @@ body { margin-left: var(--spine-w); }
   align-items: center; justify-content: space-between;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: none;
 }
 .topbar .brand { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.03em; }
 .menu-btn {
@@ -118,7 +118,7 @@ body { margin-left: var(--spine-w); }
   .spine {
     width: min(86vw, 340px); transform: translateX(-102%);
     transition: transform 0.5s var(--ease);
-    box-shadow: 0 0 60px -10px color-mix(in srgb, var(--ink) 30%, transparent);
+    box-shadow: none;
   }
   body.nav-open .spine { transform: translateX(0); }
   body.nav-open .backdrop { opacity: 1; pointer-events: auto; }

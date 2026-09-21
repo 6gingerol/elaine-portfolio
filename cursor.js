@@ -35,6 +35,10 @@
     'html.cc-on .proj.locked, html.cc-on .proj.locked *,',
     'html.cc-on a.locked, html.cc-on a.locked * {',
     '  cursor: ' + ringUrl + ' !important;',
+    '}',
+    'html.cc-on .proj.proj-jellybreak, html.cc-on .proj.proj-jellybreak *,',
+    'html.cc-on .proj.proj-jellybreak .p-media {',
+    '  cursor: ' + dotUrl + ' !important;',
     '}'
   ].join('\n');
   document.head.appendChild(style);

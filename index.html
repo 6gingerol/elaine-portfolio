@@ -29,9 +29,6 @@
   </svg>
 </template>
 
-<!-- faint atmospheric background -->
-<div id="ascii-bg" aria-hidden="true"></div>
-
 <!-- mobile topbar (sidebar is always visible on desktop) -->
 <div class="topbar">
   <a href="#work" class="brand">Elaine Chen</a>
@@ -52,7 +49,7 @@
     <a href="playground.html" class="toc-item"><span>Playground</span></a>
     <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="toc-item toc-proj"><span>nwPlus</span></a>
     <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
-    <a href="case-jellybreak.html" class="toc-item toc-proj locked"><span>JellyBreak</span></a>
+    <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
     <a href="case-hatchloom.html" class="toc-item toc-proj locked"><span>Hatchloom</span></a>
   </nav>
 
@@ -89,8 +86,12 @@
       </article>
 
       <article class="c-6 proj reveal-self" id="palette" data-screen-label="Project Hackathon Judging Portal">
-        <a href="case-hackathon.html" class="p-media" aria-label="Open Hackathon Judging Portal case study">
-          <span class="frame"><video src="assets/award-admin.mp4" class="full" autoplay muted loop playsinline preload="metadata" aria-label="Hackathon judging portal — admin award view, looping demo"></video></span>
+        <a href="case-hackathon.html" class="p-media portal-thumb" aria-label="Open Hackathon Judging Portal case study">
+          <span class="frame">
+            <span class="portal-screen">
+              <video src="assets/award-admin.mp4" class="full" autoplay muted loop playsinline preload="metadata" aria-label="Hackathon judging portal — admin award view, looping demo"></video>
+            </span>
+          </span>
         </a>
         <div class="p-body">
           <div class="p-tags"><span class="tag">Product Design</span><span class="tag">Systems</span></div>
@@ -98,13 +99,12 @@
         </div>
       </article>
 
-      <article class="c-6 proj locked reveal-self" id="saved" data-screen-label="Project JellyBreak">
-        <span class="p-media" aria-label="JellyBreak — case study coming soon" tabindex="-1" aria-disabled="true">
+      <article class="c-6 proj proj-jellybreak reveal-self" id="saved" data-screen-label="Project JellyBreak">
+        <a href="case-jellybreak.html" class="p-media" aria-label="Open JellyBreak case study">
           <span class="frame">
             <video src="assets/jellybreak-breaks.mp4" class="full" style="object-fit: cover; object-position: center center;" autoplay muted loop playsinline preload="metadata" aria-label="JellyBreak — looping demo"></video>
           </span>
-        </span>
-        </span>
+        </a>
         <div class="p-body">
           <div class="p-tags"><span class="tag">Designathon</span><span class="tag">Mobile</span></div>
           <h3>Designed an app to encourage intentional, guilt-free breaks.</h3>
@@ -196,7 +196,6 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js" defer></script>
-<script src="ascii-sketch.js" defer></script>
 <script src="pixel-grid.js" defer></script>
 <script src="sidebar-icons.js" defer></script>
 <script src="cursor.js" defer></script>

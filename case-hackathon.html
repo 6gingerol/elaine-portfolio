@@ -13,10 +13,30 @@
 <link rel="stylesheet" href="case-study.css" />
 <link rel="stylesheet" href="sidebar.css" />
 <style>
+  :root {
+    --hack-content-width: 900px;
+    --hack-copy-width: 720px;
+    --hack-section-space: clamp(76px, 10vh, 112px);
+    --hack-content-space: 20px;
+    --hack-block-space: 24px;
+  }
+
   .cs-head .cs-meta { grid-template-columns: repeat(4, 1fr); border-top: none; padding-top: 0; }
   .cs-head .cs-meta .k { font-family: inherit; font-size: 14px; letter-spacing: 0; }
 
-  .compare-2up { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  /* Match JellyBreak's centered content margins */
+  .cs-top,
+  .cs-hero,
+  .cs-head,
+  .cs-section {
+    width: 100%;
+    max-width: var(--hack-content-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cs-section { margin-top: var(--hack-section-space); }
+
+  .compare-2up { display: grid; grid-template-columns: 1fr 1fr; gap: var(--hack-block-space); }
   .compare-2up figure { margin: 0; }
   .compare-2up figcaption { margin-top: 10px; font-size: 14.5px; color: var(--steel); }
   .compare-2up .slot img { display: block; width: 100%; height: auto; }
@@ -25,7 +45,7 @@
   .comment-pair figure:first-child img { display: block; height: 55px; width: auto; max-width: 100%; }
   .comment-pair figure:last-child img { display: block; height: 67px; width: auto; max-width: 100%; }
   .comment-pair figure:first-child figcaption { margin-top: 10px; }
-  .comment-pair figure:last-child figcaption { margin-top: -2px; }
+  .comment-pair figure:last-child figcaption { margin-top: 10px; }
   @media (max-width: 720px) {
     .compare-2up { grid-template-columns: 1fr; }
     .comment-pair { justify-items: start; }
@@ -40,21 +60,23 @@
 
   /* === CONSISTENT SPACING SYSTEM === */
   /* paragraph after anything */
-  .cs-section > p { max-width: 720px; margin: 20px 0 0; }
+  .cs-section > p { max-width: var(--hack-copy-width); margin: 0; }
+  .cs-section > p + p { margin-top: var(--hack-content-space); }
+  .findings-grid + p { margin-top: var(--hack-block-space); }
   /* section title */
-  .cs-section h2.sec-title { font-weight: 500; font-size: clamp(20px, 2.2vw, 27px); line-height: 1.3; color: var(--ink); max-width: 720px; margin: 0 0 12px; }
+  .cs-section h2.sec-title { font-weight: 500; font-size: clamp(20px, 2.2vw, 27px); line-height: 1.3; color: var(--ink); max-width: var(--hack-copy-width); margin: 0 0 12px; }
   /* image headings */
-  .img-heading { font-family: var(--font-display); font-weight: 500; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.35; letter-spacing: -0.02em; color: var(--ink); margin: 36px 0 0; max-width: 720px; }
+  .img-heading { font-family: var(--font-display); font-weight: 500; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.35; letter-spacing: -0.02em; color: var(--ink); margin: 32px 0 0; max-width: var(--hack-copy-width); }
   /* heading → image */
-  .img-heading + .blk, .img-heading + .blk-full, .img-heading + .legend-bar { margin-top: 16px !important; }
+  .img-heading + .blk, .img-heading + .blk-full, .img-heading + .legend-bar { margin-top: 20px !important; }
   /* image blocks */
-  .cs-section .blk, .cs-section .blk-full { margin-top: 24px; }
+  .cs-section .blk, .cs-section .blk-full { margin-top: var(--hack-block-space); }
   /* image → paragraph */
-  .cs-section .blk + p, .cs-section .blk-full + p { margin-top: 24px; }
+  .cs-section .blk + p, .cs-section .blk-full + p { margin-top: var(--hack-block-space); }
   /* image → heading */
-  .cs-section .blk + .img-heading, .cs-section .blk-full + .img-heading { margin-top: 36px; }
+  .cs-section .blk + .img-heading, .cs-section .blk-full + .img-heading { margin-top: 32px; }
   /* image → image (back to back) */
-  .cs-section .blk + .blk, .cs-section .blk-full + .blk-full, .cs-section .blk + .blk-full, .cs-section .blk-full + .blk { margin-top: 24px; }
+  .cs-section .blk + .blk, .cs-section .blk-full + .blk-full, .cs-section .blk + .blk-full, .cs-section .blk-full + .blk { margin-top: var(--hack-block-space); }
   /* captions */
   .blk .cap, .compare-2up figcaption, .old-workflow-toggle .old-workflow-body figcaption { font-size: 14.5px; color: var(--steel); margin-top: 10px; line-height: 1.5; }
 
@@ -65,14 +87,16 @@
   @media (max-width: 920px) { .cs-head .cs-meta { grid-template-columns: repeat(2, 1fr); } }
 
   .statement.hmw {
-    max-width: 720px;
-    margin: 32px 0 22px;
+    max-width: var(--hack-copy-width);
+    margin: var(--hack-section-space) 0 var(--hack-block-space);
+    text-align: left;
     font-weight: 500;
     font-size: clamp(20px, 2.2vw, 27px);
     line-height: 1.3;
     color: var(--ink);
     letter-spacing: -0.025em;
   }
+  .cs-section[data-screen-label="Scope"] > .statement.hmw { margin-top: 0; }
   .statement.hmw .hmw-lead,
   .cs-section > .hmw-lead {
     display: block;
@@ -86,12 +110,19 @@
   }
   .cs-section > .hmw-lead + .img-heading { margin-top: 0; }
 
+  .cs-head { text-align: left; }
+  .cs-head .cs-sub { max-width: var(--hack-copy-width); margin-left: 0; margin-right: 0; }
+  .cs-head .cs-meta { text-align: left; }
+  .blk .cap,
+  .compare-2up figcaption,
+  .old-workflow-toggle .old-workflow-body figcaption { text-align: left; }
 
-  .cs-section .blk + p { margin-top: clamp(16px, 2.4vh, 24px); }
+
+  .cs-section .blk + p { margin-top: var(--hack-block-space); }
 
   /* Old workflow disclosure — clean, no box */
   .old-workflow-toggle {
-    margin-top: 22px;
+    margin-top: var(--hack-block-space);
     border: none;
     border-radius: 0;
     overflow: visible;
@@ -120,7 +151,7 @@
   .old-workflow-toggle summary:hover { color: var(--ink); }
   .old-workflow-toggle .old-workflow-body {
     padding: 16px 0 0;
-    display: flex; flex-direction: column; gap: 16px;
+    display: flex; flex-direction: column; gap: var(--hack-content-space);
   }
   .old-workflow-toggle .old-workflow-body figure { margin: 0; }
   .old-workflow-toggle .old-workflow-body img {
@@ -134,7 +165,7 @@
   }
 
   /* Review sketches side by side — equal height */
-  .review-sketches { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; margin-top: 22px; }
+  .review-sketches { display: grid; grid-template-columns: 1fr 1fr; gap: var(--hack-block-space); align-items: stretch; margin-top: var(--hack-block-space); }
   .review-sketches .review-sketch { background: #ffffff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
   .review-sketches img { display: block; width: 100%; height: 100%; object-fit: contain; cursor: zoom-in;
     transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
@@ -164,7 +195,7 @@
     display: block; width: 100%; height: 100%;
     object-fit: cover; object-position: top center; border-radius: 0; background: transparent;
   }
-  .scope-figs { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: stretch; }
+  .scope-figs { display: grid; grid-template-columns: 1fr; gap: var(--hack-block-space); align-items: stretch; }
   .scope-figs .board-stage { max-height: 420px; }
 
   /* Impact line */
@@ -173,7 +204,7 @@
     font-weight: 500;
     font-size: clamp(20px, 2.2vw, 27px);
     color: var(--ink);
-    margin-top: 28px;
+    margin-top: var(--hack-block-space);
     line-height: 1.3;
     letter-spacing: -0.025em;
     max-width: 720px;
@@ -182,16 +213,15 @@
   /* Findings grid */
   .findings-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 24px;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: var(--hack-block-space);
   }
-  @media (max-width: 720px) { .findings-grid { grid-template-columns: 1fr; } }
   .finding-item {
-    padding: 24px;
-    border: 1px solid var(--line);
+    padding: 20px 24px;
+    border: none;
     border-radius: 12px;
-    background: var(--surface);
+    background: var(--paper);
   }
   .finding-item h3 {
     font-family: var(--font-display);
@@ -207,10 +237,9 @@
     margin: 0;
     line-height: 1.55;
   }
-
   /* Legend bar */
   .legend-bar {
-    margin: 20px auto;
+    margin: var(--hack-block-space) auto 0;
     display: flex;
     justify-content: center;
   }
@@ -224,7 +253,7 @@
   /* Paired small images — equal height, centered */
   .paired-imgs {
     display: flex;
-    gap: 16px;
+    gap: 32px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -334,7 +363,7 @@
   <!-- RESEARCH -->
   <section class="cs-section reveal-self" data-screen-label="Research">
     <h2 class="sec-title">My team and I conducted focus group sessions and interviews with 8 participants including previous judges and organizers to validate and further understand the problems of the existing system.</h2>
-    <p>Those discussions turned into these core findings.</p>
+    <p>Those discussions turned into these core findings;</p>
 
     <div class="findings-grid">
       <div class="finding-item">
@@ -370,7 +399,6 @@
 
   <!-- MY SCOPE -->
   <section class="cs-section reveal-self" data-screen-label="Scope">
-    <p>I focused on making project review and winner selection efficient, clear and trustworthy.</p>
     <p class="statement hmw"><span class="hmw-lead">My design challenge:</span>How can I help hackathon organizers turn messy project data into decisions they can trust and act on quickly?</p>
     <p>From then on I began creating low and mid-fidelity prototypes for this workflow. Throughout the process we held weekly design critiques and discussions with the developers and the PM to refine the scope.</p>
     <div class="blk blk-full">
