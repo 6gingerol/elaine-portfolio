@@ -15,7 +15,7 @@
 <style>
   :root {
     --hack-content-width: 900px;
-    --hack-copy-width: 720px;
+    --hack-copy-width: 60ch;
     --hack-section-space: clamp(76px, 10vh, 112px);
     --hack-content-space: 20px;
     --hack-block-space: 24px;
@@ -61,6 +61,7 @@
   /* === CONSISTENT SPACING SYSTEM === */
   /* paragraph after anything */
   .cs-section > p { max-width: var(--hack-copy-width); margin: 0; }
+  .cs-section > p.wide-copy { max-width: var(--hack-content-width); }
   .cs-section > p + p { margin-top: var(--hack-content-space); }
   .findings-grid + p { margin-top: var(--hack-block-space); }
   /* section title */
@@ -111,7 +112,7 @@
   .cs-section > .hmw-lead + .img-heading { margin-top: 0; }
 
   .cs-head { text-align: left; }
-  .cs-head .cs-sub { max-width: var(--hack-copy-width); margin-left: 0; margin-right: 0; }
+  .cs-head .cs-sub { max-width: var(--hack-content-width); margin-left: 0; margin-right: 0; }
   .cs-head .cs-meta { text-align: left; }
   .blk .cap,
   .compare-2up figcaption,
@@ -151,15 +152,61 @@
   .old-workflow-toggle summary:hover { color: var(--ink); }
   .old-workflow-toggle .old-workflow-body {
     padding: 16px 0 0;
-    display: flex; flex-direction: column; gap: var(--hack-content-space);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--hack-block-space);
   }
+  .old-workflow-toggle .old-workflow-body figure:last-child { grid-column: 1 / -1; }
   .old-workflow-toggle .old-workflow-body figure { margin: 0; }
+  .zoomable-figure { position: relative; }
+  .zoomable-figure::after {
+    content: "↗";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 50%;
+    background: rgba(11,11,12,0.72);
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    pointer-events: none;
+    transition: transform 0.25s var(--ease), background 0.25s var(--ease);
+  }
+  .zoomable-figure::before {
+    content: "View larger";
+    position: absolute;
+    top: 44px;
+    right: 10px;
+    z-index: 1;
+    padding: 5px 8px;
+    border-radius: 5px;
+    background: rgba(11,11,12,0.78);
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.2;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-3px);
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .zoomable-figure:hover::after,
+  .zoomable-figure:focus-within::after { background: rgba(11,11,12,0.9); transform: scale(1.06); }
+  .zoomable-figure:hover::before,
+  .zoomable-figure:focus-within::before { opacity: 1; transform: none; }
   .old-workflow-toggle .old-workflow-body img {
     display: block; width: 100%; height: auto; border-radius: 8px;
     border: 1px solid var(--line);
+    cursor: zoom-in;
+    transition: box-shadow 0.3s var(--ease);
     filter: grayscale(0.7) contrast(0.92) brightness(1.02);
     opacity: 0.88;
   }
+  .old-workflow-toggle .old-workflow-body img:hover { box-shadow: 0 10px 40px -18px rgba(11,11,12,0.35); }
   .old-workflow-toggle .old-workflow-body figcaption {
     font-size: 14.5px; color: var(--steel); margin-top: 8px; line-height: 1.5;
   }
@@ -177,6 +224,11 @@
     background: rgba(11,11,12,0.82); padding: 4vw; cursor: zoom-out; }
   .sketch-lightbox.open { display: flex; }
   .sketch-lightbox img { max-width: 96vw; max-height: 92vh; width: auto; height: auto; border-radius: 6px; background: var(--bg); }
+  .sketch-lightbox img.is-spreadsheet { filter: grayscale(0.7) contrast(0.92) brightness(1.02); opacity: 0.88; }
+  @media (max-width: 720px) {
+    .sketch-lightbox { padding: 16px; }
+    .sketch-lightbox img { max-width: 100%; max-height: 88vh; }
+  }
 
   /* Team photo */
   .team-photo { aspect-ratio: 3 / 2; overflow: hidden; }
@@ -215,8 +267,10 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 28px;
-    margin-top: var(--hack-block-space);
+    margin-top: clamp(56px, 7vh, 76px);
+    margin-bottom: clamp(56px, 7vh, 76px);
   }
+  .findings-grid + p { margin-top: 0; }
   .finding-item {
     padding: 20px 24px;
     border: none;
@@ -275,6 +329,37 @@
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  /* Pair related reflection text blocks while keeping them readable. */
+  .hack-reflection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    column-gap: clamp(28px, 4vw, 56px);
+    row-gap: 20px;
+    margin-top: var(--hack-block-space);
+  }
+  .hack-reflection-grid > div {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+  .hack-reflection-grid .img-heading { margin-top: 0; }
+  .hack-reflection-grid p {
+    max-width: 48ch;
+    margin-top: 0;
+  }
+  @media (max-width: 920px) {
+    .old-workflow-toggle .old-workflow-body { grid-template-columns: 1fr; }
+    .old-workflow-toggle .old-workflow-body figure:last-child { grid-column: auto; }
+  }
+  @media (max-width: 720px) {
+    .findings-grid,
+    .hack-reflection-grid { grid-template-columns: 1fr; }
+    .hack-reflection-grid > div { display: block; grid-row: auto; }
+    .hack-reflection-grid > div + div { margin-top: var(--hack-block-space); }
+    .hack-reflection-grid p { margin-top: 20px; }
   }
 </style>
 <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yej2f3uibq");</script>
@@ -339,21 +424,21 @@
   <!-- THE PROBLEM -->
   <section class="cs-section reveal-self" data-screen-label="Problem">
     <h2 class="sec-title">The problem</h2>
-    <p>nwPlus is a student-run organization that runs Western Canada's largest hackathons. With hundreds of participants and projects, judges had to grade hundreds of individual submissions in Google Sheets while organizers managed the whole process by hand. It was inefficient, confusing, and largely repetitive.</p>
+    <p class="wide-copy">nwPlus is a student-run organization that runs Western Canada's largest hackathons. With hundreds of participants and projects, judges had to grade hundreds of individual submissions in Google Sheets while organizers managed the whole process by hand. It was inefficient, confusing, and largely repetitive.</p>
 
     <details class="old-workflow-toggle">
       <summary>The old workflow</summary>
       <div class="old-workflow-body">
-        <figure>
-          <img src="assets/sheets feedback.webp" alt="Old judging spreadsheet — per-criteria scores with free-text feedback" loading="lazy" />
+        <figure class="zoomable-figure">
+          <img src="assets/sheets feedback.webp" alt="Old judging spreadsheet — per-criteria scores with free-text feedback" loading="lazy" data-zoomable="assets/sheets feedback.png" data-censored="true" />
           <figcaption>Previously, all judges scored projects and gave feedback typed in crowded Google Sheets.</figcaption>
         </figure>
-        <figure>
-          <img src="assets/sheets zscore.webp" alt="Separate spreadsheet ranking projects by weighted average and z-score" loading="lazy" />
+        <figure class="zoomable-figure">
+          <img src="assets/sheets zscore.webp" alt="Separate spreadsheet ranking projects by weighted average and z-score" loading="lazy" data-zoomable="assets/sheets zscore.png" data-censored="true" />
           <figcaption>In another sheet, organizers ranked projects by compiling together the weighted averages and z-scores.</figcaption>
         </figure>
-        <figure>
-          <img src="assets/sheets vibecheck.webp" alt="Vibe check sheet with eligibility and compliance checkboxes" loading="lazy" />
+        <figure class="zoomable-figure">
+          <img src="assets/sheets vibecheck.webp" alt="Vibe check sheet with eligibility and compliance checkboxes" loading="lazy" data-zoomable="assets/sheets vibecheck.png" data-censored="true" />
           <figcaption>Before selecting winners, organizers checked top-ranked projects for eligibility and compliance in another sheet.</figcaption>
         </figure>
       </div>
@@ -363,7 +448,7 @@
   <!-- RESEARCH -->
   <section class="cs-section reveal-self" data-screen-label="Research">
     <h2 class="sec-title">My team and I conducted focus group sessions and interviews with 8 participants including previous judges and organizers to validate and further understand the problems of the existing system.</h2>
-    <p>Those discussions turned into these core findings;</p>
+    <p>Those discussions turned into these core findings:</p>
 
     <div class="findings-grid">
       <div class="finding-item">
@@ -425,8 +510,8 @@
 
     <div class="blk blk-full">
       <div class="review-sketches">
-        <div class="slot review-sketch"><img src="assets/multi system p1.webp" alt="Sketch of the review interaction flow" loading="lazy" data-zoomable="assets/multi system p1.png" /></div>
-        <div class="slot review-sketch"><img src="assets/multisystem p2.webp" alt="Sketch of what a project row looks like after many edits" loading="lazy" data-zoomable="assets/multisystem p2.png" /></div>
+        <div class="slot review-sketch zoomable-figure"><img src="assets/multi system p1.webp" alt="Sketch of the review interaction flow" loading="lazy" data-zoomable="assets/multi system p1.png" /></div>
+        <div class="slot review-sketch zoomable-figure"><img src="assets/multisystem p2.webp" alt="Sketch of what a project row looks like after many edits" loading="lazy" data-zoomable="assets/multisystem p2.png" /></div>
       </div>
     </div>
 
@@ -437,7 +522,7 @@
       <p class="cap">After</p>
     </div>
 
-    <p>The revised system gives organizers four actions on any project: viewing it, approving it, flagging it, or starring it. They can also leave comments directly on a project.</p>
+    <p class="wide-copy">The revised system gives organizers four actions on any project: viewing it, approving it, flagging it, or starring it. They can also leave comments directly on a project.</p>
     <div class="blk blk-full compare-2up comment-pair">
       <figure>
         <img src="assets/comment mo pfp.webp" alt="Comment bubble without profile picture" loading="lazy" />
@@ -505,11 +590,16 @@
   <section class="cs-section reveal-self" data-screen-label="Reflection">
     <h2 class="sec-title">Reflection</h2>
 
-    <h3 class="img-heading">Be ready to reinvent your workflows.</h3>
-    <p>The project required many rounds of heavy discussion with multiple user groups, thus data collected led to different directions. Being able to let things go despite the time sunk into building already helped me realize the benefits of iteration: it creates a better product.</p>
-
-    <h3 class="img-heading">Have a firm grasp when conducting user research.</h3>
-    <p>Time your discussions and interviews. Step in when conversations go off on tangents so you can protect everyone's energy and keep things moving.</p>
+    <div class="hack-reflection-grid">
+      <div>
+        <h3 class="img-heading">Be ready to reinvent your workflows.</h3>
+        <p>The project required many rounds of heavy discussion with multiple user groups, thus data collected led to different directions. Being able to let things go despite the time sunk into building already helped me realize the benefits of iteration: it creates a better product.</p>
+      </div>
+      <div>
+        <h3 class="img-heading">Have a firm grasp when conducting user research.</h3>
+        <p>Time your discussions and interviews; this project required hours of discussion with different stakeholders and user groups. Generally people had a lot to say. It was important for me to step in when conversations go off on tangents to protect everyone's energy and keep the discussions productive.</p>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -536,6 +626,8 @@
       el.addEventListener('click', function () {
         if (!box || !boxImg) return;
         boxImg.src = el.getAttribute('data-zoomable') || el.src;
+        boxImg.alt = el.alt ? 'Enlarged — ' + el.alt : 'Enlarged image';
+        boxImg.classList.toggle('is-spreadsheet', el.hasAttribute('data-censored'));
         box.classList.add('open');
       });
     });
