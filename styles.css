@@ -613,6 +613,8 @@ footer.foot a:hover { color: var(--ink); }
 }
 @media (max-width: 940px) {
   .work-grid .c-4 { grid-column: span 6; }
+  .opening-head h1 { margin-inline: auto; text-align: center; }
+  .opening-head .locale { justify-content: center; }
 }
 @media (max-width: 760px) {
   .c-4, .c-5, .c-6, .c-7, .c-8 { grid-column: span 12; }

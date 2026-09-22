@@ -24,6 +24,16 @@
   window.addEventListener('load', function () { checkReveals(); setTimeout(checkReveals, 250); });
   setTimeout(function () { revealEls.forEach(hardShow); }, 1400); // failsafe
 
+  // ---- lazy-load videos only when they approach the viewport ----
+  function materializeVideo(v) {
+    var src = v.getAttribute('data-lazy-src');
+    if (!src || v.getAttribute('src')) return;
+    v.setAttribute('src', src);
+    v.removeAttribute('data-lazy-src');
+    v.autoplay = true;
+    v.load();
+  }
+
   // ---- muted videos sometimes stall despite autoplay attrs ----
   function kickVideos() {
     document.querySelectorAll('video[autoplay]').forEach(function (v) {
@@ -40,7 +50,7 @@
   // videos don't start playing until they enter the viewport.
   // (scroll-listener pattern — IntersectionObserver is unreliable in
   // some embedded webviews, so we mirror the checkReveals approach.)
-  var lazyVids = Array.prototype.slice.call(document.querySelectorAll('video[autoplay], video[data-play-on-visible]'));
+  var lazyVids = Array.prototype.slice.call(document.querySelectorAll('video[autoplay], video[data-play-on-visible], video[data-lazy-src]'));
   function checkVideos() {
     var vh = window.innerHeight || document.documentElement.clientHeight;
     lazyVids.forEach(function (v) {
@@ -48,6 +58,7 @@
       var near = r.bottom > -120 && r.top < vh + 120;
       v.muted = true;
       if (near) {
+        materializeVideo(v);
         if (v.paused) { var p = v.play(); if (p) p.catch(function () {}); }
       } else if (!v.paused) {
         v.pause();
@@ -63,11 +74,13 @@
   window.addEventListener('pageshow', function (e) {
     document.querySelectorAll('video').forEach(function (v) {
       v.muted = true;
+      if (!v.getAttribute('src') && v.getAttribute('data-lazy-src')) return;
       if (e.persisted || v.readyState === 0 || v.error) {
         try { v.load(); } catch (err) {}
       }
     });
     kickVideos();
+    checkVideos();
   });
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'visible') kickVideos();

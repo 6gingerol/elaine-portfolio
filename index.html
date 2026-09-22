@@ -10,9 +10,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
+<style>
+  @media (max-width: 940px) {
+    :root { --pad: clamp(32px, 7vw, 64px); }
+    .opening-head h1 { margin-inline: auto; text-align: center; }
+    .opening-head .locale { justify-content: center; }
+  }
+</style>
 <link rel="preload" href="assets/fonts/PPMondwest-Regular.otf" as="font" type="font/otf" crossorigin />
 <link rel="preload" href="assets/nwplus.webp" as="image" />
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yej2f3uibq");</script>
+<script>window.addEventListener('load',function(){var f=function(){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yej2f3uibq")};if('requestIdleCallback' in window)requestIdleCallback(f,{timeout:2000});else setTimeout(f,1200)});</script>
 </head>
 <body>
 
@@ -77,7 +84,7 @@
     <div class="bento work-grid">
       <article class="c-6 proj reveal-self" id="cadence" data-screen-label="Project nwPlus">
         <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="p-media" aria-label="Open nwPlus website">
-          <span class="frame"><img src="assets/nwplus.webp" class="full" alt="nwPlus — space illustration with logo" /></span>
+          <span class="frame"><img src="assets/nwplus.webp" class="full" alt="nwPlus — space illustration with logo" width="1600" height="1100" fetchpriority="high" decoding="async" /></span>
         </a>
         <div class="p-body">
           <div class="p-tags"><span class="tag">UX/UI</span><span class="tag">Branding</span><span class="tag">Design Systems</span></div>
@@ -89,20 +96,20 @@
         <a href="case-hackathon.html" class="p-media portal-thumb" aria-label="Open Hackathon Judging Portal case study">
           <span class="frame">
             <span class="portal-screen">
-              <video src="assets/award-admin.mp4" class="full" autoplay muted loop playsinline preload="metadata" aria-label="Hackathon judging portal — admin award view, looping demo"></video>
+            <video class="full" muted loop playsinline preload="none" poster="assets/award view - admin.webp" data-lazy-src="assets/award-admin.mp4" aria-label="Hackathon judging portal — admin award view, looping demo"></video>
             </span>
           </span>
         </a>
         <div class="p-body">
           <div class="p-tags"><span class="tag">Product Design</span><span class="tag">Systems</span></div>
-          <h3>Optimizing the end-to-end judging workflow for nwPlus' hackathons.</h3>
+          <h3>Optimized the end-to-end judging workflow for nwPlus' hackathons.</h3>
         </div>
       </article>
 
       <article class="c-6 proj proj-jellybreak reveal-self" id="saved" data-screen-label="Project JellyBreak">
         <a href="case-jellybreak.html" class="p-media" aria-label="Open JellyBreak case study">
           <span class="frame">
-            <video src="assets/jellybreak-breaks.mp4" class="full" style="object-fit: cover; object-position: center center;" autoplay muted loop playsinline preload="metadata" aria-label="JellyBreak — looping demo"></video>
+            <video class="full" style="object-fit: cover; object-position: center center;" muted loop playsinline preload="none" poster="assets/saved.webp" data-lazy-src="assets/jellybreak-breaks.mp4" aria-label="JellyBreak — looping demo"></video>
           </span>
         </a>
         <div class="p-body">
@@ -152,7 +159,7 @@
         <p>I used to think that design was just about making things beautiful, but now I get to solve problems too! I love the process because I get to work at the intersection of research, human-centered thinking and creativity.</p>
         <p>Outside of design, I’m usually exploring vintage markets, gaming, practicing yoga, or catching a DJ set &#10022;.</p>
       </div>
-      <div class="portrait reveal-self"><img src="assets/elaine-portrait.webp" alt="Elaine Chen" class="portrait-img" loading="lazy" /></div>
+      <div class="portrait reveal-self"><img src="assets/elaine-portrait.webp" alt="Elaine Chen" class="portrait-img" width="1616" height="1080" loading="lazy" decoding="async" /></div>
     </div>
 
     <div class="xp reveal-self" aria-label="Experience">
@@ -282,11 +289,49 @@
   window.addEventListener('hashchange', route);
   route();
 
+  // ---- lazy-load video thumbnails only when they approach the viewport ----
+  const lazyVideos = [...document.querySelectorAll('video[data-lazy-src]')];
+  function loadLazyVideo(video) {
+    if (video.dataset.lazySrc) {
+      video.src = video.dataset.lazySrc;
+      video.removeAttribute('data-lazy-src');
+      video.autoplay = true;
+      video.load();
+    }
+    video.muted = true;
+    const play = video.play();
+    if (play) play.catch(() => {});
+  }
+  function updateLazyVideos() {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    lazyVideos.forEach((video) => {
+      const r = video.getBoundingClientRect();
+      const near = r.bottom > -240 && r.top < vh + 360;
+      if (near) loadLazyVideo(video);
+      else if (!video.paused) video.pause();
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) loadLazyVideo(entry.target);
+        else if (!entry.target.paused) entry.target.pause();
+      });
+    }, { rootMargin: '360px 0px' });
+    lazyVideos.forEach((video) => videoObserver.observe(video));
+  } else {
+    updateLazyVideos();
+    window.addEventListener('scroll', updateLazyVideos, { passive: true });
+  }
+
   // ---- ensure muted videos actually autoplay (some browsers stall despite attrs) ----
   function kickVideos() {
     document.querySelectorAll('video[autoplay]').forEach((v) => {
       v.muted = true;
-      if (v.paused) { const p = v.play(); if (p) p.catch(() => {}); }
+      const r = v.getBoundingClientRect();
+      const near = r.bottom > -240 && r.top < (window.innerHeight || document.documentElement.clientHeight) + 360;
+      if (near && v.paused) { const p = v.play(); if (p) p.catch(() => {}); }
+      else if (!near) v.pause();
     });
   }
   window.addEventListener('load', kickVideos);
@@ -303,9 +348,10 @@
       }
       const p = v.play(); if (p) p.catch(() => {});
     });
+    updateLazyVideos();
   });
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') kickVideos();
+    if (document.visibilityState === 'visible') { updateLazyVideos(); kickVideos(); }
   });
 
   // ---- local time (Vancouver) ----
