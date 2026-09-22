@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=sidebar-final-20260922" />
+    <link rel="stylesheet" href="styles.css?v=loader-spread-20260922" />
 <style>
   @media (max-width: 940px) {
     :root { --pad: clamp(32px, 7vw, 64px); }
@@ -259,7 +259,10 @@
         Array.from(word).forEach((character) => {
           const letter = document.createElement('span');
           const transform = disperseTransforms[characterIndex % disperseTransforms.length];
-          const exitDelay = ((characterIndex * 17) % 7) * 0.018;
+          const exitDelay = ((characterIndex * 13) % 8) * 0.035;
+          const exitX = transform.x * 1.35;
+          const exitY = transform.y * 1.35;
+          const exitRotation = transform.rotationZ * 1.12;
           letter.className = 'home-loader-char';
           letter.textContent = character;
           letter.style.setProperty('--loader-delay', `${characterIndex * 0.028}s`);
@@ -267,6 +270,9 @@
           letter.style.setProperty('--loader-x', `${transform.x}em`);
           letter.style.setProperty('--loader-y', `${transform.y}em`);
           letter.style.setProperty('--loader-rotation', `${transform.rotationZ}deg`);
+          letter.style.setProperty('--loader-exit-x', `${exitX}em`);
+          letter.style.setProperty('--loader-exit-y', `${exitY}em`);
+          letter.style.setProperty('--loader-exit-rotation', `${exitRotation}deg`);
           wordGroup.appendChild(letter);
           characterIndex += 1;
         });
@@ -284,6 +290,7 @@
     const loaderStartedAt = performance.now();
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const loaderMinimumDuration = prefersReducedMotion ? 700 : 2300;
+    const loaderExitDuration = prefersReducedMotion ? 0 : 1050;
     let loaderFinished = false;
     function finishHomeLoader() {
       if (loaderFinished) return;
@@ -295,7 +302,7 @@
           homeLoader.classList.add('is-done');
           document.body.classList.remove('home-loading');
           window.setTimeout(() => homeLoader.remove(), 700);
-        }, prefersReducedMotion ? 0 : 850);
+        }, loaderExitDuration);
       }, remainingAnimation);
     }
 
