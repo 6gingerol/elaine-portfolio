@@ -485,11 +485,17 @@ html.js.single-view .stage > .section:not(.view-active) { display: none; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(32px, 3vw, 56px);
-  align-items: center;
+  align-items: start;
   max-width: 1060px;
   margin-inline: auto;
 }
-.about-grid .portrait { width: 100%; max-width: 460px; justify-self: center; }
+.about-grid .portrait {
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 4 / 5;
+  align-self: start;
+  justify-self: center;
+}
 .about-body p.about-lead, .about-lead {
   font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
   font-weight: 300; letter-spacing: 0;
