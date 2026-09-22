@@ -506,7 +506,7 @@ html.js.single-view .stage > .section:not(.view-active) { display: none; }
 /* Keep the About intro equally spaced from the section's top and bottom. */
 #about { padding-block: clamp(96px, 10vw, 144px); }
 .about-body p { font-size: 16px; color: var(--graphite); margin: 0 0 16px; max-width: 56ch; }
-.portrait { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.portrait { overflow: hidden; border: none; border-radius: var(--radius); background: var(--surface); }
 .portrait image-slot { width: 100%; height: 100%; display: block; aspect-ratio: 5/7; }
 .portrait-img { width: 100%; height: 100%; display: block; aspect-ratio: 4/5; object-fit: cover; object-position: 43% 30%; }
 

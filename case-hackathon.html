@@ -66,6 +66,7 @@
 
   .cs-hero .screen { background: transparent; border: none; padding: 0; }
   .cs-hero .media { box-shadow: none; }
+  .cs-hero .media video { transform: translateY(1px); }
 
   /* === CONSISTENT SPACING SYSTEM === */
   /* paragraph after anything */
@@ -345,20 +346,23 @@
     border-radius: 8px;
   }
 
-  /* Add breathing room without adding new visual devices or copy. */
+  /* Give text-to-visual transitions a little more room to breathe. */
   .cs-section > p + .blk,
-  .cs-section > p + .blk-full { padding-top: clamp(8px, 1.2vh, 16px); }
+  .cs-section > p + .blk-full { margin-top: clamp(32px, 4vh, 44px); }
   .cs-section > .blk + p,
-  .cs-section > .blk-full + p { padding-top: clamp(8px, 1.2vh, 16px); }
+  .cs-section > .blk-full + p { margin-top: clamp(32px, 4vh, 44px); }
   .cs-section[data-screen-label="Final designs"] .img-heading {
-    max-width: 48ch;
-    padding-top: clamp(28px, 4.5vh, 64px);
+    margin-top: clamp(56px, 7vh, 84px);
   }
   .cs-section[data-screen-label="Final designs"] .img-heading:first-of-type {
-    padding-top: 0;
+    margin-top: clamp(20px, 3vh, 32px) !important;
+  }
+  .cs-section[data-screen-label="Final designs"] .img-heading + .blk,
+  .cs-section[data-screen-label="Final designs"] .img-heading + .legend-bar {
+    margin-top: clamp(28px, 4vh, 40px) !important;
   }
   .cs-section[data-screen-label="Final designs"] .paired-imgs + p {
-    padding-top: clamp(16px, 2.5vh, 36px);
+    margin-top: clamp(32px, 4vh, 48px);
   }
 
   /* Full-width framed image with clean border */
@@ -463,7 +467,7 @@
   <!-- INTRO -->
   <header class="cs-head reveal-self">
     <h1>Hackathon Judging Portal</h1>
-    <p class="cs-sub">Designed a centralized project-review and winner-selection workflow for nwPlus's 54-person organizing team, supporting three annual hackathons with 1,000+ attendees.</p>
+    <p class="cs-sub">Designed a centralized project-review and winner-selection workflow for nwPlus's 54-person organizing team and seasonal judges, supporting three annual hackathons with 1,000+ attendees.</p>
     <div class="cs-meta">
       <div><span class="k">Timeline</span><span class="v">May 2025 – August 2025</span></div>
       <div><span class="k">Team</span><span class="v">4 Designers<br>3 Developers</span></div>
