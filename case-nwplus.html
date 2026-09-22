@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <script>document.documentElement.classList.add('js');</script>
+<script>try { if (localStorage.getItem('portfolio-sidebar-collapsed') === 'true') document.documentElement.classList.add('sidebar-collapsed-preload'); } catch (e) {}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>nwPlus — Elaine Chen</title>
 <link rel="icon" type="image/png" href="assets/favicon.png" />
@@ -11,8 +12,8 @@
 <link rel="preload" href="assets/fonts/PPMondwest-Regular.otf" as="font" type="font/otf" crossorigin />
 <link rel="preload" href="assets/nwplus-thumbnail.gif" as="image" fetchpriority="high" />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="case-study.css" />
-<link rel="stylesheet" href="sidebar.css" />
+    <link rel="stylesheet" href="case-study.css?v=sidebar-final-20260922" />
+    <link rel="stylesheet" href="sidebar.css?v=sidebar-final-20260922" />
 <script>window.addEventListener('load',function(){var f=function(){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yej2f3uibq")};if('requestIdleCallback' in window)requestIdleCallback(f,{timeout:2000});else setTimeout(f,1200)});</script>
 </head>
 <body>
@@ -36,7 +37,7 @@
     <a href="index.html#about" class="toc-item"><span>About</span></a>
     <a href="playground.html" class="toc-item"><span>Playground</span></a>
     <a href="case-nwplus.html" class="toc-item toc-proj active"><span>nwPlus</span></a>
-    <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
+  <a href="case-hackathon.html?v=judging-layout-20260922" class="toc-item toc-proj"><span>Judging Portal</span></a>
     <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
     <a href="case-hatchloom.html" class="toc-item toc-proj"><span>Hatchloom</span></a>
   </nav>
@@ -183,7 +184,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js" defer></script>
 <script src="pixel-grid.js" defer></script>
-<script src="sidebar-icons.js" defer></script>
+<script src="sidebar-icons.js?v=sidebar-final-20260922" defer></script>
 <script src="cursor.js" defer></script>
 <script src="case-study.js" defer></script>
 </body>
