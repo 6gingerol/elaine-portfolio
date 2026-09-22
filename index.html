@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <script>document.documentElement.classList.add('js');</script>
+<script>try { if (localStorage.getItem('portfolio-sidebar-collapsed') === 'true') document.documentElement.classList.add('sidebar-collapsed-preload'); } catch (e) {}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Elaine Chen — Product Designer</title>
 <link rel="icon" type="image/png" href="assets/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=sidebar-final-20260922" />
 <style>
   @media (max-width: 940px) {
     :root { --pad: clamp(32px, 7vw, 64px); }
@@ -60,7 +61,7 @@
     <a href="#about" class="toc-item" data-spy="about"><span>About</span></a>
     <a href="playground.html" class="toc-item"><span>Playground</span></a>
     <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="toc-item toc-proj"><span>nwPlus</span></a>
-    <a href="case-hackathon.html" class="toc-item toc-proj"><span>Hackathon Judging Portal</span></a>
+    <a href="case-hackathon.html?v=judging-layout-20260922" class="toc-item toc-proj"><span>Judging Portal</span></a>
     <a href="case-jellybreak.html" class="toc-item toc-proj"><span>JellyBreak</span></a>
     <a href="case-hatchloom.html" class="toc-item toc-proj locked"><span>Hatchloom</span></a>
   </nav>
@@ -98,7 +99,7 @@
       </article>
 
       <article class="c-6 proj reveal-self" id="palette" data-screen-label="Project Hackathon Judging Portal">
-        <a href="case-hackathon.html" class="p-media portal-thumb" aria-label="Open Hackathon Judging Portal case study">
+        <a href="case-hackathon.html?v=judging-layout-20260922" class="p-media portal-thumb" aria-label="Open Hackathon Judging Portal case study">
           <span class="frame">
             <span class="portal-screen">
             <video class="full" src="assets/award-admin.mp4" autoplay muted loop playsinline preload="auto" aria-label="Hackathon judging portal — admin award view, looping demo"></video>

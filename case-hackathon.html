@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <script>document.documentElement.classList.add('js');</script>
+<script>try { if (localStorage.getItem('portfolio-sidebar-collapsed') === 'true') document.documentElement.classList.add('sidebar-collapsed-preload'); } catch (e) {}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Hackathon Judging Portal — Elaine Chen</title>
 <link rel="icon" type="image/png" href="assets/favicon.png" />
@@ -10,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" href="assets/fonts/PPMondwest-Regular.otf" as="font" type="font/otf" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="case-study.css" />
-<link rel="stylesheet" href="sidebar.css" />
+    <link rel="stylesheet" href="case-study.css?v=sidebar-final-20260922" />
+    <link rel="stylesheet" href="sidebar.css?v=sidebar-final-20260922" />
 <style>
   :root {
     --hack-content-width: 900px;
@@ -439,7 +440,7 @@
     <a href="index.html#about" class="toc-item"><span>About</span></a>
     <a href="playground.html" class="toc-item"><span>Playground</span></a>
     <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="toc-item toc-proj"><span>nwPlus</span></a>
-    <a href="case-hackathon.html" class="toc-item toc-proj active"><span>Hackathon Judging Portal</span></a>
+    <a href="case-hackathon.html" class="toc-item toc-proj active"><span>Judging Portal</span></a>
     <a href="case-jellybreak.html" class="toc-item toc-proj locked"><span>JellyBreak</span></a>
     <a href="case-hatchloom.html" class="toc-item toc-proj locked"><span>Hatchloom</span></a>
   </nav>

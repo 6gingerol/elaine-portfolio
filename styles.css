@@ -64,6 +64,7 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   --spine-w: 248px;
+  --sidebar-width-icon: 4rem;
   --gap: clamp(16px, 1.6vw, 26px);
   --pad: clamp(24px, 4.2vw, 80px);
   --radius: 12px;
@@ -210,6 +211,7 @@ html:not(.js) .home-loader { display: none; }
   background: var(--bg);
   z-index: 40;
   overflow-y: auto;
+  transition: width 0.2s linear, padding 0.2s linear;
 }
 .spine::-webkit-scrollbar { width: 0; }
 .js .spine .toc,
@@ -217,6 +219,19 @@ html:not(.js) .home-loader { display: none; }
 .js .spine.icons-ready .toc,
 .js .spine.icons-ready .spine-links { opacity: 1; }
 
+.spine-id {
+  position: static;
+  display: block;
+  max-height: 120px;
+  min-height: 51px;
+  margin-bottom: 28px;
+  padding-left: 10px; padding-right: 0;
+  overflow: hidden;
+  transition: margin 0.2s linear, padding 0.2s linear;
+}
+.spine-id-copy { min-width: 0; flex: 1 1 auto; }
+.spine-id .brand,
+.spine-id .descriptor { transition: opacity 0.2s linear; }
 .spine-id .brand {
   font-family: var(--font-display);
   font-weight: 600; font-size: 21px;
@@ -225,8 +240,6 @@ html:not(.js) .home-loader { display: none; }
 .spine-id .descriptor { font-size: 13.5px; color: var(--steel); margin-top: 8px; display: block; }
 
 .rule { height: 1px; background: var(--line); margin: 24px 0; }
-.spine-id { margin-bottom: 28px; padding-left: 10px; }
-
 /* nav — shadcn-style menu: quiet rounded rows, soft active state */
 .toc { display: flex; flex-direction: column; gap: 2px; }
 .toc a.toc-item {
@@ -237,13 +250,29 @@ html:not(.js) .home-loader { display: none; }
   transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 .toc a.toc-item .nav-ic-wrap {
-  width: 18px; height: 18px; flex: 0 0 18px;
+  width: 20px; height: 20px; flex: 0 0 20px;
   display: inline-flex; align-items: center; justify-content: center;
+  margin-top: 0;
   color: currentColor;
 }
 .toc a.toc-item .nav-ic {
   width: 16px; height: 16px; display: block;
   stroke-width: 1.8; opacity: 0.78;
+}
+.toc a.toc-item > span:not(.nav-ic-wrap) {
+  display: block;
+  min-width: 0;
+  max-width: none;
+  flex: 1 1 auto;
+  overflow: visible;
+  white-space: normal;
+  line-height: 1.35;
+  transition: max-width 0.2s linear, opacity 0.2s linear;
+}
+.toc a.toc-proj > span:not(.nav-ic-wrap) {
+  max-width: none;
+  white-space: normal;
+  overflow: visible;
 }
 .toc a.toc-item:hover .nav-ic,
 .toc a.toc-item.active .nav-ic { opacity: 1; }
@@ -253,7 +282,9 @@ html:not(.js) .home-loader { display: none; }
 /* project tabs — same quiet rows, same alignment + size */
 .toc-group-label {
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--steel); padding: 14px 10px 4px; margin-top: 4px;
+  color: var(--faint); height: 34px; box-sizing: border-box;
+  padding: 14px 10px 4px; margin-top: 4px;
+  transition: height 0.2s linear, padding 0.2s linear, margin 0.2s linear, opacity 0.2s linear;
 }
 .toc a.toc-proj {
   color: var(--steel);
@@ -270,14 +301,92 @@ html:not(.js) .home-loader { display: none; }
 }
 .spine-links a .ar { color: var(--faint); margin-left: auto; transition: transform 0.3s var(--ease), color 0.3s var(--ease); }
 .spine-links a .nav-ic-wrap {
-  width: 18px; height: 18px; flex: 0 0 18px;
+  width: 20px; height: 20px; flex: 0 0 20px;
   display: inline-flex; align-items: center; justify-content: center; color: currentColor;
+}
+.spine-link-label {
+  display: inline-block;
+  max-width: 120px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width 0.2s linear, opacity 0.2s linear;
 }
 .spine-links a .nav-ic { width: 16px; height: 16px; display: block; stroke-width: 1.8; opacity: 0.78; }
 .spine-links a:hover .nav-ic { opacity: 1; }
 .spine-links a:hover { background: var(--surface); color: var(--ink); }
 .spine-links a:hover .ar { transform: translate(2px,-2px); color: var(--ink); }
 .spine-copy { margin-top: 18px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--faint); display: flex; justify-content: space-between; }
+
+/* shadcn-style desktop collapse: the existing sidebar becomes an icon rail */
+.sidebar-toggle {
+  position: absolute;
+  top: 24px; right: 32px;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  appearance: none; border: 0; border-radius: 7px;
+  background: transparent; color: var(--steel);
+  cursor: pointer;
+  transition: background-color 0.2s linear, color 0.2s linear;
+}
+.sidebar-toggle:hover { background: var(--surface); color: var(--ink); }
+.sidebar-toggle svg { width: 16px; height: 16px; }
+.sidebar-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+@media (min-width: 1041px) {
+  .spine { padding-top: clamp(56px, 7vh, 78px); }
+  .stage { transition: margin-left 0.2s linear, padding 0.2s linear; }
+  body.sidebar-collapsed,
+  html.sidebar-collapsed-preload { --spine-w: var(--sidebar-width-icon); }
+  body.sidebar-collapsed .spine,
+  html.sidebar-collapsed-preload .spine { padding-left: 12px; padding-right: 12px; }
+  body.sidebar-collapsed .sidebar-toggle,
+  html.sidebar-collapsed-preload .sidebar-toggle { right: 17px; }
+  body.sidebar-collapsed .spine-id,
+  html.sidebar-collapsed-preload .spine-id { justify-content: center; gap: 0; }
+  body.sidebar-collapsed .spine-id-copy,
+  html.sidebar-collapsed-preload .spine-id-copy { flex: 0 0 0; width: 0; overflow: hidden; }
+  body.sidebar-collapsed .spine-id,
+  html.sidebar-collapsed-preload .spine-id {
+    max-height: 120px; margin-bottom: 28px; padding-top: 0; padding-bottom: 0; padding-left: 0; padding-right: 0;
+  }
+  body.sidebar-collapsed .spine-id .brand,
+  body.sidebar-collapsed .spine-id .descriptor,
+  html.sidebar-collapsed-preload .spine-id .brand,
+  html.sidebar-collapsed-preload .spine-id .descriptor {
+    opacity: 0;
+    pointer-events: none;
+  }
+  body.sidebar-collapsed .toc-group-label,
+  html.sidebar-collapsed-preload .toc-group-label {
+    display: block; height: 10px; padding: 0; margin: 6px 0 2px;
+    overflow: hidden; opacity: 0; pointer-events: none;
+  }
+  body.sidebar-collapsed .spine-foot::before,
+  html.sidebar-collapsed-preload .spine-foot::before { display: none; }
+  body.sidebar-collapsed .toc a.toc-item,
+  html.sidebar-collapsed-preload .toc a.toc-item {
+    justify-content: center; gap: 0; padding-left: 0; padding-right: 0;
+  }
+  body.sidebar-collapsed .toc a.toc-item > span:not(.nav-ic-wrap),
+  html.sidebar-collapsed-preload .toc a.toc-item > span:not(.nav-ic-wrap) {
+    max-width: 0; width: 0; min-width: 0; flex: 0 0 0;
+    height: 1.35em; line-height: 1.35; overflow: hidden; opacity: 0;
+  }
+  body.sidebar-collapsed .spine-links a,
+  html.sidebar-collapsed-preload .spine-links a {
+    justify-content: center; gap: 0; padding-left: 0; padding-right: 0;
+  }
+  body.sidebar-collapsed .spine-link-label,
+  html.sidebar-collapsed-preload .spine-link-label {
+    max-width: 0; width: 0; flex: 0 0 0; overflow: hidden; opacity: 0;
+  }
+  body.sidebar-collapsed .spine-links a .ar,
+  html.sidebar-collapsed-preload .spine-links a .ar { display: none; }
+}
+
+@media (max-width: 1040px) {
+  .sidebar-toggle { display: none; }
+}
 
 /* ============================================================
    MOBILE TOPBAR + DRAWER (desktop: sidebar is always visible)
@@ -319,6 +428,13 @@ html:not(.js) .home-loader { display: none; }
    ============================================================ */
 .opening { padding-top: clamp(120px, 15vh, 156px); }
 .opening-head { margin-bottom: clamp(56px, 8vh, 88px); }
+.opening-head,
+.work-grid {
+  width: 100%;
+  max-width: min(1080px, calc(100vw - var(--spine-w) - var(--pad) - var(--pad)));
+  margin-left: auto; margin-right: auto;
+  transition: max-width 0.2s linear;
+}
 
 /* top row — location/time, right-aligned */
 .opening-top {
@@ -686,7 +802,7 @@ footer.foot a:hover { color: var(--ink); }
     box-shadow: none;
     padding-left: var(--pad); padding-right: var(--pad);
   }
-  .spine-id { padding-left: 0; }
+  .spine-id { padding-left: 0; padding-right: 0; }
   .toc a.toc-item,
   .toc-group-label,
   .spine-links a { padding-left: 0; padding-right: 0; }

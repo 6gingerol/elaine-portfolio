@@ -1,4 +1,75 @@
 (function () {
+  // Keep the current static HTML, but expose the same composition points as
+  // shadcn/ui's Sidebar component: Sidebar > Header / Content / Menu / Footer.
+  // This makes the existing navigation easy to migrate later without changing
+  // its layout, copy, or custom icon system today.
+  document.querySelectorAll('.spine').forEach((sidebar) => {
+    sidebar.dataset.sidebar = 'sidebar';
+    const header = sidebar.querySelector('.spine-id');
+    const content = sidebar.querySelector('.toc');
+    const footer = sidebar.querySelector('.spine-foot');
+    if (header) header.dataset.sidebar = 'header';
+    if (content) {
+      content.dataset.sidebar = 'content';
+      content.dataset.sidebarGroup = 'group';
+      content.dataset.sidebarMenu = 'menu';
+    }
+    if (footer) footer.dataset.sidebar = 'footer';
+    if (header && !header.querySelector('.spine-id-copy')) {
+      const identity = document.createElement('div');
+      identity.className = 'spine-id-copy';
+      while (header.firstChild) identity.appendChild(header.firstChild);
+      header.appendChild(identity);
+    }
+    sidebar.querySelectorAll('.toc a.toc-item, .spine-links a').forEach((item) => {
+      item.dataset.sidebarMenuButton = 'menu-button';
+    });
+    sidebar.querySelectorAll('.spine-links a').forEach((link) => {
+      [...link.childNodes]
+        .filter((node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim())
+        .forEach((node) => {
+          const label = document.createElement('span');
+          label.className = 'spine-link-label';
+          label.textContent = node.textContent.trim();
+          node.replaceWith(label);
+        });
+    });
+
+    // Match shadcn's SidebarTrigger behavior without changing the existing
+    // mobile menu: desktop toggles between the full sidebar and icon rail.
+    if (!sidebar.querySelector('.sidebar-toggle')) {
+      const toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'sidebar-toggle';
+      toggle.setAttribute('aria-controls', sidebar.id || 'spine');
+      // Lucide PanelLeft — the same icon family used by shadcn/ui.
+      toggle.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg>';
+
+      let collapsed = false;
+      try { collapsed = window.localStorage.getItem('portfolio-sidebar-collapsed') === 'true'; } catch (e) { /* ignore */ }
+
+      const syncToggle = () => {
+        document.body.classList.toggle('sidebar-collapsed', collapsed);
+        document.documentElement.classList.remove('sidebar-collapsed-preload');
+        toggle.setAttribute('aria-expanded', String(!collapsed));
+        toggle.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      };
+
+      toggle.addEventListener('click', () => {
+        collapsed = !collapsed;
+        try { window.localStorage.setItem('portfolio-sidebar-collapsed', String(collapsed)); } catch (e) { /* ignore */ }
+        syncToggle();
+      });
+
+      // Keep the trigger in the same header row as the identity block. This
+      // gives it a real sidebar-header home instead of leaving it floating
+      // above the navigation while the rail changes width.
+      if (header) header.appendChild(toggle);
+      else sidebar.insertBefore(toggle, sidebar.firstChild);
+      syncToggle();
+    }
+  });
+
   const icons = {
     home: '<path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"></path>',
     projects: '<rect x="3" y="3" width="7" height="7" rx="1.4"></rect><rect x="14" y="3" width="7" height="7" rx="1.4"></rect><rect x="14" y="14" width="7" height="7" rx="1.4"></rect><rect x="3" y="14" width="7" height="7" rx="1.4"></rect>',
