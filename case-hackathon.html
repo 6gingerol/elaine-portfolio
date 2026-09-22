@@ -345,23 +345,20 @@
     border-radius: 8px;
   }
 
-  /* Give the final designs room to breathe so the interface visuals do not
-     visually overpower the explanations that introduce them. */
-  .cs-section[data-screen-label="Final designs"] {
-    --hack-block-space: clamp(32px, 4vh, 44px);
-  }
+  /* Add breathing room without adding new visual devices or copy. */
+  .cs-section > p + .blk,
+  .cs-section > p + .blk-full { padding-top: clamp(8px, 1.2vh, 16px); }
+  .cs-section > .blk + p,
+  .cs-section > .blk-full + p { padding-top: clamp(8px, 1.2vh, 16px); }
   .cs-section[data-screen-label="Final designs"] .img-heading {
-    margin-top: clamp(40px, 5vh, 56px);
+    max-width: 48ch;
+    padding-top: clamp(28px, 4.5vh, 64px);
   }
   .cs-section[data-screen-label="Final designs"] .img-heading:first-of-type {
-    margin-top: clamp(20px, 3vh, 32px) !important;
+    padding-top: 0;
   }
-  .cs-section[data-screen-label="Final designs"] .img-heading + .blk,
-  .cs-section[data-screen-label="Final designs"] .img-heading + .legend-bar {
-    margin-top: clamp(32px, 4vh, 44px) !important;
-  }
-  .cs-section[data-screen-label="Final designs"] .blk + .img-heading {
-    margin-top: clamp(40px, 5vh, 56px);
+  .cs-section[data-screen-label="Final designs"] .paired-imgs + p {
+    padding-top: clamp(16px, 2.5vh, 36px);
   }
 
   /* Full-width framed image with clean border */

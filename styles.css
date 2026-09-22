@@ -614,8 +614,6 @@ footer.foot a:hover { color: var(--ink); }
   .toc a.toc-item,
   .toc-group-label,
   .spine-links a { padding-left: 0; padding-right: 0; }
-  .toc a.toc-item .nav-ic-wrap,
-  .spine-links a .nav-ic-wrap { display: none; }
   body.nav-open .spine { transform: translateX(0); }
   body.nav-open .backdrop { opacity: 1; pointer-events: auto; }
   body.nav-open .menu-btn .bars span:nth-child(1) { transform: translateY(4.5px) rotate(45deg); }
