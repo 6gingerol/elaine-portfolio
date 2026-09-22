@@ -22,8 +22,9 @@
 
 /* Cross-document view transitions (MPA navigation cross-fade) */
 @view-transition { navigation: auto; }
+::view-transition { background: var(--bg, #ffffff); }
 ::view-transition-old(root),
-::view-transition-new(root) { animation-duration: 0.32s; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+::view-transition-new(root) { animation-duration: 0.22s; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),
@@ -47,7 +48,7 @@
   --frame-grad: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%);
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-y: scroll; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-y: scroll; background: var(--bg); }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
   font-family: var(--font-body); font-size: 16px; line-height: 1.65;
