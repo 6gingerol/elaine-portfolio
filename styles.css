@@ -316,6 +316,8 @@ html.js.single-view .stage > .section:not(.view-active) { display: none; }
   background: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%);
   transition: transform 0.7s var(--ease);
 }
+/* Give the nwPlus artwork a little extra scale so the thumbnail feels fuller. */
+.proj#cadence .p-media .frame img.full { transform: scale(1.10); transform-origin: center; }
 .proj:hover .p-media .frame img, .proj:hover .p-media .frame video { transform: scale(1.025); }
 @media (prefers-reduced-motion: reduce) {
   .proj:hover .p-media .frame img, .proj:hover .p-media .frame video { transform: none; }
