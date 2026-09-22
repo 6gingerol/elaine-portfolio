@@ -364,9 +364,12 @@ html.locked .cs-gate {
   .blk-sticky .sticky-copy { position: static; }
   .blk-gallery { grid-template-columns: repeat(3, 1fr); }
   .blk-snaps { grid-template-columns: repeat(2, 1fr); }
+  /* On narrower screens, the hero media and story content share one edge. */
+  .cs-hero .screen { padding: 0; border: none; border-radius: 0; background: transparent; }
 }
 @media (max-width: 640px) {
-  .cs-wrap { padding: 0 22px 80px; }
+  /* Keep the reading column aligned with the hero's responsive inset. */
+  .cs-wrap { padding: 0 36px 80px; }
   .cs-meta { grid-template-columns: repeat(2, 1fr); }
   .blk-compare, .blk-ba { grid-template-columns: 1fr; }
   .blk-gallery { grid-template-columns: 1fr; }

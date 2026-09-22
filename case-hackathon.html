@@ -71,6 +71,15 @@
   /* === CONSISTENT SPACING SYSTEM === */
   /* paragraph after anything */
   .cs-section > p { max-width: var(--hack-copy-width); margin: 0; }
+  .cs-section > p,
+  .hack-reflection-grid p {
+    color: var(--graphite);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 15.5px;
+    line-height: 1.65;
+    letter-spacing: inherit;
+  }
   .cs-section > p.wide-copy { max-width: var(--hack-content-width); }
   .cs-section > p + p { margin-top: var(--hack-content-space); }
   .findings-grid + p { margin-top: var(--hack-block-space); }
@@ -356,11 +365,19 @@
   .hack-reflection-grid .img-heading { margin-top: 0; }
   .hack-reflection-grid p {
     max-width: 48ch;
-    margin-top: 0;
+    margin: 0;
   }
   @media (max-width: 920px) {
     .old-workflow-toggle .old-workflow-body { grid-template-columns: 1fr; }
     .old-workflow-toggle .old-workflow-body figure:last-child { grid-column: auto; }
+    .cs-section > p,
+    .cs-section h2.sec-title,
+    .img-heading,
+    .hack-reflection-grid p { max-width: none; }
+    .hack-reflection-grid { grid-template-columns: 1fr; }
+    .hack-reflection-grid > div { display: block; grid-row: auto; }
+    .hack-reflection-grid > div + div { margin-top: var(--hack-block-space); }
+    .hack-reflection-grid p { margin-top: 20px; }
   }
   @media (max-width: 720px) {
     .findings-grid,
@@ -601,7 +618,7 @@
     <div class="hack-reflection-grid">
       <div>
         <h3 class="img-heading">Be ready to reinvent your workflows.</h3>
-        <p>The project required many rounds of heavy discussion with multiple user groups, thus data collected led to different directions. Being able to let things go despite the time sunk into building already helped me realize the benefits of iteration: it creates a better product.</p>
+        <p>When conducting research, we found a lot of variation in the data collected, thus leading to many possible solutions. Due to this, we tested many iterations of the portal. I learned that it's important to be able to let things go despite the time sunk into building. This helped me realize the benefits of iteration: it creates a better product.</p>
       </div>
       <div>
         <h3 class="img-heading">Have a firm grasp when conducting user research.</h3>
