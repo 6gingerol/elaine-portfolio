@@ -45,11 +45,15 @@
   .comment-pair figure:first-child img { display: block; height: 55px; width: auto; max-width: 100%; }
   .comment-pair figure:last-child img { display: block; height: 67px; width: auto; max-width: 100%; }
   .comment-pair figure:first-child figcaption { margin-top: 10px; }
-  .comment-pair figure:last-child figcaption { margin-top: 10px; }
+  /* The profile marker extends below the comment bubble; align the caption to the bubble itself. */
+  .comment-pair figure:last-child figcaption { margin-top: -2px; }
   @media (max-width: 720px) {
     .compare-2up { grid-template-columns: 1fr; }
-    .comment-pair { justify-items: start; }
-    .comment-pair figure img { height: auto !important; width: auto; max-width: 280px; }
+    .comment-pair { justify-items: center; }
+    .comment-pair figure img { width: auto; max-width: 100%; }
+    .comment-pair figure:first-child img { height: 55px !important; }
+    .comment-pair figure:last-child img { height: 67px !important; }
+    .comment-pair figure:last-child { transform: translateX(8px); }
   }
 
   .blk .slot.framed { background: #ffffff; padding: 0; border-color: var(--line); }
@@ -168,36 +172,22 @@
     place-items: center;
     width: 28px;
     height: 28px;
-    border: 1px solid rgba(255,255,255,0.7);
     border-radius: 50%;
     background: rgba(11,11,12,0.72);
     color: #fff;
     font-size: 16px;
+    font-weight: 500;
     line-height: 1;
-    pointer-events: none;
-    transition: transform 0.25s var(--ease), background 0.25s var(--ease);
-  }
-  .zoomable-figure::before {
-    content: "View larger";
-    position: absolute;
-    top: 44px;
-    right: 10px;
-    z-index: 1;
-    padding: 5px 8px;
-    border-radius: 5px;
-    background: rgba(11,11,12,0.78);
-    color: #fff;
-    font-size: 11px;
-    line-height: 1.2;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-3px);
-    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+    transition: opacity 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease);
   }
   .zoomable-figure:hover::after,
-  .zoomable-figure:focus-within::after { background: rgba(11,11,12,0.9); transform: scale(1.06); }
-  .zoomable-figure:hover::before,
-  .zoomable-figure:focus-within::before { opacity: 1; transform: none; }
+  .zoomable-figure:focus-within::after {
+    opacity: 1;
+    background: rgba(11,11,12,0.68);
+    transform: scale(1.03);
+  }
   .old-workflow-toggle .old-workflow-body img {
     display: block; width: 100%; height: auto; border-radius: 8px;
     border: 1px solid var(--line);
@@ -525,11 +515,11 @@
     <p class="wide-copy">The revised system gives organizers four actions on any project: viewing it, approving it, flagging it, or starring it. They can also leave comments directly on a project.</p>
     <div class="blk blk-full compare-2up comment-pair">
       <figure>
-        <img src="assets/comment mo pfp.webp" alt="Comment bubble without profile picture" loading="lazy" />
+        <img src="assets/comment-without-pfp.svg" alt="Comment bubble without profile picture" loading="lazy" />
         <figcaption>Before</figcaption>
       </figure>
       <figure>
-        <img src="assets/comment w pfp.webp" alt="Comment bubble with profile picture" loading="lazy" />
+        <img src="assets/comment-with-pfp.svg" alt="Comment bubble with profile picture" loading="lazy" />
         <figcaption>After</figcaption>
       </figure>
     </div>
