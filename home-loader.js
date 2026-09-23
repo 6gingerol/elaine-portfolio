@@ -18,6 +18,10 @@
 
   if (!homeLoader || !homeLoaderText) return;
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const loaderMinimumDuration = prefersReducedMotion ? 1400 : 3000;
+  const loaderExitDuration = prefersReducedMotion ? 550 : 1150;
+
   const disperseTransforms = [
     { x: -0.8, y: -0.6, rotationZ: -29 },
     { x: -0.2, y: -0.4, rotationZ: -6 },
@@ -52,14 +56,14 @@
       Array.from(word).forEach((character) => {
         const letter = document.createElement('span');
         const transform = disperseTransforms[characterIndex % disperseTransforms.length];
-        const exitDelay = ((characterIndex * 13) % 8) * 0.035;
+        const exitDelay = ((characterIndex * 13) % 8) * 0.045;
         const exitX = transform.x * 1.35;
         const exitY = transform.y * 1.35;
         const exitRotation = transform.rotationZ * 1.12;
 
         letter.className = 'home-loader-char';
         letter.textContent = character;
-        letter.style.setProperty('--loader-delay', `${characterIndex * 0.028}s`);
+        letter.style.setProperty('--loader-delay', `${characterIndex * 0.04}s`);
         letter.style.setProperty('--loader-exit-delay', `${exitDelay}s`);
         letter.style.setProperty('--loader-x', `${transform.x}em`);
         letter.style.setProperty('--loader-y', `${transform.y}em`);
@@ -83,10 +87,10 @@
     homeLoaderText.appendChild(line);
   });
 
+  homeLoader.classList.remove('is-preparing');
+  homeLoader.classList.add('is-ready');
+
   const loaderStartedAt = performance.now();
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const loaderMinimumDuration = prefersReducedMotion ? 700 : 2300;
-  const loaderExitDuration = prefersReducedMotion ? 0 : 1050;
   let loaderFinished = false;
 
   function finishHomeLoader() {

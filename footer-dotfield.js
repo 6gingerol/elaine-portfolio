@@ -13,8 +13,9 @@
   var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   var finePointerQuery = window.matchMedia('(pointer: fine)');
   var reducedMotion = motionQuery.matches;
-  var hasTouchInput = 'ontouchstart' in window;
-  var pointerInteraction = finePointerQuery.matches && !hasTouchInput;
+  /* A touchscreen PC can still have a fine mouse or trackpad pointer.
+     Pointer events identify and ignore touch input below. */
+  var pointerInteraction = finePointerQuery.matches;
 
   /* Tune these values to change the field without changing the layout. */
   var OPTIONS = {
@@ -157,7 +158,7 @@
           targetY += Math.cos(ambientTime * 0.86 + dot.phase) * OPTIONS.ambientDistance;
         }
 
-        if (!reducedMotion && pointerInteraction && state.pointer.active) {
+        if (pointerInteraction && state.pointer.active) {
           var dx = targetX - state.pointer.x;
           var dy = targetY - state.pointer.y;
           var distance = Math.sqrt(dx * dx + dy * dy);
@@ -187,15 +188,18 @@
 
     function tick(timestamp) {
       state.frame = 0;
-      if (!state.visible || reducedMotion || document.hidden) return;
+      if (!state.visible || document.hidden) return;
       draw(timestamp);
-      state.frame = requestAnimationFrame(tick);
+      if (!reducedMotion) state.frame = requestAnimationFrame(tick);
     }
 
     function start() {
-      if (!reducedMotion && state.visible && !document.hidden && !state.frame) {
-        state.frame = requestAnimationFrame(tick);
+      if (!state.visible || document.hidden) return;
+      if (reducedMotion) {
+        draw(performance.now());
+        return;
       }
+      if (!state.frame) state.frame = requestAnimationFrame(tick);
     }
 
     if (pointerInteraction) {
@@ -205,11 +209,13 @@
         state.pointer.x = event.clientX - rect.left;
         state.pointer.y = event.clientY - rect.top;
         state.pointer.active = true;
-        start();
+        if (reducedMotion) draw(performance.now());
+        else start();
       }, { passive: true });
 
       footer.addEventListener('pointerleave', function () {
         state.pointer.active = false;
+        if (reducedMotion) draw(performance.now());
       }, { passive: true });
     }
 

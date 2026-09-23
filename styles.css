@@ -109,6 +109,8 @@ a { color: inherit; text-decoration: none; }
   visibility: hidden;
   pointer-events: none;
 }
+.home-loader.is-preparing .home-loader-text { opacity: 0; }
+.home-loader.is-ready .home-loader-text { opacity: 1; transition: opacity 0.18s ease; }
 html:not(.js) .home-loader { display: none; }
 .home-loader-text {
   margin: 0;
@@ -136,12 +138,12 @@ html:not(.js) .home-loader { display: none; }
   min-width: 0.22em;
   opacity: 0;
   transform: translate3d(var(--loader-x), var(--loader-y), 0) rotate(var(--loader-rotation)) scale(0.78);
-  animation: home-loader-assemble 0.75s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  animation: home-loader-assemble 0.9s cubic-bezier(0.33, 1, 0.68, 1) forwards;
   animation-delay: var(--loader-delay);
   will-change: transform, opacity;
 }
 .home-loader.is-exiting .home-loader-char {
-  animation: home-loader-crumble 0.95s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  animation: home-loader-crumble 1.1s cubic-bezier(0.33, 1, 0.68, 1) forwards;
   animation-delay: var(--loader-exit-delay);
 }
 @keyframes home-loader-assemble {
