@@ -11,6 +11,9 @@ uploads/
 # Archive — old versions, optional to exclude
 # archive/
 
+# Local drafts — keep out of the published site
+.drafts/
+
 # Screenshots — optional, can be large
 # screenshots/
 

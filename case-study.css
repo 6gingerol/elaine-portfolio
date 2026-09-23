@@ -166,6 +166,35 @@ html.locked .cs-gate {
 }
 .cs-hero img, .cs-hero video { width: 100%; height: auto; }
 .cs-hero .media video { object-fit: contain; object-position: center; }
+.cs-hero .lottie-media { aspect-ratio: 16 / 9; }
+.cs-hero .lottie-media [data-lottie-path] { width: 100%; height: 100%; }
+.cs-hero .lottie-media svg { display: block; width: 100%; height: 100%; }
+.lottie-fallback { display: grid; place-items: center; min-height: 160px; padding: 24px; color: var(--steel); font-size: 14px; text-align: center; }
+.lottie-media [data-lottie-path].is-loaded .lottie-fallback { display: none; }
+.motion-project-title { margin: 0 0 8px; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.12; letter-spacing: -0.02em; }
+.motion-project-intro { margin: 0 0 24px; color: var(--graphite); font-size: 15px; }
+.motion-project-list { display: grid; grid-template-columns: repeat(3, minmax(0, 180px)); gap: 24px; justify-content: space-between; align-items: start; }
+.motion-project { margin: 0; }
+.motion-project-media {
+  width: min(100%, 180px); aspect-ratio: 9 / 16; overflow: hidden;
+  margin: 0; border: 0; border-radius: 0;
+  background: transparent;
+}
+.motion-project-media [data-lottie-path] { width: 100%; height: 100%; clip-path: inset(0 0 4px 4px); }
+.motion-project-media svg { display: block; width: 100%; height: 100%; }
+.motion-project-media video { display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; }
+.motion-project-media img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.motion-project-media > [data-lottie-path],
+.motion-project-media > video,
+.motion-project-media > img {
+  transform: scale(1);
+  transform-origin: center;
+}
+.motion-project-media [data-lottie-path].is-loaded .lottie-fallback { display: none; }
+@media (max-width: 640px) {
+  .motion-project-list { grid-template-columns: 1fr; }
+  .motion-project-media { max-width: 180px; }
+}
 .cs-hero image-slot { width: 100%; height: auto; aspect-ratio: 16 / 9; display: block; }
 .cs-hero .hero-cap {
   display: flex; justify-content: space-between; gap: 16px;
@@ -241,6 +270,10 @@ html.locked .cs-gate {
 .cs-section > p, .cs-section .sec-copy p {
   color: var(--graphite); max-width: none; margin: 0 0 14px; font-size: 15.5px;
 }
+.jelly-dilemma + p { margin-top: 0; padding-top: clamp(48px, 6vh, 72px); }
+.jelly-dilemma + p + p { margin-top: clamp(24px, 3vh, 36px); }
+.jelly-flow-figure { width: min(100%, 560px); margin: clamp(72px, 11vh, 120px) auto 0; }
+.jelly-flow-figure img { width: 100%; height: auto; filter: brightness(0.9); }
 .cs-section ul.points { margin: 0; padding: 0; list-style: none; max-width: none; display: flex; flex-direction: column; gap: 9px; }
 .cs-section ul.points li { position: relative; display: block; padding-left: 18px; font-size: 15px; color: var(--graphite); }
 .cs-section ul.points li::before { content: "·"; position: absolute; left: 0; top: 0; color: var(--faint); font-weight: 700; }
@@ -454,6 +487,7 @@ html.locked .cs-gate {
    DARK MODE
    ============================================================ */
 @media (prefers-color-scheme: dark) {
+  .jelly-flow-figure img { filter: none; }
   :root {
     --bg:       #0f0f10;
     --paper:    #141415;

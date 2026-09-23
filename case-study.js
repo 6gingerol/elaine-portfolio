@@ -28,6 +28,11 @@
   function materializeVideo(v) {
     var src = v.getAttribute('data-lazy-src');
     if (!src || v.getAttribute('src')) return;
+    var fallback = v.getAttribute('data-lazy-fallback');
+    if (fallback && /\.webm(?:\?|$)/i.test(src) && v.canPlayType('video/webm') === '') {
+      src = fallback;
+      v.setAttribute('data-fallback-active', 'true');
+    }
     v.setAttribute('src', src);
     v.removeAttribute('data-lazy-src');
     v.autoplay = true;

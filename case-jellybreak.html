@@ -11,58 +11,711 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" href="assets/fonts/PPMondwest-Regular.otf" as="font" type="font/otf" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="case-study.css?v=sidebar-final-20260922" />
+    <link rel="stylesheet" href="case-study.css?v=case-gutters-20260922" />
     <link rel="stylesheet" href="sidebar.css?v=sidebar-final-20260922" />
 <style>
-  body.pg { height: 100vh; overflow: hidden; }
-  .pg-stage { margin-left: 0; height: 100vh; padding: 0; position: relative; overflow: hidden; }
+  :root {
+    --jelly-section-space: clamp(80px, 9vh, 104px);
+    --jelly-content-space: 22px;
+    --jelly-block-space: 32px;
+    --jelly-theme-space: clamp(56px, 7vh, 80px);
+    --jelly-copy-width: 100%;
+  }
+  .cs-head .cs-meta { grid-template-columns: repeat(4, 1fr); border-top: none; padding-top: 0; }
+  .cs-head .cs-meta .k { font-family: inherit; font-size: 14px; letter-spacing: 0; }
+  .cs-top,
+  .cs-head,
+  .cs-section {
+    width: 100%;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cs-section h2.sec-title,
+  .cs-section > p,
+  .statement.hmw {
+    max-width: var(--jelly-copy-width);
+  }
+  .cs-section { margin-top: var(--jelly-section-space); }
+  .cs-section[data-screen-label="Design direction"] {
+    padding-block: 0;
+  }
+  .cs-section[data-screen-label="Design philosophy"] {
+    padding-block: clamp(48px, 6vh, 72px);
+  }
+  /* Keep shared case-study typography in lockstep with Judging Portal. */
+  .cs-section h2.sec-title {
+    width: 100%;
+    max-width: var(--jelly-copy-width);
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(20px, 2.2vw, 27px);
+    line-height: 1.3;
+  }
+  .cs-section[data-screen-label="Solution"] h2.sec-title {
+    text-align: center;
+  }
+  .cs-section > p {
+    width: 100%;
+    max-width: var(--jelly-copy-width);
+    margin: 0;
+    color: var(--graphite);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 15.5px;
+    line-height: 1.65;
+    letter-spacing: inherit;
+  }
+  .cs-section > p:not(.statement) { max-width: var(--jelly-copy-width); }
+  .cs-hero {
+    width: 100%;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cs-hero .screen { padding: 0; border: none; border-radius: 0; background: transparent; }
+  /* Match the hero frame to jellybreak-breaks.mp4 so the animation is not letterboxed. */
+  .cs-hero .media { border-radius: 8px; box-shadow: none; aspect-ratio: 2926 / 1758; }
+  .cs-hero .media video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Trim edge artifacts from the source while keeping the phone undistorted. */
+    transform: scale(1.08);
+    transform-origin: center;
+  }
 
-  /* locked / in-progress state */
-  .pg-locked { display: grid; place-items: center; text-align: center; padding: 40px; position: relative; overflow: hidden; }
-  .pg-lock-inner { position: relative; z-index: 2; max-width: 560px; display: flex; flex-direction: column; align-items: center; }
-  .lock-title {
-    font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
-    font-weight: 400; font-size: clamp(38px, 5vw, 62px); line-height: 1;
-    letter-spacing: 0.01em; color: var(--ink); margin: 0; white-space: nowrap;
+  /* JellyBreak-specific content patterns */
+  .jelly-grid,
+  .jelly-response-grid,
+  .jelly-reflection-grid {
+    display: grid;
+    gap: 16px;
+    margin-top: var(--jelly-block-space);
   }
-  .lock-sub { font-family: 'Space Grotesk', var(--font-display); font-weight: 400; font-size: 16px; line-height: 1.5; color: var(--steel); margin: 16px 0 0; max-width: 40ch; text-wrap: pretty; }
-  .lock-title .dots { display: inline-flex; }
-  .lock-title .dots span { display: inline-block; animation: dotBob 1.4s var(--ease) infinite; }
-  .lock-title .dots span:nth-child(2) { animation-delay: 0.2s; }
-  .lock-title .dots span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes dotBob {
-    0%, 60%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-0.09em); }
+  .jelly-grid,
+  .jelly-response-grid { grid-template-columns: repeat(3, 1fr); }
+  .jelly-reflection-grid { grid-template-columns: repeat(2, 1fr); }
+  .jelly-reflection-grid {
+    column-gap: clamp(28px, 4vw, 56px);
+    row-gap: 20px;
   }
-  @media (prefers-reduced-motion: reduce) { .lock-title .dots span { animation: none; } }
-  .lock-back {
-    margin-top: 30px; font-family: 'Space Grotesk', var(--font-display); font-weight: 500; font-size: 16px;
-    letter-spacing: -0.01em; color: var(--steel);
-    display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s var(--ease);
+
+  .jelly-direction-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(24px, 3.4vw, 44px);
+    margin: clamp(72px, 8vh, 96px) 0 0;
   }
-  .lock-back .arr { display: inline-block; transition: transform 0.3s var(--ease); }
-  .lock-back:hover { color: var(--ink); }
-  .lock-back:hover .arr { transform: translateX(-5px); }
+  .jelly-direction {
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  .jelly-direction-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .jelly-direction-theme {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+  }
+  .jelly-direction-theme h3 {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(18px, 2vw, 22px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+  .jelly-direction-theme img {
+    display: block;
+    width: 76px;
+    height: 76px;
+    object-fit: contain;
+    margin: 12px auto 0;
+  }
+  .jelly-direction-arrow {
+    color: var(--silver);
+    font-size: 22px;
+    line-height: 1;
+    text-align: center;
+  }
+  .jelly-direction-response {
+    padding-top: 0;
+    text-align: center;
+  }
+  .jelly-direction-response p {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(15px, 1.7vw, 18px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .jelly-themes {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(36px, 5vh, 60px);
+    margin-top: var(--jelly-theme-space);
+    margin-bottom: clamp(36px, 5vh, 60px);
+  }
+  .jelly-theme {
+    display: flex;
+    max-width: none;
+    margin-inline: auto;
+    gap: clamp(24px, 3.2vw, 40px);
+    align-items: flex-start;
+  }
+  .jelly-theme-copy {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 58ch;
+  }
+  .jelly-theme .card-label {
+    display: block;
+    margin-bottom: 14px;
+    color: var(--silver);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .jelly-theme h3 {
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2.3vw, 29px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+  .jelly-theme p {
+    margin: 0;
+    color: var(--graphite);
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+  .jelly-theme-graphic {
+    display: block;
+    width: 100%;
+    max-width: 145px;
+    height: auto;
+    justify-self: end;
+  }
+  .jelly-theme-visual {
+    flex: 0 0 145px;
+    width: 145px;
+    align-self: flex-start;
+    margin: 0;
+  }
+  .jelly-card,
+  .jelly-reflection {
+    border: none;
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 24px;
+  }
+  .jelly-card h3 {
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .jelly-card p {
+    margin: 0;
+    color: var(--graphite);
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+  .jelly-card .card-label {
+    display: block;
+    margin-bottom: 16px;
+    color: var(--silver);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .cs-section > p { max-width: none; margin: 0; }
+  .cs-section > p:not(.statement) { max-width: 100%; }
+  .jelly-copy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(24px, 4vw, 56px);
+    margin-top: var(--jelly-block-space);
+  }
+  .jelly-copy-grid > p {
+    max-width: 48ch;
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+  .jelly-research-insight {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: var(--jelly-block-space) !important;
+  }
+  .cs-section[data-screen-label="Research"] > p {
+    width: 100%;
+    max-width: var(--jelly-copy-width);
+  }
+  .statement.hmw {
+    max-width: none;
+    margin: clamp(64px, 8vh, 96px) 0;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.2vw, 27px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+  }
+  .statement.hmw .hmw-lead {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--steel);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .jelly-research-hmw,
+  .jelly-design-prompt {
+    max-width: 48ch;
+    margin: clamp(72px, 8vh, 96px) auto;
+    padding: clamp(36px, 5vh, 56px) 0;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .cs-section[data-screen-label="Research"] .jelly-research-hmw {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .jelly-sprint-intro {
+    width: 100% !important;
+    max-width: var(--jelly-copy-width) !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-wrap: pretty;
+  }
+  .cs-section[data-screen-label="The sprint"] {
+    margin-top: var(--jelly-section-space);
+  }
+  .cs-section[data-screen-label="The sprint"] > .jelly-design-prompt {
+    max-width: 100%;
+    margin: clamp(48px, 6vh, 72px) 0 0;
+    padding: clamp(28px, 4vh, 40px) 0 0;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .cs-section[data-screen-label="The sprint"] .jelly-sprint-intro {
+    margin-top: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left;
+  }
+  .cs-section[data-screen-label="Research"] {
+    margin-top: clamp(48px, 6vh, 72px);
+  }
+  .cs-section[data-screen-label="Research"] .jelly-research-insight {
+    margin-top: clamp(12px, 2vh, 20px) !important;
+    margin-bottom: clamp(28px, 4vh, 40px) !important;
+  }
+
+  /* Keep the opening research narrative centered as a column while
+     preserving a calm, left-aligned reading direction. */
+  .cs-section[data-screen-label="The sprint"] > .jelly-sprint-intro,
+  .cs-section[data-screen-label="The sprint"] > .jelly-design-prompt,
+  .cs-section[data-screen-label="Research"] > .jelly-centered-copy {
+    width: min(100%, 840px) !important;
+    max-width: 840px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: left;
+  }
+  .cs-section[data-screen-label="The sprint"] > .jelly-design-prompt {
+    margin-top: clamp(48px, 6vh, 72px);
+    padding-top: clamp(28px, 4vh, 40px);
+    padding-bottom: clamp(28px, 4vh, 40px);
+  }
+
+  .jelly-dilemma {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--jelly-block-space);
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: dilemma;
+    align-items: stretch;
+  }
+  .jelly-dilemma li {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 0;
+    align-items: start;
+    padding: 20px 24px;
+    border: none;
+    border-radius: 12px;
+    background: var(--paper);
+    counter-increment: dilemma;
+  }
+  .jelly-dilemma li::before {
+    content: counter(dilemma) ".";
+    display: block;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    grid-row: 1;
+    align-self: start;
+  }
+  .jelly-dilemma li h3 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .jelly-dilemma li p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .jelly-dilemma h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    min-height: 0;
+    display: block;
+    text-wrap: balance;
+  }
+  .jelly-dilemma p {
+    margin: 0;
+    max-width: 42ch;
+    color: var(--graphite);
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+  .jelly-dilemma + p {
+    margin-top: 0 !important;
+    padding-top: clamp(48px, 6vh, 72px);
+  }
+  .jelly-dilemma + p + p { margin-top: clamp(24px, 3vh, 36px) !important; }
+
+  .jelly-solution-intro {
+    max-width: 62ch !important;
+    margin-top: 0 !important;
+  }
+  .jelly-solution-features {
+    display: grid;
+    width: min(100%, 840px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(40px, 5vw, 72px);
+    margin-top: var(--jelly-block-space);
+    margin-inline: auto;
+    align-items: start;
+  }
+  .jelly-solution-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(28px, 5vw, 64px);
+    margin: 0;
+  }
+  .jelly-solution-copy {
+    order: 2;
+    width: 100%;
+    max-width: 48ch;
+    margin: 0;
+  }
+  .jelly-solution-copy h3 {
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.8vw, 22px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.35;
+  }
+  .jelly-solution-copy p {
+    margin: 0;
+    color: var(--graphite);
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+  .jelly-solution-video {
+    order: 1;
+    width: min(100%, 240px);
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    margin: 0;
+    margin-inline: 0;
+    justify-self: start;
+    align-self: center;
+    flex: 0 0 auto;
+    border-radius: 12%;
+    isolation: isolate;
+  }
+  .jelly-solution-video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.24);
+  }
+  .jelly-transition-screen {
+    width: min(100%, 840px);
+    aspect-ratio: 2926 / 1754;
+    margin: clamp(40px, 5vw, 72px) auto 0;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .jelly-transition-screen > video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+  .jelly-keyed-video {
+    position: relative;
+    background: transparent;
+  }
+  .jelly-keyed-video > video {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: none;
+  }
+  .jelly-keyed-video > canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    image-rendering: auto;
+  }
+  .jelly-keyed-video.is-keyed > video { opacity: 0; visibility: hidden; }
+  .jelly-keyed-video.is-keyed > canvas { opacity: 1; }
+  .jelly-native-video > video {
+    z-index: 1;
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.06);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  .jelly-native-video > canvas { display: none; }
+  .jelly-native-video > video {
+    border-radius: 0;
+    clip-path: none;
+    -webkit-clip-path: none;
+  }
+  .jelly-transition-screen.jelly-native-video > video { transform: none; }
+  .jelly-group-video > video {
+    /* The first source has a shorter phone frame than the other two videos. */
+    transform: translateX(clamp(22px, 3vw, 30px)) scale(1.06, 1.10);
+  }
+  .jelly-solution-feature:nth-child(2) .jelly-solution-video > video {
+    transform: scaleX(1.01) scale(1.08);
+  }
+  .jelly-solution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--jelly-block-space);
+    margin-top: var(--jelly-block-space);
+    margin-left: auto;
+    margin-right: auto;
+    max-width: none;
+    align-items: start;
+  }
+  .jelly-solution-principle h3 {
+    margin-bottom: 12px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.8vw, 22px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.35;
+  }
+  .jelly-solution-principle p {
+    max-width: 42ch;
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+  .jelly-reflection h3 {
+    margin: 0 0 20px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.8vw, 22px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+  }
+  .jelly-reflection p {
+    margin: 0;
+    color: var(--graphite);
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+  .jelly-note {
+    max-width: 58ch !important;
+    margin-top: clamp(28px, 4vh, 44px) !important;
+  }
+  .jelly-reflection-grid { margin-top: var(--jelly-block-space); }
+  .jelly-reflection { background: transparent; padding: 0; }
+  .jelly-quote {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    padding: 0;
+  }
+  .jelly-demo {
+    margin: var(--jelly-block-space) 0 0;
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--surface);
+    aspect-ratio: 16 / 9;
+  }
+  .jelly-demo video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+  .jelly-flow-figure {
+    width: min(100%, 560px);
+    margin: var(--jelly-section-space) auto 0;
+    overflow: hidden;
+  }
+  .jelly-flow-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: brightness(0.9);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .jelly-flow-figure img { filter: none; }
+  }
+
+  @media (max-width: 920px) {
+    .cs-head .cs-meta { grid-template-columns: repeat(2, 1fr); }
+    :root {
+      --jelly-section-space: clamp(80px, 9vh, 104px);
+      --jelly-content-space: 20px;
+      --jelly-block-space: 28px;
+      --jelly-theme-space: clamp(64px, 8vh, 96px);
+    }
+    .jelly-direction-list { grid-template-columns: 1fr; gap: 16px; }
+    .jelly-themes { gap: clamp(32px, 4.5vh, 52px); }
+    .jelly-theme {
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      text-align: center;
+    }
+    .jelly-theme-visual {
+      flex-basis: auto;
+      width: min(145px, 100%);
+      margin: 0 auto;
+    }
+    .jelly-research-hmw,
+    .jelly-design-prompt {
+      margin: clamp(64px, 8vh, 96px) auto;
+      padding: clamp(36px, 5vh, 56px) 0;
+    }
+    .cs-section h2.sec-title,
+    .cs-section > p,
+    .jelly-copy-grid > p,
+    .jelly-theme-copy { max-width: none; }
+    .jelly-copy-grid,
+    .jelly-reflection-grid { grid-template-columns: 1fr; }
+    .jelly-solution-features { gap: clamp(40px, 6vh, 72px); }
+    .jelly-solution-video { width: min(100%, 220px); }
+    .jelly-solution-copy { max-width: none; }
+    .jelly-direction { padding: 0; }
+  }
+  @media (max-width: 720px) {
+    :root {
+      --jelly-section-space: 80px;
+      --jelly-content-space: 20px;
+      --jelly-block-space: 28px;
+      --jelly-theme-space: 48px;
+    }
+    .jelly-grid,
+    .jelly-response-grid,
+    .jelly-reflection-grid,
+    .jelly-dilemma,
+    .jelly-solution-grid,
+    .jelly-copy-grid { grid-template-columns: 1fr; }
+    .jelly-theme { flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+    .jelly-theme-visual { flex-basis: auto; width: min(145px, 100%); margin-top: 0; }
+    .jelly-direction { padding: 0; }
+    .jelly-direction-list { gap: 12px; }
+    .jelly-themes { gap: 28px; }
+    .statement.hmw { margin-block: 48px; }
+    .jelly-research-hmw,
+    .jelly-design-prompt { margin-block: 48px; padding-block: 28px; }
+    .jelly-solution-grid { gap: 20px; margin-top: 20px; }
+    .jelly-dilemma li { min-height: 0; padding: 20px; }
+    .jelly-dilemma li::before { align-self: start; }
+    .jelly-dilemma h3 { min-height: 0; display: block; }
+  }
+  @media (max-width: 720px) {
+    .jelly-solution-features { grid-template-columns: 1fr; }
+    .jelly-solution-feature { grid-template-columns: 1fr; }
+    .jelly-solution-video { justify-self: center; }
+  }
 </style>
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yej2f3uibq");</script>
+<script>window.addEventListener('load',function(){var f=function(){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yej2f3uibq")};if('requestIdleCallback' in window)requestIdleCallback(f,{timeout:2000});else setTimeout(f,1200)});</script>
 </head>
-<body class="pg">
+<body>
 
 <!-- mobile topbar (sidebar is always visible on desktop) -->
 <div class="topbar">
   <a href="index.html" class="brand">Elaine Chen</a>
-  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation"><span class="bars"><span></span><span></span><span></span></span></button>
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Toggle navigation" aria-controls="spine" aria-expanded="false"><span class="bars"><span></span><span></span><span></span></span></button>
 </div>
 <div class="backdrop" id="backdrop"></div>
 
 <!-- persistent sidebar / table of contents -->
-<aside class="spine" id="spine">
+<aside class="spine" id="spine" aria-label="Primary navigation">
   <div class="spine-id">
     <a href="index.html" class="brand" style="font-weight: 400; font-size: 21px">Elaine&nbsp;Chen</a>
     <span class="descriptor" style="font-size: 13px">Product Designer</span>
   </div>
 
-  <nav class="toc">
+  <nav class="toc" aria-label="Site navigation">
     <a href="index.html#work" class="toc-item"><span>Home</span></a>
     <a href="index.html#about" class="toc-item"><span>About</span></a>
     <a href="playground.html" class="toc-item"><span>Playground</span></a>
@@ -81,13 +734,196 @@
   </div>
 </aside>
 
-<!-- under-construction view -->
-<main class="stage pg-stage pg-locked">
-  <div class="pg-lock-inner">
-    <h1 class="lock-title">Under construction<span class="dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span></h1>
-    <p class="lock-sub">Hi, I&rsquo;m glad you wandered in! I&rsquo;m tinkering with some experiments. Check back soon &#10022;</p>
-    <a class="lock-back" href="index.html#work"><span class="arr">&larr;</span> Back to work</a>
+<main class="cs-wrap">
+  <div class="cs-top">
+    <a class="back" href="index.html#work">&larr; Back</a>
   </div>
+
+  <div class="cs-hero reveal-self" data-screen-label="JellyBreak hero">
+    <div class="screen">
+      <div class="media">
+        <video src="assets/jellybreak-breaks.mp4" autoplay muted loop playsinline preload="metadata" aria-label="JellyBreak app experience showing intentional break options"></video>
+      </div>
+    </div>
+  </div>
+
+  <header class="cs-head reveal-self">
+    <h1>JellyBreak</h1>
+    <p class="cs-sub">Designed an app to encourage intentional, guilt-free breaks.</p>
+    <div class="cs-meta">
+      <div><span class="k">Timeline</span><span class="v">24 Hours</span></div>
+      <div><span class="k">Team</span><span class="v">4 Designers</span></div>
+      <div><span class="k">Role</span><span class="v">Lead Product Designer</span></div>
+      <div><span class="k">Skills</span><span class="v">Interface Design<br>Prototyping<br>Motion Design</span></div>
+    </div>
+  </header>
+
+  <section class="cs-section reveal-self" data-screen-label="The sprint" aria-label="The sprint">
+    <p class="jelly-sprint-intro jelly-centered-copy">Last year, I participated in UBC UXHub&rsquo;s yearly design sprint; in 24 hours, my teammates and I ideated, prototyped, and presented a solution to a design challenge to a panel of experienced designers. We first started off with the design challenge below.</p>
+    <p class="statement hmw jelly-design-prompt jelly-centered-copy">In a world that rewards being “always on,” how might we design an experience that helps people set and keep boundaries to make recovery time feel socially safe, rewarding, and easy to sustain?</p>
+  </section>
+
+  <section class="cs-section reveal-self" data-screen-label="Research" aria-labelledby="research-title">
+    <p class="jelly-centered-copy">We started by exploring the problems students face when setting boundaries.</p>
+    <h2 class="sec-title jelly-research-insight jelly-centered-copy" id="research-title">Through six user interviews, we found that the barrier was not simply a lack of time. Students also needed permission, ideas, and a reliable transition out of work.</h2>
+    <p class="jelly-centered-copy">We found three recurring themes: rest guilt, low-quality rest, and difficulty transitioning.</p>
+    <div class="jelly-themes">
+      <article class="jelly-theme">
+        <div class="jelly-theme-copy">
+          <h3>Rest guilt</h3>
+          <p>Students struggled to give themselves permission to rest unless they were exhausted or had finished everything, because taking time off could make them feel behind.</p>
+        </div>
+        <figure class="jelly-theme-visual">
+          <img class="jelly-theme-graphic" src="assets/jellybreak-rest-guilt.svg" alt="Illustration of a cheerful character with a check mark, representing permission to rest" loading="lazy" decoding="async" />
+        </figure>
+      </article>
+      <article class="jelly-theme">
+        <div class="jelly-theme-copy">
+          <h3>Low-quality rest</h3>
+          <p>Students often chose breaks that did not restore their energy, such as doomscrolling, because those options were the most convenient in the moment.</p>
+        </div>
+        <figure class="jelly-theme-visual">
+          <img class="jelly-theme-graphic" src="assets/jellybreak-low-quality-rest.svg" alt="Illustration of a character with a small phone, representing low-quality rest" loading="lazy" decoding="async" />
+        </figure>
+      </article>
+      <article class="jelly-theme">
+        <div class="jelly-theme-copy">
+          <h3>Difficulty transitioning</h3>
+          <p>Hyperfocus and forgetfulness made it difficult for students to notice when it was time to move between work, breaks, and other tasks.</p>
+        </div>
+        <figure class="jelly-theme-visual">
+          <img class="jelly-theme-graphic" src="assets/jellybreak-difficulty-transitioning.svg" alt="Illustration of a character with a question mark, representing difficulty transitioning between tasks" loading="lazy" decoding="async" />
+        </figure>
+      </article>
+    </div>
+    <p class="statement hmw jelly-research-hmw"><span class="hmw-lead">So we worked to solve a more specific problem:</span>How might we help users feel comfortable stepping away from work to take breaks that genuinely restore their energy?</p>
+  </section>
+
+  <section class="cs-section reveal-self" data-screen-label="Design direction" aria-labelledby="direction-title">
+    <h2 class="sec-title" id="direction-title">Turning research into a direction</h2>
+    <p>Each theme pointed to a different kind of support, so we mapped each theme to plausible solutions.</p>
+    <div class="jelly-direction-list">
+      <article class="jelly-direction">
+        <div class="jelly-direction-copy">
+          <div class="jelly-direction-theme">
+            <h3>Rest guilt</h3>
+            <img src="assets/jellybreak-rest-guilt.svg" alt="Illustration representing rest guilt" loading="lazy" decoding="async" />
+          </div>
+          <span class="jelly-direction-arrow" aria-hidden="true">↓</span>
+          <div class="jelly-direction-response">
+            <p>Make rest feel warranted through a shared focus-and-break experience</p>
+          </div>
+        </div>
+      </article>
+      <article class="jelly-direction">
+        <div class="jelly-direction-copy">
+          <div class="jelly-direction-theme">
+            <h3>Low-quality rest</h3>
+            <img src="assets/jellybreak-low-quality-rest.svg" alt="Illustration representing low-quality rest" loading="lazy" decoding="async" />
+          </div>
+          <span class="jelly-direction-arrow" aria-hidden="true">↓</span>
+          <div class="jelly-direction-response">
+            <p>Encourage healthier, more enjoyable breaks that restore energy</p>
+          </div>
+        </div>
+      </article>
+      <article class="jelly-direction">
+        <div class="jelly-direction-copy">
+          <div class="jelly-direction-theme">
+            <h3>Difficulty transitioning</h3>
+            <img src="assets/jellybreak-difficulty-transitioning.svg" alt="Illustration representing difficulty transitioning between tasks" loading="lazy" decoding="async" />
+          </div>
+          <span class="jelly-direction-arrow" aria-hidden="true">↓</span>
+          <div class="jelly-direction-response">
+            <p>Use time-blocking and reminders to assist students in switching between tasks</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="cs-section reveal-self" data-screen-label="User flow" aria-labelledby="flow-title">
+    <h2 class="sec-title" id="flow-title">User flow</h2>
+    <p>With several solutions in mind, my team and I headed to the drawing board to quickly iterate through user flows. We settled on something intentional and research informed; rather than creating another tool to maximize productivity, we explored how a familiar study structure could be reimagined with our findings.</p>
+    <figure class="jelly-flow-figure">
+      <img src="assets/jellybreak-user-flow.png" alt="User flow showing onboarding, study focus, break suggestions, activity timing, reminders, and restarting a focus session" loading="lazy" decoding="async" />
+    </figure>
+  </section>
+
+  <section class="cs-section reveal-self" data-screen-label="Design philosophy" aria-labelledby="philosophy-title">
+    <h2 class="sec-title" id="philosophy-title">The design philosophy dilemma</h2>
+    <p>Before prototyping our solution, we identified two main design philosophies we could abide by. Each could have benefits, but each carried different tradeoffs.</p>
+    <ol class="jelly-dilemma">
+      <li>
+        <h3>Force breaks</h3>
+        <p>This assumes self-control is a finite, depletable resource, so the product should step in and make the decision for the user.</p>
+      </li>
+      <li>
+        <h3>Promote self-directed breaks</h3>
+        <p>This protects agency, but relies heavily on a person&rsquo;s own discipline to notice the need for rest and act on it.</p>
+      </li>
+    </ol>
+    <p>We chose self-directed breaks; our data has shown that students have guilt over resting, meaning they&rsquo;ve internalized a belief that unstructured time has to be earned or justified.</p>
+    <p>Transitioning, by contrast, is a noticing problem: hyperfocus and forgetfulness mean students often don&rsquo;t register that a transition point has arrived at all. So rather than forcing the transition (removing their choice), we decided to use a firm, repeated cue that interrupts attention without dictating the response. Forced breaks could interrupt focus or make the product feel punitive, while a supportive structure can make rest easier to recognize and act on without taking the decision away, especially for building long-term habits.</p>
+  </section>
+
+  <section class="cs-section reveal-self" data-screen-label="Solution" aria-labelledby="solution-title">
+    <h2 class="sec-title" id="solution-title">The Solution</h2>
+    <div class="jelly-solution-features">
+      <article class="jelly-solution-feature">
+        <figure class="jelly-solution-video jelly-keyed-video jelly-native-video jelly-group-video" data-native-alpha>
+          <video muted autoplay loop playsinline preload="metadata" data-lazy-src="assets/jellybreak-group-session-nobg.webm" data-play-on-visible aria-label="JellyBreak group session experience"></video>
+          <canvas aria-hidden="true"></canvas>
+        </figure>
+        <div class="jelly-solution-copy">
+          <h3>Make rest feel warranted</h3>
+          <p>We designed a shared group session so taking a break feels like part of the routine, not a personal choice that needs to be justified. Seeing other students step away helps alleviate the guilt that can come with resting alone, while everyone still gets to choose what their break looks like.</p>
+        </div>
+      </article>
+      <article class="jelly-solution-feature">
+        <figure class="jelly-solution-video jelly-keyed-video jelly-native-video" data-native-alpha>
+          <video muted autoplay loop playsinline preload="metadata" data-lazy-src="assets/jellybreak-choose-break-nobg.webm" data-lazy-fallback="assets/jellybreak-choose-break.mp4" data-play-on-visible aria-label="JellyBreak break activity choices"></video>
+          <canvas aria-hidden="true"></canvas>
+        </figure>
+        <div class="jelly-solution-copy">
+          <h3>Make breaks more restorative</h3>
+          <p>Rather than defaulting to convenient but low-quality breaks like doomscrolling, JellyBreak encourages personalized activities that users enjoy, so they can leave a break feeling restored. To emphasize this even more, we included a &quot;doing nothing&quot; option as a break, this tells the student that stillness counts as a valid form of rest, not a failure to rest &quot;properly.&quot;</p>
+        </div>
+      </article>
+      <article class="jelly-solution-feature">
+        <figure class="jelly-solution-video jelly-keyed-video jelly-native-video" data-native-alpha>
+          <video muted autoplay loop playsinline preload="metadata" data-lazy-src="assets/jellybreak-chroma-keyed-video.webm" data-play-on-visible aria-label="JellyBreak transition animation"></video>
+          <canvas aria-hidden="true"></canvas>
+        </figure>
+        <div class="jelly-solution-copy">
+          <h3>Support easier transitions</h3>
+          <p>We used time-blocking and an alarm reminder to help students notice when it was time to switch tasks, making the transition from focused work to a restorative break feel more intentional.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="cs-section reveal-self" data-screen-label="Reflection" aria-labelledby="reflection-title">
+    <h2 class="sec-title" id="reflection-title">Reflection</h2>
+    <div class="jelly-reflection-grid">
+      <article class="jelly-reflection">
+        <h3>Explore before committing</h3>
+        <p>Our team may have went too fast and too deep into creating a full-scale digital product. Looking back, I would explore and test more modes of the solution before focusing on one type specifically. I'd look into other modes like hardware to connect physical with the digital world.</p>
+      </article>
+      <article class="jelly-reflection">
+        <h3>Collect a wider range of data</h3>
+        <p>Six interviews helped us identify strong themes, but due to the limited time and access to resources, we only interviewed students. For a next iteration we would collect data from more user groups to understand how different people experience setting boundaries and taking breaks.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="cs-section reveal-self" data-screen-label="Interaction in motion" aria-labelledby="motion-title">
+    <h2 class="sec-title" id="motion-title">Full prototype in motion</h2>
+    <figure class="jelly-demo">
+      <video muted loop playsinline controls preload="none" data-lazy-src="assets/jellybreak-full-flow.mp4" data-play-on-visible aria-label="JellyBreak interaction walkthrough"></video>
+    </figure>
+  </section>
+
 </main>
 
 <footer class="home-foot" data-screen-label="Footer">
@@ -101,5 +937,183 @@
 <script src="sidebar-icons.js?v=sidebar-final-20260922" defer></script>
 <script src="cursor.js" defer></script>
 <script src="case-study.js" defer></script>
+<script>
+  (function () {
+    var keyedVideos = document.querySelectorAll('.jelly-keyed-video');
+    if (!keyedVideos.length) return;
+
+    keyedVideos.forEach(function (wrapper) {
+      var video = wrapper.querySelector('video');
+      var canvas = wrapper.querySelector('canvas');
+      var context = canvas && canvas.getContext('2d', { willReadFrequently: true });
+      var frameRequest = 0;
+      var useNativeAlpha = wrapper.hasAttribute('data-native-alpha');
+      if (!video || !canvas || !context) return;
+
+      function drawKeyedFrame() {
+        if (!video.videoWidth || video.readyState < 2) {
+          frameRequest = requestAnimationFrame(drawKeyedFrame);
+          return;
+        }
+
+        var sourceWidth = video.videoWidth;
+        var sourceHeight = video.videoHeight;
+        var cropHeight = Math.round(sourceHeight * 0.92);
+        var sourceY = Math.round((sourceHeight - cropHeight) / 2);
+        var cropWidth = Math.min(sourceWidth, Math.round(cropHeight * 0.52));
+        var sourceX = Math.max(0, Math.round((sourceWidth - cropWidth) / 2));
+
+        if (canvas.width !== cropWidth || canvas.height !== cropHeight) {
+          canvas.width = cropWidth;
+          canvas.height = cropHeight;
+          wrapper.style.aspectRatio = cropWidth + ' / ' + cropHeight;
+        }
+
+        context.clearRect(0, 0, cropWidth, cropHeight);
+        context.imageSmoothingEnabled = true;
+        context.imageSmoothingQuality = 'high';
+        context.drawImage(video, sourceX, sourceY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+        var frame = context.getImageData(0, 0, cropWidth, cropHeight);
+        var pixels = frame.data;
+        var totalPixels = cropWidth * cropHeight;
+        var pinkTargets = [
+          [255, 220, 208],
+          [255, 198, 190],
+          [246, 158, 176]
+        ];
+
+        function colorDistance(red, green, blue, target) {
+          var redDistance = red - target[0];
+          var greenDistance = green - target[1];
+          var blueDistance = blue - target[2];
+          return Math.sqrt(redDistance * redDistance + greenDistance * greenDistance + blueDistance * blueDistance);
+        }
+
+        var backgroundMask = new Uint8Array(totalPixels);
+        for (var i = 0; i < totalPixels; i++) {
+          var pixelIndex = i * 4;
+          var red = pixels[pixelIndex];
+          var green = pixels[pixelIndex + 1];
+          var blue = pixels[pixelIndex + 2];
+          var warmPink = red > 185 && red - green > 8 && red - blue > 4 && blue > 105;
+          var nearestPink = Math.min.apply(null, pinkTargets.map(function (target) {
+            return colorDistance(red, green, blue, target);
+          }));
+          if (warmPink && nearestPink < 126) backgroundMask[i] = 1;
+        }
+
+        var visited = new Uint8Array(totalPixels);
+        var queue = new Int32Array(totalPixels);
+        var queueStart = 0;
+        var queueEnd = 0;
+
+        function enqueue(index) {
+          if (index < 0 || index >= totalPixels || visited[index] || !backgroundMask[index]) return;
+          visited[index] = 1;
+          queue[queueEnd++] = index;
+        }
+
+        for (var edgeX = 0; edgeX < cropWidth; edgeX++) {
+          enqueue(edgeX);
+          enqueue((cropHeight - 1) * cropWidth + edgeX);
+        }
+        for (var edgeY = 0; edgeY < cropHeight; edgeY++) {
+          enqueue(edgeY * cropWidth);
+          enqueue(edgeY * cropWidth + cropWidth - 1);
+        }
+
+        while (queueStart < queueEnd) {
+          var current = queue[queueStart++];
+          pixels[current * 4 + 3] = 0;
+          var currentX = current % cropWidth;
+          if (currentX > 0) enqueue(current - 1);
+          if (currentX < cropWidth - 1) enqueue(current + 1);
+          if (current >= cropWidth) enqueue(current - cropWidth);
+          if (current < totalPixels - cropWidth) enqueue(current + cropWidth);
+        }
+
+        // Remove faint matte pixels left by the background-removal pass and
+        // feather the remaining alpha so the phone edge stays clean.
+        var edgeTrim = Math.max(1, Math.round(Math.min(cropWidth, cropHeight) * 0.006));
+        for (var y = 0; y < cropHeight; y++) {
+          for (var x = 0; x < cropWidth; x++) {
+            var alphaIndex = (y * cropWidth + x) * 4 + 3;
+            if (x < edgeTrim || y < edgeTrim || x >= cropWidth - edgeTrim || y >= cropHeight - edgeTrim) {
+              pixels[alphaIndex] = 0;
+              continue;
+            }
+
+            var alpha = pixels[alphaIndex];
+            if (alpha < 40) {
+              pixels[alphaIndex] = 0;
+            } else if (alpha < 224) {
+              var normalizedAlpha = (alpha - 40) / 184;
+              var smoothedAlpha = normalizedAlpha * normalizedAlpha * (3 - 2 * normalizedAlpha);
+              pixels[alphaIndex] = Math.round(smoothedAlpha * 255);
+            }
+          }
+        }
+
+        context.putImageData(frame, 0, 0);
+        wrapper.classList.add('is-keyed');
+
+        if (!video.paused && !video.ended) {
+          frameRequest = requestAnimationFrame(drawKeyedFrame);
+        }
+      }
+
+      function startKeying() {
+        cancelAnimationFrame(frameRequest);
+        drawKeyedFrame();
+      }
+
+      function showNativeVideo() {
+        wrapper.classList.add('is-native-video');
+      }
+
+      function isNativeSource() {
+        var activeSource = video.currentSrc || video.src || '';
+        return useNativeAlpha && video.getAttribute('data-fallback-active') !== 'true' && !/\.mp4(?:\?|$)/i.test(activeSource);
+      }
+
+      function handleLoadedData() {
+        if (isNativeSource()) showNativeVideo();
+        else {
+          useNativeAlpha = false;
+          wrapper.classList.remove('jelly-native-video', 'is-native-video');
+          startKeying();
+        }
+      }
+
+      video.addEventListener('loadeddata', handleLoadedData);
+      video.addEventListener('play', function () {
+        if (isNativeSource()) showNativeVideo();
+        else startKeying();
+      });
+      video.addEventListener('error', function () {
+        var fallback = video.getAttribute('data-lazy-fallback');
+        if (!useNativeAlpha || !fallback || video.getAttribute('data-fallback-active') === 'true') return;
+        useNativeAlpha = false;
+        wrapper.classList.remove('jelly-native-video', 'is-native-video');
+        video.setAttribute('data-fallback-active', 'true');
+        video.src = fallback;
+        video.load();
+        var playPromise = video.play();
+        if (playPromise) playPromise.catch(function () {});
+      });
+      video.addEventListener('pause', function () { cancelAnimationFrame(frameRequest); });
+    });
+  })();
+</script>
+<script>
+  (function () {
+    var menuBtn = document.getElementById('menuBtn');
+    if (!menuBtn) return;
+    menuBtn.addEventListener('click', function () {
+      menuBtn.setAttribute('aria-expanded', document.body.classList.contains('nav-open') ? 'false' : 'true');
+    });
+  })();
+</script>
 </body>
 </html>
