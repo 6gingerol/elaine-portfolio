@@ -146,13 +146,11 @@
       </article>
     </div>
 
-    <!-- homepage footer — interactive pixel-diamond gradient on the white
-         page, with a centered sign-off (pixel-grid.js). -->
+    <!-- homepage footer — decorative dot field with one low-emphasis line. -->
     <footer class="home-foot" data-screen-label="Footer">
-      <div class="rain-scene footer-pixel-grid" aria-hidden="true"></div>
-      <div class="home-foot-inner">
-        <p class="ff-made">Made by Elaine</p>
-        <p class="ff-love">with a cup of green tea and lots of love ♥</p>
+      <canvas class="footer-dotfield" aria-hidden="true"></canvas>
+      <div class="home-foot-copy">
+        <p class="home-foot-copyright">© 2026 Elaine Chen</p>
       </div>
     </footer>
   </section>
@@ -201,17 +199,15 @@
     </div>
 
     <footer class="home-foot" data-screen-label="Footer">
-      <div class="rain-scene footer-pixel-grid" aria-hidden="true"></div>
-      <div class="home-foot-inner">
-        <p class="ff-made">Made by Elaine</p>
-        <p class="ff-love">with a cup of green tea and lots of love ♥</p>
+      <canvas class="footer-dotfield" aria-hidden="true"></canvas>
+      <div class="home-foot-copy">
+        <p class="home-foot-copyright">© 2026 Elaine Chen</p>
       </div>
     </footer>
   </section>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js" defer></script>
-<script src="pixel-grid.js" defer></script>
+<script src="footer-dotfield.js" defer></script>
 <script src="sidebar-icons.js?v=sidebar-final-20260922" defer></script>
 <script src="cursor.js" defer></script>
 <script>
@@ -237,8 +233,6 @@
   window.addEventListener('resize', checkReveals);
   window.addEventListener('load', () => { checkReveals(); setTimeout(checkReveals, 250); });
   setTimeout(() => revealEls.forEach(hardShow), 1250); // ultimate failsafe
-
-  // ---- footer reveal is handled centrally in pixel-grid.js ----
 
   // ---- mobile drawer ----
   const body = document.body;

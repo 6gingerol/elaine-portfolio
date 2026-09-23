@@ -387,81 +387,67 @@ html.locked .cs-gate {
 }
 
 /* ============================================================
-   SITE FOOTER — interactive pixel gradient (matches homepage)
-   A quiet sign-off over a faint field of small diamonds
-   (pixel-grid.js canvas). Sits full-width below the content
-   column, to the right of the fixed spine. Canvas is
-   pointer-events:none.
+   SITE FOOTER — compact interactive dot field
+   This footer is in the body after the case-study main, so the
+   sidebar's body offset keeps its left edge to the right of the spine.
    ============================================================ */
 .home-foot {
   position: relative;
   margin-top: clamp(88px, 12vh, 136px);
-  min-height: clamp(110px, 15vh, 160px);
+  width: 100%;
+  min-height: clamp(132px, 17vh, 180px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding-top: clamp(12px, 2vh, 18px);
-  padding-bottom: clamp(10px, 1.8vh, 16px);
+  justify-content: flex-end;
+  padding: 18px var(--pad) 28px;
   overflow: hidden;
   isolation: isolate;
   border-top: none;
   background: var(--bg);
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.9s var(--ease), transform 1.05s var(--ease);
+  color: var(--ink);
 }
-.js .home-foot { opacity: 0; transform: translateY(48px); }
-.home-foot.in-view { opacity: 1; transform: none; }
-.home-foot .rain-scene {
-  position: absolute; inset: 0; z-index: 1;
+.footer-dotfield {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   contain: strict;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
 }
-.home-foot .rain-scene canvas { position: absolute; inset: 0; display: block; opacity: 0.32; filter: contrast(1.16); }
-.home-foot-inner {
-  position: relative; z-index: 3; isolation: isolate;
-  display: flex; flex-direction: column; align-items: center; gap: 5px;
+.home-foot-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: auto;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
   text-align: center;
-  pointer-events: none;
-  padding: 10px 56px 8px;
+  transform: none;
+  opacity: 0.72;
 }
-.home-foot-inner::before {
-  content: "";
-  position: absolute; inset: -24px -64px;
-  z-index: -1; pointer-events: none;
-  background: radial-gradient(ellipse at center,
-    color-mix(in srgb, var(--bg) 94%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 68%, transparent) 50%,
-    transparent 82%);
-}
-.home-foot .ff-made {
+.home-foot-copyright {
   margin: 0;
-  font-family: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
-  font-weight: 400; letter-spacing: 0.03em;
-  font-size: clamp(16px, 1.5vw, 20px); line-height: 1.05;
-  color: var(--ink); opacity: 0.92; white-space: nowrap;
-}
-.home-foot .ff-place {
-  margin: 0;
-  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
-  letter-spacing: 0.03em; text-transform: none;
-  color: var(--steel); white-space: nowrap;
-}
-.home-foot .ff-love {
-  margin: 1px 0 0;
-  font-family: 'PP Mondwest', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
-  font-weight: 400; font-size: clamp(11px, 1vw, 13px); letter-spacing: 0.04em;
-  color: var(--graphite); opacity: 0.78; white-space: nowrap;
+  padding: 1px 2px 2px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  color: var(--steel);
+  background: transparent;
+  white-space: nowrap;
 }
 @media (prefers-reduced-motion: reduce) {
-  .home-foot { opacity: 1; transform: none; transition: none; }
+  .home-foot { transition: none; }
 }
 @media (max-width: 760px) {
-  .home-foot { margin-top: clamp(72px, 10vh, 104px); min-height: clamp(100px, 15.5vh, 140px); }
-  .home-foot-inner { padding-inline: 28px; }
+  .home-foot { margin-top: clamp(72px, 10vh, 104px); min-height: clamp(132px, 20vh, 168px); }
 }
 
 /* ============================================================
@@ -481,9 +467,4 @@ html.locked .cs-gate {
     --line-2:   #66676e;
     --frame-grad: linear-gradient(150deg, #1c1c1e 0%, #232326 52%, #28282c 100%);
   }
-  .home-foot .rain-scene {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 14%, rgba(0,0,0,0.7) 38%, #000 56%, rgba(0,0,0,0.24) 88%, transparent 100%);
-  }
-  .home-foot .rain-scene canvas { opacity: 0.54; filter: brightness(1.8) contrast(1.08); }
 }
