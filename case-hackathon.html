@@ -16,10 +16,10 @@
 <style>
   :root {
     --hack-content-width: 900px;
-    --hack-copy-width: 60ch;
-    --hack-section-space: clamp(76px, 10vh, 112px);
-    --hack-content-space: 20px;
-    --hack-block-space: 24px;
+    --hack-copy-width: 100%;
+    --hack-section-space: clamp(64px, 8vh, 88px);
+    --hack-content-space: 16px;
+    --hack-block-space: 20px;
   }
 
   .cs-head .cs-meta { grid-template-columns: repeat(4, 1fr); border-top: none; padding-top: 0; }
@@ -71,7 +71,7 @@
 
   /* === CONSISTENT SPACING SYSTEM === */
   /* paragraph after anything */
-  .cs-section > p { max-width: var(--hack-copy-width); margin: 0; }
+  .cs-section > p { width: 100%; max-width: var(--hack-copy-width); margin: 0; }
   .cs-section > p,
   .hack-reflection-grid p {
     color: var(--graphite);
@@ -85,9 +85,9 @@
   .cs-section > p + p { margin-top: var(--hack-content-space); }
   .findings-grid + p { margin-top: var(--hack-block-space); }
   /* section title */
-  .cs-section h2.sec-title { font-weight: 500; font-size: clamp(20px, 2.2vw, 27px); line-height: 1.3; color: var(--ink); max-width: var(--hack-copy-width); margin: 0 0 12px; }
+  .cs-section h2.sec-title { width: 100%; font-weight: 500; font-size: clamp(20px, 2.2vw, 27px); line-height: 1.3; color: var(--ink); max-width: var(--hack-copy-width); margin: 0 0 12px; }
   /* image headings */
-  .img-heading { font-family: var(--font-display); font-weight: 500; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.35; letter-spacing: -0.02em; color: var(--ink); margin: 32px 0 0; max-width: var(--hack-copy-width); }
+  .img-heading { width: 100%; font-family: var(--font-display); font-weight: 500; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.35; letter-spacing: -0.02em; color: var(--ink); margin: 32px 0 0; max-width: var(--hack-copy-width); }
   /* heading → image */
   .img-heading + .blk, .img-heading + .blk-full, .img-heading + .legend-bar { margin-top: 20px !important; }
   /* image blocks */
@@ -108,6 +108,7 @@
   @media (max-width: 920px) { .cs-head .cs-meta { grid-template-columns: repeat(2, 1fr); } }
 
   .statement.hmw {
+    width: 100%;
     max-width: var(--hack-copy-width);
     margin: var(--hack-section-space) 0 var(--hack-block-space);
     text-align: left;
@@ -295,9 +296,9 @@
   .findings-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 28px;
-    margin-top: clamp(56px, 7vh, 76px);
-    margin-bottom: clamp(56px, 7vh, 76px);
+    gap: var(--hack-block-space);
+    margin-top: 32px;
+    margin-bottom: 32px;
   }
   .findings-grid + p { margin-top: 0; }
   .finding-item {
@@ -395,7 +396,8 @@
   }
   .hack-reflection-grid .img-heading { margin-top: 0; }
   .hack-reflection-grid p {
-    max-width: 48ch;
+    width: 100%;
+    max-width: none;
     margin: 0;
   }
   @media (max-width: 920px) {
@@ -406,6 +408,7 @@
     .img-heading,
     .hack-reflection-grid p { max-width: none; }
     .hack-reflection-grid { grid-template-columns: 1fr; }
+    .findings-grid { grid-template-columns: 1fr; }
     .hack-reflection-grid > div { display: block; grid-row: auto; }
     .hack-reflection-grid > div + div { margin-top: var(--hack-block-space); }
     .hack-reflection-grid p { margin-top: 20px; }
@@ -439,7 +442,7 @@
     <a href="index.html#work" class="toc-item"><span>Home</span></a>
     <a href="index.html#about" class="toc-item"><span>About</span></a>
     <a href="playground.html" class="toc-item"><span>Playground</span></a>
-    <a href="https://www.nwplus.io/" target="_blank" rel="noopener" class="toc-item toc-proj"><span>nwPlus</span></a>
+    <a href="case-nwplus.html" class="toc-item toc-proj"><span>nwPlus</span></a>
     <a href="case-hackathon.html" class="toc-item toc-proj active"><span>Judging Portal</span></a>
     <a href="case-jellybreak.html" class="toc-item toc-proj locked"><span>JellyBreak</span></a>
     <a href="case-hatchloom.html" class="toc-item toc-proj locked"><span>Hatchloom</span></a>
