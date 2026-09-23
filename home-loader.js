@@ -19,7 +19,7 @@
   if (!homeLoader || !homeLoaderText) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const loaderMinimumDuration = prefersReducedMotion ? 1400 : 3000;
+  const loaderMinimumDuration = prefersReducedMotion ? 2300 : 3000;
   const loaderExitDuration = prefersReducedMotion ? 550 : 1150;
 
   const disperseTransforms = [
@@ -87,11 +87,15 @@
     homeLoaderText.appendChild(line);
   });
 
-  homeLoader.classList.remove('is-preparing');
-  homeLoader.classList.add('is-ready');
-
   const loaderStartedAt = performance.now();
   let loaderFinished = false;
+
+  // Let the browser paint the initial state before releasing the characters.
+  // This keeps the assemble animation visible on slower and Windows browsers.
+  window.requestAnimationFrame(() => {
+    homeLoader.classList.remove('is-preparing');
+    homeLoader.classList.add('is-ready');
+  });
 
   function finishHomeLoader() {
     if (loaderFinished) return;

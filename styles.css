@@ -110,7 +110,9 @@ a { color: inherit; text-decoration: none; }
   pointer-events: none;
 }
 .home-loader.is-preparing .home-loader-text { opacity: 0; }
+.home-loader.is-preparing .home-loader-char { animation-play-state: paused; }
 .home-loader.is-ready .home-loader-text { opacity: 1; transition: opacity 0.18s ease; }
+.home-loader.is-ready .home-loader-char { animation-play-state: running; }
 html:not(.js) .home-loader { display: none; }
 .home-loader-text {
   margin: 0;
@@ -157,8 +159,24 @@ html:not(.js) .home-loader { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .home-loader { transition-duration: 0.2s; }
-  .home-loader-char { animation: none; opacity: 1; transform: none; }
-  .home-loader.is-exiting .home-loader-char { opacity: 0; }
+  .home-loader-char {
+    animation-name: home-loader-reduced-assemble;
+    animation-duration: 0.45s;
+    transform: none;
+  }
+  .home-loader.is-exiting .home-loader-char {
+    animation-name: home-loader-reduced-exit;
+    animation-duration: 0.4s;
+    animation-delay: var(--loader-exit-delay);
+  }
+  @keyframes home-loader-reduced-assemble {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes home-loader-reduced-exit {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
 }
 
 .sr-only {
