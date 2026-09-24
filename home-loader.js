@@ -1,13 +1,17 @@
 (() => {
   const homeLoader = document.getElementById('homeLoader');
   const homeLoaderText = homeLoader?.querySelector('[data-home-loader-text]');
-  let showHomeLoader = true;
+  // The loader belongs to the landing view, not deep-linked sections.
+  const isSectionView = Boolean(window.location.hash);
+  let showHomeLoader = !isSectionView;
 
-  try {
-    showHomeLoader = sessionStorage.getItem('elaine-home-loader-seen') !== '1';
-    if (showHomeLoader) sessionStorage.setItem('elaine-home-loader-seen', '1');
-  } catch (error) {
-    // Storage can be unavailable in private browsing; the loader still works.
+  if (showHomeLoader) {
+    try {
+      showHomeLoader = sessionStorage.getItem('elaine-home-loader-seen') !== '1';
+      if (showHomeLoader) sessionStorage.setItem('elaine-home-loader-seen', '1');
+    } catch (error) {
+      // Storage can be unavailable in private browsing; the loader still works.
+    }
   }
 
   if (!showHomeLoader && homeLoader) {
