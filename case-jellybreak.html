@@ -550,6 +550,26 @@
   .jelly-solution-feature:nth-child(2) .jelly-solution-video > canvas {
     transform: scaleX(1.01) scale(1.08);
   }
+  /* Portrait MP4s have the alpha composited offline for iOS playback.
+     Keep their square pixels and measured source proportions intact. */
+  .jelly-solution-video.jelly-phone-video {
+    aspect-ratio: 500 / 920;
+    border-radius: 0;
+  }
+  .jelly-solution-feature .jelly-phone-video > video {
+    position: static;
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    border-radius: 0;
+    clip-path: none;
+    -webkit-clip-path: none;
+  }
+  .jelly-phone-video > canvas { display: none; }
   .jelly-solution-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -874,7 +894,7 @@
     <h2 class="sec-title" id="solution-title">The Solution</h2>
     <div class="jelly-solution-features">
       <article class="jelly-solution-feature">
-        <figure class="jelly-solution-video jelly-keyed-video jelly-native-video jelly-group-video" data-native-alpha data-crop-x-offset="-54">
+        <figure class="jelly-solution-video jelly-keyed-video jelly-native-video jelly-group-video" data-native-alpha data-crop-x-offset="-54" data-phone-video="group-session">
           <video muted autoplay loop playsinline preload="metadata" data-lazy-src="assets/jellybreak-group-session-nobg.webm" data-lazy-fallback="assets/jellybreak-group-session.mp4" data-play-on-visible aria-label="JellyBreak group session experience"></video>
           <canvas aria-hidden="true"></canvas>
         </figure>
@@ -884,7 +904,7 @@
         </div>
       </article>
       <article class="jelly-solution-feature">
-        <figure class="jelly-solution-video jelly-keyed-video jelly-native-video" data-native-alpha>
+        <figure class="jelly-solution-video jelly-keyed-video jelly-native-video" data-native-alpha data-phone-video="choose-break">
           <video muted autoplay loop playsinline preload="metadata" data-lazy-src="assets/jellybreak-choose-break-nobg.webm" data-lazy-fallback="assets/jellybreak-choose-break.mp4" data-play-on-visible aria-label="JellyBreak break activity choices"></video>
           <canvas aria-hidden="true"></canvas>
         </figure>
@@ -894,7 +914,7 @@
         </div>
       </article>
       <article class="jelly-solution-feature">
-        <figure class="jelly-solution-video jelly-keyed-video jelly-native-video" data-native-alpha>
+        <figure class="jelly-solution-video jelly-keyed-video jelly-native-video" data-native-alpha data-phone-video="transition">
           <video muted autoplay loop playsinline preload="metadata" data-lazy-src="assets/jellybreak-chroma-keyed-video.webm" data-play-on-visible aria-label="JellyBreak transition animation"></video>
           <canvas aria-hidden="true"></canvas>
         </figure>
@@ -946,9 +966,46 @@
     if (!keyedVideos.length) return;
     var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function usePortraitVideo(wrapper, video) {
+      wrapper.classList.remove('jelly-native-video', 'jelly-keyed-video');
+      wrapper.classList.add('jelly-phone-video');
+      video.removeAttribute('data-lazy-fallback');
+      video.setAttribute('width', '500');
+      video.setAttribute('height', '920');
+
+      function updateSource() {
+        var base = 'assets/jellybreak-' + wrapper.getAttribute('data-phone-video') +
+          '-phone-' + (colorScheme.matches ? 'dark' : 'light');
+        video.poster = base + '.png';
+        if (!video.getAttribute('src')) {
+          video.setAttribute('data-lazy-src', base + '.mp4');
+          return;
+        }
+        var time = video.currentTime;
+        var wasPlaying = !video.paused;
+        video.addEventListener('loadedmetadata', function () {
+          video.currentTime = Math.min(time, video.duration || time);
+          if (wasPlaying) {
+            var playPromise = video.play();
+            if (playPromise) playPromise.catch(function () {});
+          }
+        }, { once: true });
+        video.src = base + '.mp4';
+        video.load();
+      }
+
+      updateSource();
+      colorScheme.addEventListener('change', updateSource);
+    }
 
     keyedVideos.forEach(function (wrapper) {
       var video = wrapper.querySelector('video');
+      if (isIOS && video && wrapper.hasAttribute('data-phone-video')) {
+        usePortraitVideo(wrapper, video);
+        return;
+      }
       var canvas = wrapper.querySelector('canvas');
       var context = canvas && canvas.getContext('2d', { willReadFrequently: true });
       var frameRequest = 0;
@@ -956,46 +1013,7 @@
       var canvasPreservesAlpha = false;
       var keyBlackBackground = false;
       var cropXOffset = parseFloat(wrapper.getAttribute('data-crop-x-offset') || '0') || 0;
-      var iosCrop = null;
       if (!video || !canvas || !context) return;
-      if (isIOS) wrapper.classList.remove('jelly-native-video');
-
-      function findIOSPhoneCrop() {
-        // Safari decodes WebM alpha as solid black. Locate the bright phone
-        // screen in a small source-frame sample before cropping the wide video.
-        var probe = document.createElement('canvas');
-        probe.width = 320;
-        probe.height = 90;
-        var probeContext = probe.getContext('2d', { willReadFrequently: true });
-        if (!probeContext) return null;
-        try {
-          probeContext.drawImage(video, 0, 0, probe.width, probe.height);
-          var data = probeContext.getImageData(0, 0, probe.width, probe.height).data;
-          var left = probe.width;
-          var right = -1;
-          var silhouetteLeft = probe.width;
-          var silhouetteRight = -1;
-          for (var y = 25; y < 65; y += 4) {
-            for (var x = 0; x < probe.width; x++) {
-              var i = (y * probe.width + x) * 4;
-              if (Math.max(data[i], data[i + 1], data[i + 2]) > 28) {
-                silhouetteLeft = Math.min(silhouetteLeft, x);
-                silhouetteRight = Math.max(silhouetteRight, x);
-              }
-              if (data[i] > 160 && data[i + 1] > 160 && data[i + 2] > 160) {
-                left = Math.min(left, x);
-                right = Math.max(right, x);
-              }
-            }
-          }
-          if (right < left || right - left < 5) return null;
-          var phoneSilhouette = silhouetteRight > silhouetteLeft &&
-            silhouetteLeft >= left - 6 && silhouetteRight <= right + 6;
-          var center = (phoneSilhouette ? silhouetteLeft + silhouetteRight : left + right) / 2 * video.videoWidth / probe.width;
-          var width = Math.round((right - left + 1) * video.videoWidth / probe.width * 1.42);
-          return { center: center, width: width };
-        } catch (err) { return null; }
-      }
 
       function drawKeyedFrame() {
         if (!video.videoWidth || video.readyState < 2) {
@@ -1009,20 +1027,11 @@
         var sourceY = Math.round((sourceHeight - cropHeight) / 2);
         var cropWidth = Math.min(sourceWidth, Math.round(cropHeight * 0.52));
         var sourceX = Math.max(0, Math.round((sourceWidth - cropWidth) / 2 + cropXOffset));
-        if (isIOS && video.getAttribute('data-fallback-active') !== 'true') {
-          // Fix the crop for the whole clip: changing it with each screen
-          // causes the phone to resize and drift as UI content animates.
-          if (!iosCrop) iosCrop = findIOSPhoneCrop();
-          if (iosCrop) {
-            cropWidth = Math.min(sourceWidth, iosCrop.width);
-            sourceX = Math.max(0, Math.min(sourceWidth - cropWidth, Math.round(iosCrop.center - cropWidth / 2)));
-          }
-        }
 
         if (canvas.width !== cropWidth || canvas.height !== cropHeight) {
           canvas.width = cropWidth;
           canvas.height = cropHeight;
-          wrapper.style.aspectRatio = isIOS ? '9 / 16' : cropWidth + ' / ' + cropHeight;
+          wrapper.style.aspectRatio = cropWidth + ' / ' + cropHeight;
         }
 
         context.clearRect(0, 0, cropWidth, cropHeight);
@@ -1201,7 +1210,6 @@
         useNativeAlpha = false;
         canvasPreservesAlpha = false;
         keyBlackBackground = false;
-        iosCrop = null;
         wrapper.classList.remove('jelly-native-video', 'is-native-video', 'is-keyed');
         video.setAttribute('data-fallback-active', 'true');
         video.src = fallback;
@@ -1268,7 +1276,7 @@
 </script>
 <script>
   if (new URLSearchParams(location.search).has('jelly-diag')) {
-    document.querySelectorAll('.jelly-solution-video.jelly-keyed-video').forEach(function (wrapper, index) {
+    document.querySelectorAll('.jelly-solution-video').forEach(function (wrapper, index) {
       var video = wrapper.querySelector('video');
       var canvas = wrapper.querySelector('canvas');
       var copy = wrapper.parentNode.querySelector('.jelly-solution-copy');
@@ -1284,7 +1292,8 @@
       function updateLabel() {
         var source = video.currentSrc || video.src || video.getAttribute('data-lazy-src') || 'waiting';
         source = source.split('/').pop().split('?')[0];
-        var path = wrapper.classList.contains('is-keyed') ? 'canvas' :
+        var path = wrapper.classList.contains('jelly-phone-video') ? 'native portrait MP4' :
+          wrapper.classList.contains('is-keyed') ? 'canvas' :
           wrapper.classList.contains('is-native-video') ? 'native video' : 'waiting';
         var corner = 'waiting';
         if (video.readyState >= 2 && probeContext) {
