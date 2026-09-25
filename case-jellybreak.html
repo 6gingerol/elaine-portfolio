@@ -944,6 +944,8 @@
   (function () {
     var keyedVideos = document.querySelectorAll('.jelly-keyed-video');
     if (!keyedVideos.length) return;
+    var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     keyedVideos.forEach(function (wrapper) {
       var video = wrapper.querySelector('video');
@@ -951,9 +953,11 @@
       var context = canvas && canvas.getContext('2d', { willReadFrequently: true });
       var frameRequest = 0;
       var useNativeAlpha = wrapper.hasAttribute('data-native-alpha');
+      var canvasPreservesAlpha = false;
       var keyBlackBackground = false;
       var cropXOffset = parseFloat(wrapper.getAttribute('data-crop-x-offset') || '0') || 0;
       if (!video || !canvas || !context) return;
+      if (isIOS) wrapper.classList.remove('jelly-native-video');
 
       function drawKeyedFrame() {
         if (!video.videoWidth || video.readyState < 2) {
@@ -979,7 +983,7 @@
         context.imageSmoothingQuality = 'high';
         var activeSource = video.currentSrc || video.src || '';
         var alphaFrame = null;
-        if (typeof VideoFrame === 'function' && /\.webm(?:[?#]|$)/i.test(activeSource) && video.getAttribute('data-fallback-active') !== 'true') {
+        if (!canvasPreservesAlpha && typeof VideoFrame === 'function' && /\.webm(?:[?#]|$)/i.test(activeSource) && video.getAttribute('data-fallback-active') !== 'true') {
           try { alphaFrame = new VideoFrame(video); } catch (err) {}
         }
 
@@ -998,6 +1002,14 @@
         }
 
         context.drawImage(video, sourceX, sourceY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+        // On iOS, canvas can retain WebM alpha even when the video element
+        // paints the transparent landscape frame as opaque black.
+        if (canvasPreservesAlpha) {
+          wrapper.classList.add('is-keyed');
+          if (!video.paused && !video.ended) frameRequest = requestAnimationFrame(drawKeyedFrame);
+          return;
+        }
 
         var frame = context.getImageData(0, 0, cropWidth, cropHeight);
         var pixels = frame.data;
@@ -1109,11 +1121,9 @@
         return useNativeAlpha && video.getAttribute('data-fallback-active') !== 'true' && !/\.mp4(?:\?|$)/i.test(activeSource);
       }
 
-      // canPlayType() only tells us that the browser can decode WebM. It does
-      // not tell us whether the decoded alpha channel survives compositing.
-      // Probe the transparent corners of the actual frame before displaying
-      // the native video; browsers that flatten alpha will return opaque black
-      // pixels here instead of transparent ones.
+      // Probe whether canvas retains the decoded alpha channel. On iOS the
+      // native video element can still paint the landscape frame incorrectly,
+      // so a successful probe there selects the cropped canvas instead.
       function nativeAlphaWorks() {
         if (!video.videoWidth || video.readyState < 2) return true;
         var probe = document.createElement('canvas');
@@ -1142,6 +1152,7 @@
         var fallback = video.getAttribute('data-lazy-fallback');
         if (!fallback || video.getAttribute('data-fallback-active') === 'true') return false;
         useNativeAlpha = false;
+        canvasPreservesAlpha = false;
         keyBlackBackground = false;
         wrapper.classList.remove('jelly-native-video', 'is-native-video', 'is-keyed');
         video.setAttribute('data-fallback-active', 'true');
@@ -1153,19 +1164,27 @@
       }
 
       function chooseRenderPath() {
+        if (!video.videoWidth || video.readyState < 2) return;
         if (!isNativeSource()) {
           useNativeAlpha = false;
           showKeyedVideo();
           return;
         }
         if (nativeAlphaWorks()) {
-          showNativeVideo();
+          if (isIOS) {
+            canvasPreservesAlpha = true;
+            useNativeAlpha = false;
+            showKeyedVideo();
+          } else {
+            showNativeVideo();
+          }
           return;
         }
         // Keep the playable WebM on the canvas when the browser can decode it
         // but does not preserve its alpha channel. This avoids the alternate
         // MP4 edit, whose baked-in background does not match the WebM frames.
         useNativeAlpha = false;
+        canvasPreservesAlpha = false;
         keyBlackBackground = true;
         showKeyedVideo();
       }
@@ -1182,6 +1201,7 @@
         if (activateFallback()) return;
         if (useNativeAlpha) {
           useNativeAlpha = false;
+          canvasPreservesAlpha = false;
           keyBlackBackground = true;
           showKeyedVideo();
         }
@@ -1189,6 +1209,46 @@
       video.addEventListener('pause', function () { cancelAnimationFrame(frameRequest); });
     });
   })();
+</script>
+<script>
+  if (new URLSearchParams(location.search).has('jelly-diag')) {
+    document.querySelectorAll('.jelly-solution-video.jelly-keyed-video').forEach(function (wrapper, index) {
+      var video = wrapper.querySelector('video');
+      var canvas = wrapper.querySelector('canvas');
+      var copy = wrapper.parentNode.querySelector('.jelly-solution-copy');
+      if (!video || !canvas || !copy) return;
+
+      var label = document.createElement('p');
+      label.style.cssText = 'margin:0 0 12px;font:12px/1.5 monospace;color:var(--ink);overflow-wrap:anywhere';
+      copy.insertBefore(label, copy.firstChild);
+      var probe = document.createElement('canvas');
+      probe.width = probe.height = 4;
+      var probeContext = probe.getContext('2d', { willReadFrequently: true });
+
+      function updateLabel() {
+        var source = video.currentSrc || video.src || video.getAttribute('data-lazy-src') || 'waiting';
+        source = source.split('/').pop().split('?')[0];
+        var path = wrapper.classList.contains('is-keyed') ? 'canvas' :
+          wrapper.classList.contains('is-native-video') ? 'native video' : 'waiting';
+        var corner = 'waiting';
+        if (video.readyState >= 2 && probeContext) {
+          try {
+            probeContext.clearRect(0, 0, 4, 4);
+            probeContext.drawImage(video, 0, 0, 4, 4);
+            var pixel = probeContext.getImageData(0, 0, 1, 1).data;
+            corner = pixel[0] + ',' + pixel[1] + ',' + pixel[2] + ',' + pixel[3];
+          } catch (err) { corner = 'unreadable'; }
+        }
+        label.textContent = 'Video ' + (index + 1) + ' | ' + source + ' | ' + path +
+          ' | ' + video.videoWidth + 'x' + video.videoHeight +
+          ' | WebM ' + (video.canPlayType('video/webm') || 'no') +
+          ' | corner RGBA ' + corner;
+      }
+
+      updateLabel();
+      window.setInterval(updateLabel, 750);
+    });
+  }
 </script>
 <script>
   (function () {
