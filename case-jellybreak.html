@@ -872,7 +872,7 @@
     <div class="jelly-solution-features">
       <article class="jelly-solution-feature">
         <figure class="jelly-solution-video jelly-keyed-video jelly-native-video jelly-group-video" data-native-alpha>
-          <video muted autoplay loop playsinline preload="metadata" data-lazy-src="assets/jellybreak-group-session-nobg.webm" data-play-on-visible aria-label="JellyBreak group session experience"></video>
+          <video muted autoplay loop playsinline preload="metadata" data-lazy-src="assets/jellybreak-group-session-nobg.webm" data-lazy-fallback="assets/jellybreak-group-session.mp4" data-play-on-visible aria-label="JellyBreak group session experience"></video>
           <canvas aria-hidden="true"></canvas>
         </figure>
         <div class="jelly-solution-copy">
@@ -948,6 +948,7 @@
       var context = canvas && canvas.getContext('2d', { willReadFrequently: true });
       var frameRequest = 0;
       var useNativeAlpha = wrapper.hasAttribute('data-native-alpha');
+      var keyBlackBackground = false;
       if (!video || !canvas || !context) return;
 
       function drawKeyedFrame() {
@@ -1000,7 +1001,8 @@
           var nearestPink = Math.min.apply(null, pinkTargets.map(function (target) {
             return colorDistance(red, green, blue, target);
           }));
-          if (warmPink && nearestPink < 126) backgroundMask[i] = 1;
+          var nearBlack = red < 34 && green < 34 && blue < 34;
+          if ((warmPink && nearestPink < 126) || (keyBlackBackground && nearBlack)) backgroundMask[i] = 1;
         }
 
         var visited = new Uint8Array(totalPixels);
@@ -1068,7 +1070,13 @@
         drawKeyedFrame();
       }
 
+      function showKeyedVideo() {
+        wrapper.classList.remove('jelly-native-video', 'is-native-video', 'is-keyed');
+        startKeying();
+      }
+
       function showNativeVideo() {
+        wrapper.classList.remove('is-keyed');
         wrapper.classList.add('is-native-video');
       }
 
@@ -1077,30 +1085,83 @@
         return useNativeAlpha && video.getAttribute('data-fallback-active') !== 'true' && !/\.mp4(?:\?|$)/i.test(activeSource);
       }
 
-      function handleLoadedData() {
-        if (isNativeSource()) showNativeVideo();
-        else {
-          useNativeAlpha = false;
-          wrapper.classList.remove('jelly-native-video', 'is-native-video');
-          startKeying();
+      // canPlayType() only tells us that the browser can decode WebM. It does
+      // not tell us whether the decoded alpha channel survives compositing.
+      // Probe the transparent corners of the actual frame before displaying
+      // the native video; browsers that flatten alpha will return opaque black
+      // pixels here instead of transparent ones.
+      function nativeAlphaWorks() {
+        if (!video.videoWidth || video.readyState < 2) return true;
+        var probe = document.createElement('canvas');
+        probe.width = 4;
+        probe.height = 4;
+        var probeContext = probe.getContext('2d', { willReadFrequently: true });
+        if (!probeContext) return true;
+        try {
+          probeContext.clearRect(0, 0, 4, 4);
+          probeContext.drawImage(video, 0, 0, 4, 4);
+          var pixels = probeContext.getImageData(0, 0, 4, 4).data;
+          var points = [[0, 0], [3, 0], [0, 3], [3, 3]];
+          var transparent = 0;
+          points.forEach(function (point) {
+            if (pixels[(point[1] * 4 + point[0]) * 4 + 3] < 16) transparent++;
+          });
+          return transparent >= 2;
+        } catch (err) {
+          // If a browser blocks the probe, keep the native path rather than
+          // replacing a working video with a heavier canvas fallback.
+          return true;
         }
       }
 
-      video.addEventListener('loadeddata', handleLoadedData);
-      video.addEventListener('play', function () {
-        if (isNativeSource()) showNativeVideo();
-        else startKeying();
-      });
-      video.addEventListener('error', function () {
+      function activateFallback() {
         var fallback = video.getAttribute('data-lazy-fallback');
-        if (!useNativeAlpha || !fallback || video.getAttribute('data-fallback-active') === 'true') return;
+        if (!fallback || video.getAttribute('data-fallback-active') === 'true') return false;
         useNativeAlpha = false;
-        wrapper.classList.remove('jelly-native-video', 'is-native-video');
+        keyBlackBackground = false;
+        wrapper.classList.remove('jelly-native-video', 'is-native-video', 'is-keyed');
         video.setAttribute('data-fallback-active', 'true');
         video.src = fallback;
         video.load();
         var playPromise = video.play();
         if (playPromise) playPromise.catch(function () {});
+        return true;
+      }
+
+      function chooseRenderPath() {
+        if (!isNativeSource()) {
+          useNativeAlpha = false;
+          showKeyedVideo();
+          return;
+        }
+        if (nativeAlphaWorks()) {
+          showNativeVideo();
+          return;
+        }
+        if (activateFallback()) return;
+        // The transition clip has no separate MP4, but its source is a
+        // chroma-keyed clip. Remove an opaque black matte if a mobile decoder
+        // flattened its alpha channel.
+        useNativeAlpha = false;
+        keyBlackBackground = true;
+        showKeyedVideo();
+      }
+
+      function handleLoadedData() {
+        chooseRenderPath();
+      }
+
+      video.addEventListener('loadeddata', handleLoadedData);
+      video.addEventListener('play', function () {
+        chooseRenderPath();
+      });
+      video.addEventListener('error', function () {
+        if (activateFallback()) return;
+        if (useNativeAlpha) {
+          useNativeAlpha = false;
+          keyBlackBackground = true;
+          showKeyedVideo();
+        }
       });
       video.addEventListener('pause', function () { cancelAnimationFrame(frameRequest); });
     });
