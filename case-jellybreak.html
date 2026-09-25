@@ -956,8 +956,38 @@
       var canvasPreservesAlpha = false;
       var keyBlackBackground = false;
       var cropXOffset = parseFloat(wrapper.getAttribute('data-crop-x-offset') || '0') || 0;
+      var iosCrop = null;
       if (!video || !canvas || !context) return;
       if (isIOS) wrapper.classList.remove('jelly-native-video');
+
+      function findIOSPhoneCrop() {
+        // Safari decodes WebM alpha as solid black. Locate the bright phone
+        // screen in a small source-frame sample before cropping the wide video.
+        var probe = document.createElement('canvas');
+        probe.width = 320;
+        probe.height = 90;
+        var probeContext = probe.getContext('2d', { willReadFrequently: true });
+        if (!probeContext) return null;
+        try {
+          probeContext.drawImage(video, 0, 0, probe.width, probe.height);
+          var data = probeContext.getImageData(0, 0, probe.width, probe.height).data;
+          var left = probe.width;
+          var right = -1;
+          for (var y = 25; y < 65; y += 4) {
+            for (var x = 0; x < probe.width; x++) {
+              var i = (y * probe.width + x) * 4;
+              if (data[i] > 160 && data[i + 1] > 160 && data[i + 2] > 160) {
+                left = Math.min(left, x);
+                right = Math.max(right, x);
+              }
+            }
+          }
+          if (right < left || right - left < 5) return null;
+          var center = (left + right) / 2 * video.videoWidth / probe.width;
+          var width = Math.round((right - left + 1) * video.videoWidth / probe.width * 1.28);
+          return { center: center, width: width };
+        } catch (err) { return null; }
+      }
 
       function drawKeyedFrame() {
         if (!video.videoWidth || video.readyState < 2) {
@@ -971,11 +1001,18 @@
         var sourceY = Math.round((sourceHeight - cropHeight) / 2);
         var cropWidth = Math.min(sourceWidth, Math.round(cropHeight * 0.52));
         var sourceX = Math.max(0, Math.round((sourceWidth - cropWidth) / 2 + cropXOffset));
+        if (isIOS && video.getAttribute('data-fallback-active') !== 'true') {
+          iosCrop = findIOSPhoneCrop() || iosCrop;
+          if (iosCrop) {
+            cropWidth = Math.min(sourceWidth, iosCrop.width);
+            sourceX = Math.max(0, Math.min(sourceWidth - cropWidth, Math.round(iosCrop.center - cropWidth / 2)));
+          }
+        }
 
         if (canvas.width !== cropWidth || canvas.height !== cropHeight) {
           canvas.width = cropWidth;
           canvas.height = cropHeight;
-          wrapper.style.aspectRatio = cropWidth + ' / ' + cropHeight;
+          wrapper.style.aspectRatio = isIOS ? '9 / 16' : cropWidth + ' / ' + cropHeight;
         }
 
         context.clearRect(0, 0, cropWidth, cropHeight);
@@ -983,7 +1020,7 @@
         context.imageSmoothingQuality = 'high';
         var activeSource = video.currentSrc || video.src || '';
         var alphaFrame = null;
-        if (!canvasPreservesAlpha && typeof VideoFrame === 'function' && /\.webm(?:[?#]|$)/i.test(activeSource) && video.getAttribute('data-fallback-active') !== 'true') {
+        if (!isIOS && !canvasPreservesAlpha && typeof VideoFrame === 'function' && /\.webm(?:[?#]|$)/i.test(activeSource) && video.getAttribute('data-fallback-active') !== 'true') {
           try { alphaFrame = new VideoFrame(video); } catch (err) {}
         }
 
@@ -1165,6 +1202,14 @@
 
       function chooseRenderPath() {
         if (!video.videoWidth || video.readyState < 2) return;
+        if (isIOS && isNativeSource()) {
+          // The 4px alpha probe gives false positives on iPhone. Actual
+          // decoded corners are opaque black, so always key that matte.
+          canvasPreservesAlpha = false;
+          keyBlackBackground = true;
+          showKeyedVideo();
+          return;
+        }
         if (!isNativeSource()) {
           useNativeAlpha = false;
           showKeyedVideo();
