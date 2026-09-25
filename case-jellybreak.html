@@ -524,10 +524,7 @@
     image-rendering: auto;
   }
   .jelly-keyed-video.is-keyed > video { opacity: 0; visibility: hidden; }
-  .jelly-keyed-video.is-keyed > canvas {
-    opacity: 1;
-    transform: scale(1.06);
-  }
+  .jelly-keyed-video.is-keyed > canvas { opacity: 1; }
   .jelly-native-video > video {
     z-index: 1;
     opacity: 1;
@@ -547,12 +544,12 @@
     /* The first source has a shorter phone frame than the other two videos. */
     transform: translateX(clamp(22px, 3vw, 30px)) scale(1.06, 1.10);
   }
-  .jelly-group-video > canvas {
-    /* Keep the first clip's corrected source alignment while trimming its outer frame. */
-    transform: scale(1.06, 1.10);
+  .jelly-solution-feature:nth-child(2) .jelly-solution-video > video {
+    transform: scaleX(1.01) scale(1.08);
   }
-  .jelly-solution-feature:nth-child(2) .jelly-solution-video > video { transform: scaleX(1.01) scale(1.08); }
-  .jelly-solution-feature:nth-child(2) .jelly-solution-video.is-keyed > canvas { transform: scaleX(1.01) scale(1.08); }
+  .jelly-solution-feature:nth-child(2) .jelly-solution-video > canvas {
+    transform: scaleX(1.01) scale(1.08);
+  }
   .jelly-solution-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1099,7 +1096,6 @@
 
       function showKeyedVideo() {
         wrapper.classList.remove('jelly-native-video', 'is-native-video', 'is-keyed');
-        wrapper.style.removeProperty('aspect-ratio');
         startKeying();
       }
 
@@ -1146,7 +1142,7 @@
         var fallback = video.getAttribute('data-lazy-fallback');
         if (!fallback || video.getAttribute('data-fallback-active') === 'true') return false;
         useNativeAlpha = false;
-        keyBlackBackground = true;
+        keyBlackBackground = false;
         wrapper.classList.remove('jelly-native-video', 'is-native-video', 'is-keyed');
         video.setAttribute('data-fallback-active', 'true');
         video.src = fallback;
