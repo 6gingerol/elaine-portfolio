@@ -544,7 +544,14 @@
     /* The first source has a shorter phone frame than the other two videos. */
     transform: translateX(clamp(22px, 3vw, 30px)) scale(1.06, 1.10);
   }
+  .jelly-group-video > canvas {
+    /* Keep the keyed fallback aligned with the native first-source frame. */
+    transform: translateX(clamp(22px, 3vw, 30px)) scale(1.06, 1.10);
+  }
   .jelly-solution-feature:nth-child(2) .jelly-solution-video > video {
+    transform: scaleX(1.01) scale(1.08);
+  }
+  .jelly-solution-feature:nth-child(2) .jelly-solution-video > canvas {
     transform: scaleX(1.01) scale(1.08);
   }
   .jelly-solution-grid {
