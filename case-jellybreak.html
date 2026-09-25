@@ -545,8 +545,8 @@
     transform: translateX(clamp(22px, 3vw, 30px)) scale(1.06, 1.10);
   }
   .jelly-group-video > canvas {
-    /* Keep the keyed fallback aligned with the native first-source frame. */
-    transform: translateX(clamp(22px, 3vw, 30px)) scale(1.06, 1.10);
+    /* The canvas is already cropped to the phone; only nudge it into place. */
+    transform: translateX(18px);
   }
   .jelly-solution-feature:nth-child(2) .jelly-solution-video > video {
     transform: scaleX(1.01) scale(1.08);
@@ -980,6 +980,26 @@
         context.clearRect(0, 0, cropWidth, cropHeight);
         context.imageSmoothingEnabled = true;
         context.imageSmoothingQuality = 'high';
+        var activeSource = video.currentSrc || video.src || '';
+        var alphaFrame = null;
+        if (typeof VideoFrame === 'function' && /\.webm(?:[?#]|$)/i.test(activeSource) && video.getAttribute('data-fallback-active') !== 'true') {
+          try { alphaFrame = new VideoFrame(video); } catch (err) {}
+        }
+
+        if (alphaFrame) {
+          try {
+            context.drawImage(alphaFrame, sourceX, sourceY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+            alphaFrame.close();
+            wrapper.classList.add('is-keyed');
+            if (!video.paused && !video.ended) frameRequest = requestAnimationFrame(drawKeyedFrame);
+            return;
+          } catch (err) {
+            alphaFrame.close();
+            alphaFrame = null;
+            context.clearRect(0, 0, cropWidth, cropHeight);
+          }
+        }
+
         context.drawImage(video, sourceX, sourceY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
         var frame = context.getImageData(0, 0, cropWidth, cropHeight);
@@ -1125,10 +1145,7 @@
         var fallback = video.getAttribute('data-lazy-fallback');
         if (!fallback || video.getAttribute('data-fallback-active') === 'true') return false;
         useNativeAlpha = false;
-        // The opaque MP4 fallback can retain black matte pixels at the frame
-        // edges. Flood-fill those pixels too, while leaving interior UI text
-        // intact because only edge-connected background is removed.
-        keyBlackBackground = true;
+        keyBlackBackground = false;
         wrapper.classList.remove('jelly-native-video', 'is-native-video', 'is-keyed');
         video.setAttribute('data-fallback-active', 'true');
         video.src = fallback;
@@ -1148,10 +1165,9 @@
           showNativeVideo();
           return;
         }
-        if (activateFallback()) return;
-        // The transition clip has no separate MP4, but its source is a
-        // chroma-keyed clip. Remove an opaque black matte if a mobile decoder
-        // flattened its alpha channel.
+        // Keep the playable WebM on the canvas when the browser can decode it
+        // but does not preserve its alpha channel. This avoids the alternate
+        // MP4 edit, whose baked-in background does not match the WebM frames.
         useNativeAlpha = false;
         keyBlackBackground = true;
         showKeyedVideo();
