@@ -1125,7 +1125,10 @@
         var fallback = video.getAttribute('data-lazy-fallback');
         if (!fallback || video.getAttribute('data-fallback-active') === 'true') return false;
         useNativeAlpha = false;
-        keyBlackBackground = false;
+        // The opaque MP4 fallback can retain black matte pixels at the frame
+        // edges. Flood-fill those pixels too, while leaving interior UI text
+        // intact because only edge-connected background is removed.
+        keyBlackBackground = true;
         wrapper.classList.remove('jelly-native-video', 'is-native-video', 'is-keyed');
         video.setAttribute('data-fallback-active', 'true');
         video.src = fallback;
