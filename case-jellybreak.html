@@ -524,7 +524,10 @@
     image-rendering: auto;
   }
   .jelly-keyed-video.is-keyed > video { opacity: 0; visibility: hidden; }
-  .jelly-keyed-video.is-keyed > canvas { opacity: 1; }
+  .jelly-keyed-video.is-keyed > canvas {
+    opacity: 1;
+    transform: scale(1.06);
+  }
   .jelly-native-video > video {
     z-index: 1;
     opacity: 1;
@@ -545,10 +548,11 @@
     transform: translateX(clamp(22px, 3vw, 30px)) scale(1.06, 1.10);
   }
   .jelly-group-video > canvas {
-    /* The keyed canvas uses the same 9:16 frame as the native video. */
-    transform: none;
+    /* Keep the first clip's corrected source alignment while trimming its outer frame. */
+    transform: scale(1.06, 1.10);
   }
   .jelly-solution-feature:nth-child(2) .jelly-solution-video > video { transform: scaleX(1.01) scale(1.08); }
+  .jelly-solution-feature:nth-child(2) .jelly-solution-video.is-keyed > canvas { transform: scaleX(1.01) scale(1.08); }
   .jelly-solution-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -964,12 +968,13 @@
         var sourceHeight = video.videoHeight;
         var cropHeight = Math.round(sourceHeight * 0.92);
         var sourceY = Math.round((sourceHeight - cropHeight) / 2);
-        var cropWidth = Math.min(sourceWidth, Math.round(cropHeight * 9 / 16));
+        var cropWidth = Math.min(sourceWidth, Math.round(cropHeight * 0.52));
         var sourceX = Math.max(0, Math.round((sourceWidth - cropWidth) / 2 + cropXOffset));
 
         if (canvas.width !== cropWidth || canvas.height !== cropHeight) {
           canvas.width = cropWidth;
           canvas.height = cropHeight;
+          wrapper.style.aspectRatio = cropWidth + ' / ' + cropHeight;
         }
 
         context.clearRect(0, 0, cropWidth, cropHeight);
