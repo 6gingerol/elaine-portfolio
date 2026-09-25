@@ -973,9 +973,15 @@
           var data = probeContext.getImageData(0, 0, probe.width, probe.height).data;
           var left = probe.width;
           var right = -1;
+          var silhouetteLeft = probe.width;
+          var silhouetteRight = -1;
           for (var y = 25; y < 65; y += 4) {
             for (var x = 0; x < probe.width; x++) {
               var i = (y * probe.width + x) * 4;
+              if (Math.max(data[i], data[i + 1], data[i + 2]) > 28) {
+                silhouetteLeft = Math.min(silhouetteLeft, x);
+                silhouetteRight = Math.max(silhouetteRight, x);
+              }
               if (data[i] > 160 && data[i + 1] > 160 && data[i + 2] > 160) {
                 left = Math.min(left, x);
                 right = Math.max(right, x);
@@ -983,8 +989,10 @@
             }
           }
           if (right < left || right - left < 5) return null;
-          var center = (left + right) / 2 * video.videoWidth / probe.width;
-          var width = Math.round((right - left + 1) * video.videoWidth / probe.width * 1.28);
+          var phoneSilhouette = silhouetteRight > silhouetteLeft &&
+            silhouetteLeft >= left - 6 && silhouetteRight <= right + 6;
+          var center = (phoneSilhouette ? silhouetteLeft + silhouetteRight : left + right) / 2 * video.videoWidth / probe.width;
+          var width = Math.round((right - left + 1) * video.videoWidth / probe.width * 1.42);
           return { center: center, width: width };
         } catch (err) { return null; }
       }
