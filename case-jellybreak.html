@@ -1002,7 +1002,9 @@
         var cropWidth = Math.min(sourceWidth, Math.round(cropHeight * 0.52));
         var sourceX = Math.max(0, Math.round((sourceWidth - cropWidth) / 2 + cropXOffset));
         if (isIOS && video.getAttribute('data-fallback-active') !== 'true') {
-          iosCrop = findIOSPhoneCrop() || iosCrop;
+          // Fix the crop for the whole clip: changing it with each screen
+          // causes the phone to resize and drift as UI content animates.
+          if (!iosCrop) iosCrop = findIOSPhoneCrop();
           if (iosCrop) {
             cropWidth = Math.min(sourceWidth, iosCrop.width);
             sourceX = Math.max(0, Math.min(sourceWidth - cropWidth, Math.round(iosCrop.center - cropWidth / 2)));
@@ -1191,6 +1193,7 @@
         useNativeAlpha = false;
         canvasPreservesAlpha = false;
         keyBlackBackground = false;
+        iosCrop = null;
         wrapper.classList.remove('jelly-native-video', 'is-native-video', 'is-keyed');
         video.setAttribute('data-fallback-active', 'true');
         video.src = fallback;
