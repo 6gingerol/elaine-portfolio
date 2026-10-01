@@ -99,7 +99,7 @@
   /* image → image (back to back) */
   .cs-section .blk + .blk, .cs-section .blk-full + .blk-full, .cs-section .blk + .blk-full, .cs-section .blk-full + .blk { margin-top: var(--hack-block-space); }
   /* captions */
-  .blk .cap, .compare-2up figcaption, .old-workflow-toggle .old-workflow-body figcaption { font-size: 14.5px; color: var(--steel); margin-top: 10px; line-height: 1.5; }
+  .blk .cap, .compare-2up figcaption, .old-workflow .old-workflow-body figcaption { font-size: 14.5px; color: var(--steel); margin-top: 10px; line-height: 1.5; }
 
   /* Center all images */
   .blk, .blk-full { margin-left: auto; margin-right: auto; }
@@ -137,48 +137,23 @@
   .cs-head .cs-meta { text-align: left; }
   .blk .cap,
   .compare-2up figcaption,
-  .old-workflow-toggle .old-workflow-body figcaption { text-align: left; }
+  .old-workflow .old-workflow-body figcaption { text-align: left; }
 
 
   .cs-section .blk + p { margin-top: var(--hack-block-space); }
 
-  /* Old workflow disclosure — clean, no box */
-  .old-workflow-toggle {
+  /* Old workflow photos — shown inline */
+  .old-workflow {
     margin-top: var(--hack-block-space);
-    border: none;
-    border-radius: 0;
-    overflow: visible;
-    background: transparent;
   }
-  .old-workflow-toggle summary {
-    padding: 10px 0;
-    font-size: 15.5px;
-    font-weight: 500;
-    color: var(--graphite);
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: color 0.2s var(--ease);
-  }
-  .old-workflow-toggle summary::-webkit-details-marker { display: none; }
-  .old-workflow-toggle summary::before {
-    content: ""; display: inline-block; width: 6px; height: 6px;
-    border-right: 1.5px solid var(--silver); border-bottom: 1.5px solid var(--silver);
-    transform: rotate(-45deg); transition: transform 0.25s var(--ease);
-    flex-shrink: 0;
-  }
-  .old-workflow-toggle[open] summary::before { transform: rotate(45deg); }
-  .old-workflow-toggle summary:hover { color: var(--ink); }
-  .old-workflow-toggle .old-workflow-body {
+  .old-workflow-body {
     padding: 16px 0 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--hack-block-space);
   }
-  .old-workflow-toggle .old-workflow-body figure:last-child { grid-column: 1 / -1; }
-  .old-workflow-toggle .old-workflow-body figure { margin: 0; }
+  .old-workflow-body figure:last-child { grid-column: 1 / -1; }
+  .old-workflow-body figure { margin: 0; }
   .zoomable-figure { position: relative; }
   .zoomable-figure::after {
     content: "↗";
@@ -205,7 +180,7 @@
     background: rgba(11,11,12,0.68);
     transform: scale(1.03);
   }
-  .old-workflow-toggle .old-workflow-body img {
+  .old-workflow-body img {
     display: block; width: 100%; height: auto; border-radius: 8px;
     border: 1px solid var(--line);
     cursor: zoom-in;
@@ -213,8 +188,8 @@
     filter: grayscale(0.7) contrast(0.92) brightness(1.02);
     opacity: 0.88;
   }
-  .old-workflow-toggle .old-workflow-body img:hover { box-shadow: 0 10px 40px -18px rgba(11,11,12,0.35); }
-  .old-workflow-toggle .old-workflow-body figcaption {
+  .old-workflow-body img:hover { box-shadow: 0 10px 40px -18px rgba(11,11,12,0.35); }
+  .old-workflow-body figcaption {
     font-size: 14.5px; color: var(--steel); margin-top: 8px; line-height: 1.5;
   }
 
@@ -401,8 +376,8 @@
     margin: 0;
   }
   @media (max-width: 920px) {
-    .old-workflow-toggle .old-workflow-body { grid-template-columns: 1fr; }
-    .old-workflow-toggle .old-workflow-body figure:last-child { grid-column: auto; }
+    .old-workflow-body { grid-template-columns: 1fr; }
+    .old-workflow-body figure:last-child { grid-column: auto; }
     .cs-section > p,
     .cs-section h2.sec-title,
     .img-heading,
@@ -485,8 +460,7 @@
     <h2 class="sec-title">The problem</h2>
     <p class="wide-copy">nwPlus is a student-run organization that runs Western Canada's largest hackathons. With hundreds of participants and projects, judges had to grade hundreds of individual submissions in Google Sheets while organizers managed the whole process by hand. It was inefficient, confusing, and largely repetitive.</p>
 
-    <details class="old-workflow-toggle">
-      <summary>The old workflow</summary>
+    <div class="old-workflow">
       <div class="old-workflow-body">
         <figure class="zoomable-figure">
           <img src="assets/sheets feedback.webp" alt="Old judging spreadsheet — per-criteria scores with free-text feedback" loading="lazy" decoding="async" data-zoomable="assets/sheets feedback.png" data-censored="true" />
@@ -501,7 +475,7 @@
           <figcaption>Before selecting winners, organizers checked top-ranked projects for eligibility and compliance in another sheet.</figcaption>
         </figure>
       </div>
-    </details>
+    </div>
   </section>
 
   <!-- RESEARCH -->
