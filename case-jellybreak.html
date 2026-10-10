@@ -553,8 +553,10 @@
   /* Portrait MP4s have the alpha composited offline for iOS playback.
      Keep their square pixels and measured source proportions intact. */
   .jelly-solution-video.jelly-phone-video {
+    position: relative;
     aspect-ratio: 500 / 920;
     border-radius: 0;
+    overflow: hidden;
   }
   .jelly-solution-feature .jelly-phone-video > video {
     position: static;
@@ -571,6 +573,60 @@
   }
   .jelly-solution-feature:nth-child(2) .jelly-phone-video > video {
     transform: none;
+  }
+  /* Normalize the measured phone-frame bounds inside each 500x920 asset.
+     This uses the first phone as the shared handset reference. */
+  .jelly-phone-video[data-phone-video="group-session"] > video {
+    transform: none;
+  }
+  .jelly-solution-feature:nth-child(2) .jelly-phone-video[data-phone-video="choose-break"] > video {
+    transform: translate(-1px, 2px) scaleX(1.0556) scaleY(1.0091);
+  }
+  .jelly-phone-video[data-phone-video="transition"] > video {
+    transform: translate(0.5px, 0.5px) scaleX(1.0435) scaleY(0.9877);
+    clip-path: inset(0 0 13px 0);
+    -webkit-clip-path: inset(0 0 13px 0);
+  }
+  /* Blend the first phone's measured lower bezel over every handset. White
+     pixels multiply away, while the shared dark frame pixels stay visible. */
+  .jelly-phone-video::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 96.087%;
+    height: 1.956%;
+    background: url("assets/jellybreak-group-session-phone-light.png") center 98% / 100% auto no-repeat;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    .jelly-phone-video::after {
+      background-image: url("assets/jellybreak-group-session-phone-dark.png");
+    }
+  }
+  /* Rebuild the middle phone's lower bevel in place. Using the first phone's
+     bitmap here creates a second, wider edge underneath the real frame. */
+  .jelly-phone-video[data-phone-video="choose-break"]::after {
+    top: 96.794%;
+    height: 1.25%;
+    background: #0b0b0b;
+    mix-blend-mode: normal;
+    clip-path: polygon(
+      9.6% 0%, 90.2% 0%,
+      89.8% 6%, 89.0% 24%, 88.2% 41%, 87.0% 53%,
+      86.5% 65%, 85.5% 76%, 84.0% 88%, 83.0% 100%,
+      17.0% 100%, 16.0% 88%, 14.5% 76%, 13.5% 65%,
+      12.4% 53%, 11.8% 41%, 11.0% 24%, 10.0% 6%
+    );
+    -webkit-clip-path: polygon(
+      9.6% 0%, 90.2% 0%,
+      89.8% 6%, 89.0% 24%, 88.2% 41%, 87.0% 53%,
+      86.5% 65%, 85.5% 76%, 84.0% 88%, 83.0% 100%,
+      17.0% 100%, 16.0% 88%, 14.5% 76%, 13.5% 65%,
+      12.4% 53%, 11.8% 41%, 11.0% 24%, 10.0% 6%
+    );
   }
   .jelly-phone-video > canvas { display: none; }
   .jelly-solution-grid {
@@ -1006,7 +1062,7 @@
     keyedVideos.forEach(function (wrapper) {
       var video = wrapper.querySelector('video');
       var phoneVideoName = wrapper.getAttribute('data-phone-video');
-      var usePortraitAsset = isIOS || phoneVideoName === 'transition';
+      var usePortraitAsset = Boolean(phoneVideoName);
       if (video && wrapper.hasAttribute('data-phone-video') && usePortraitAsset) {
         usePortraitVideo(wrapper, video);
         return;
