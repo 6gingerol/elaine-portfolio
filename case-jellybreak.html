@@ -1005,7 +1005,9 @@
 
     keyedVideos.forEach(function (wrapper) {
       var video = wrapper.querySelector('video');
-      if (isIOS && video && wrapper.hasAttribute('data-phone-video')) {
+      var phoneVideoName = wrapper.getAttribute('data-phone-video');
+      var usePortraitAsset = isIOS || phoneVideoName === 'transition';
+      if (video && wrapper.hasAttribute('data-phone-video') && usePortraitAsset) {
         usePortraitVideo(wrapper, video);
         return;
       }
