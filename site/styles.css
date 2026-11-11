@@ -40,10 +40,10 @@
   --line:     #e7e7e8;
   --line-2:   #d8d8da;
 
-  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-display: "Archivo", system-ui, sans-serif;
   --font-sans:    "Schibsted Grotesk", system-ui, sans-serif;
   /* 3 fonts total: pixel (PP Mondwest/Pixelify) for hero titles,
-     Space Grotesk for headings, Schibsted Grotesk for body + labels */
+     Archivo for headings, Schibsted Grotesk for body + labels */
   --font-mono:    "Schibsted Grotesk", system-ui, sans-serif;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);

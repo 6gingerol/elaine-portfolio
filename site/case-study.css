@@ -26,7 +26,7 @@
   --paper: #fafafa;
   --bg: #ffffff;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-display: 'Archivo', system-ui, sans-serif;
   --font-body: 'Schibsted Grotesk', system-ui, sans-serif;
   --font-pixel: 'PP Mondwest', 'FS Mondwest Bold', 'FS Mondwest', 'Pixelify Sans', var(--font-display);
   --frame-grad: linear-gradient(150deg, #fbfbfc 0%, #ededf2 52%, #e2e2ea 100%);
