@@ -359,8 +359,8 @@
   .jelly-dilemma {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin: 24px 0 0;
+    gap: var(--jelly-block-space);
+    margin: 32px 0 0;
     padding: 0;
     list-style: none;
     counter-reset: dilemma;
@@ -368,107 +368,60 @@
   }
   .jelly-dilemma li {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: clamp(20px, 2.6vw, 28px);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 0;
+    align-items: start;
+    padding: 20px 24px;
     border: none;
     border-radius: 12px;
     background: var(--paper);
     counter-increment: dilemma;
   }
   .jelly-dilemma li::before {
-    content: counter(dilemma, decimal-leading-zero);
+    content: counter(dilemma) ".";
     display: block;
-    color: var(--silver);
+    color: var(--ink);
     font-family: var(--font-display);
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: -0.02em;
     line-height: 1.25;
+    grid-row: 1;
+    align-self: start;
+  }
+  .jelly-dilemma li h3 {
+    grid-column: 2;
+    grid-row: 1;
   }
   .jelly-dilemma li p {
-    margin: 0;
-    max-width: 30ch;
-    color: var(--graphite);
-    font-size: 14px;
-    line-height: 1.5;
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
   .jelly-dilemma h3 {
-    margin: 18px 0 8px;
+    margin: 0 0 10px;
     font-family: var(--font-display);
-    font-size: clamp(18px, 2vw, 22px);
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: -0.02em;
-    line-height: 1.2;
+    line-height: 1.25;
     min-height: 0;
     display: block;
     text-wrap: balance;
   }
-  .jelly-dilemma-meta {
-    display: block;
-    margin-top: 22px;
-    color: var(--silver);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.3;
-    text-transform: uppercase;
-  }
-  .jelly-philosophy-intro {
-    max-width: 52ch !important;
+  .jelly-dilemma p {
     margin: 0;
+    max-width: 42ch;
     color: var(--graphite);
+    font-size: 15.5px;
+    line-height: 1.65;
   }
-  .jelly-decision {
-    display: grid;
-    grid-template-columns: minmax(110px, 0.3fr) 1fr;
-    gap: clamp(24px, 4vw, 56px);
-    margin-top: 12px;
-    padding: clamp(24px, 4vw, 40px);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--surface);
+  .jelly-dilemma + p {
+    margin-top: 0 !important;
+    padding-top: clamp(48px, 6vh, 72px);
   }
-  .jelly-decision-label {
-    color: var(--silver);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.3;
-    text-transform: uppercase;
-  }
-  .jelly-decision h3 {
-    margin: 0 0 20px;
-    font-family: var(--font-display);
-    font-size: clamp(21px, 2.4vw, 30px);
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    text-wrap: balance;
-  }
-  .jelly-decision-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(20px, 3vw, 40px);
-  }
-  .jelly-decision-grid p {
-    margin: 0;
-    max-width: 32ch;
-    color: var(--graphite);
-    font-size: 14px;
-    line-height: 1.5;
-  }
-  .jelly-decision-grid strong {
-    display: block;
-    margin-bottom: 6px;
-    color: var(--ink);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    line-height: 1.3;
-    text-transform: uppercase;
-  }
+  .jelly-dilemma + p + p { margin-top: clamp(24px, 3vh, 36px) !important; }
 
   .jelly-solution-intro {
     max-width: 62ch !important;
@@ -819,8 +772,6 @@
     .jelly-dilemma li { min-height: 0; padding: 20px; }
     .jelly-dilemma li::before { align-self: start; }
     .jelly-dilemma h3 { min-height: 0; display: block; }
-    .jelly-decision { grid-template-columns: 1fr; gap: 18px; }
-    .jelly-decision-grid { grid-template-columns: 1fr; gap: 16px; }
   }
   @media (max-width: 720px) {
     .jelly-solution-features { grid-template-columns: 1fr; }
@@ -982,30 +933,20 @@
   </section>
 
   <section class="cs-section reveal-self" data-screen-label="Design philosophy" aria-labelledby="philosophy-title">
-    <h2 class="sec-title" id="philosophy-title">The design choice</h2>
-    <p class="jelly-philosophy-intro">We compared two ways to make breaks happen:</p>
+    <h2 class="sec-title" id="philosophy-title">The design philosophy dilemma</h2>
+    <p>Before prototyping our solution, we identified two main design philosophies we could abide by. Each could have benefits, but each carried different tradeoffs.</p>
     <ol class="jelly-dilemma">
       <li>
         <h3>Force breaks</h3>
-        <p>The product decides when rest happens.</p>
-        <span class="jelly-dilemma-meta">More structure &middot; less agency</span>
+        <p>This assumes self-control is a finite, depletable resource, so the product should step in and make the decision for the user.</p>
       </li>
       <li>
         <h3>Promote self-directed breaks</h3>
-        <p>The user decides, but the cue can be easy to miss.</p>
-        <span class="jelly-dilemma-meta">More agency &middot; less certainty</span>
+        <p>This protects agency, but relies heavily on a person&rsquo;s own discipline to notice the need for rest and act on it.</p>
       </li>
     </ol>
-    <div class="jelly-decision">
-      <div class="jelly-decision-label">Our direction</div>
-      <div class="jelly-decision-body">
-        <h3>Support the decision, don&rsquo;t make it.</h3>
-        <div class="jelly-decision-grid">
-          <p><strong>Signal</strong>Students already felt guilty resting.</p>
-          <p><strong>Response</strong>Use a firm, repeated cue to interrupt hyperfocus without forcing the response.</p>
-        </div>
-      </div>
-    </div>
+    <p>We chose self-directed breaks; our data has shown that students have guilt over resting, meaning they&rsquo;ve internalized a belief that unstructured time has to be earned or justified.</p>
+    <p>Transitioning, by contrast, is a noticing problem: hyperfocus and forgetfulness mean students often don&rsquo;t register that a transition point has arrived at all. So rather than forcing the transition (removing their choice), we decided to use a firm, repeated cue that interrupts attention without dictating the response. Forced breaks could interrupt focus or make the product feel punitive, while a supportive structure can make rest easier to recognize and act on without taking the decision away, especially for building long-term habits.</p>
   </section>
 
   <section class="cs-section reveal-self" data-screen-label="Solution" aria-labelledby="solution-title">
